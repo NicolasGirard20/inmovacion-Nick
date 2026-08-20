@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { Prisma } from "@prisma/client";
+
 import { generarExcelRendicion, CobranzaForExcel } from "@/lib/excelGenerator";
 import { auth } from "../../../../../auth";
 

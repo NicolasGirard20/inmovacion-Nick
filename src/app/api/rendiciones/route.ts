@@ -7,8 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Importamos la conexión a la base de datos mediante Prisma
 import { db } from "@/lib/db";
 
-// Importamos tipos de Prisma
-import { Prisma } from "@prisma/client";
+
 
 // Funciones para generar archivos (EXCEL y PDF)
 import { generarExcelRendicion , CobranzaForExcel} from "@/lib/excelGenerator";
