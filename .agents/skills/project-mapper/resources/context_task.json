@@ -1,0 +1,231 @@
+{
+  "query": "DataContext cache loading pages clinicas odontologos trabajos pagos tables WorksTable TrabajosTable PaymentsTable ClinicsTable DentistsTable forms modals layout",
+  "generated_at": "2026-07-31T01:17:55.540355Z",
+  "project_name": "Proyecto-Laboratorio-Dental 2",
+  "relevant_architecture": {
+    "entry_points": [
+      "src\\app\\App.tsx",
+      "src\\app\\components\\ClinicFormModal.tsx",
+      "src\\app\\components\\ClinicsKPICards.tsx",
+      "src\\app\\components\\ClinicsTable.tsx",
+      "src\\app\\components\\DeleteClinicDialog.tsx",
+      "src\\helpers\\validators\\clinicValidator.ts",
+      "src\\services\\clinicOdont\\clinicOdont.ts",
+      "src\\services\\clinics\\clinic.ts"
+    ],
+    "core_modules": [
+      "src"
+    ]
+  },
+  "files": [
+    {
+      "path": "src\\app\\App.tsx",
+      "summary": "Punto de entrada",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\clinicas\\page.tsx",
+      "summary": "Funciones: loadData, activeClinics, uniqueDentistIds, handleNewClinic, handleEdit",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\ClinicFormModal.tsx",
+      "summary": "Punto de entrada | Funciones: ClinicFormModal, toggleDentist, handleSubmit, validationErrors, payload",
+      "exports": [
+        "ClinicFormModal"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\ClinicsTable.tsx",
+      "summary": "Punto de entrada | Funciones: ClinicsTable, filtered",
+      "exports": [
+        "interface",
+        "ClinicsTable"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\DeleteConfirmDialog.tsx",
+      "summary": "Funciones: DeleteConfirmDialog",
+      "exports": [
+        "DeleteConfirmDialog"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\DentistsTable.tsx",
+      "summary": "Funciones: DentistsTable, filtered",
+      "exports": [
+        "interface",
+        "DentistsTable"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\EditTrabajoModal.tsx",
+      "summary": "Funciones: EditTrabajoModal, handleSubmit",
+      "exports": [
+        "EditTrabajoModal"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\LoadingScreen.tsx",
+      "summary": "Funciones: LoadingScreen",
+      "exports": [
+        "LoadingScreen"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\PaymentsTable.tsx",
+      "summary": "Funciones: PaymentsTable, clearFilters, handleDelete, handleEditSuccess, loadPayments",
+      "exports": [
+        "PaymentsTable"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\TrabajosTable.tsx",
+      "summary": "Funciones: formatFecha, formatPrecio, TrabajosTable, handleGuardarEdicion, handleConfirmarBorrado",
+      "exports": [
+        "type",
+        "interface",
+        "TrabajosTable"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\WorksTable.tsx",
+      "summary": "Funciones: WorksTable, worksWithDetails, clinic, dentist, worksForTable",
+      "exports": [
+        "WorksTable"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\components\\adminAuth.tsx",
+      "summary": "Funciones: withAuth, authorize, interval",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "low",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\layout.tsx",
+      "summary": "Funciones: RootLayout",
+      "exports": [
+        "metadata",
+        "RootLayout"
+      ],
+      "dependencies": [],
+      "complexity": "low",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\login\\page.tsx",
+      "summary": "Funciones: LogoSVG, handleLogin",
+      "exports": [
+        "LoginScreen"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\odontologos\\page.tsx",
+      "summary": "Funciones: loadDentists, handleNewDentist, handleEditDentist, handleDeleteDentist, handleDentistSaved",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "high",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\pagos\\page.tsx",
+      "summary": "Archivo .tsx",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\app\\trabajos\\page.tsx",
+      "summary": "Archivo .tsx",
+      "exports": [
+        "withAuth"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "tsx"
+    },
+    {
+      "path": "src\\pages\\api\\admin.ts",
+      "summary": "Funciones: userDataHandler, token, userData",
+      "exports": [
+        "userDataHandler"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "typescript"
+    },
+    {
+      "path": "src\\pages\\api\\auth.ts",
+      "summary": "Funciones: authHandler, token",
+      "exports": [
+        "authHandler"
+      ],
+      "dependencies": [],
+      "complexity": "low",
+      "language": "typescript"
+    },
+    {
+      "path": "src\\pages\\api\\error_api.ts",
+      "summary": "Funciones: handler",
+      "exports": [
+        "handler"
+      ],
+      "dependencies": [],
+      "complexity": "medium",
+      "language": "typescript"
+    }
+  ],
+  "total_relevant_files": 20,
+  "direct_matches": 20,
+  "dependency_includes": 0,
+  "injection_strategy": "selective"
+}
