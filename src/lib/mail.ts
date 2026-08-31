@@ -4,10 +4,29 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.AUTH_RESEND_KEY);
+let resendInstance: Resend | null = null;
+
+function getResend(): Resend | null {
+  if (resendInstance) return resendInstance;
+  const apiKey = process.env.AUTH_RESEND_KEY;
+  if (!apiKey) {
+    console.warn(
+      '[mail] AUTH_RESEND_KEY no configurada o vacía; el envío de emails está deshabilitado.'
+    );
+    return null;
+  }
+  resendInstance = new Resend(apiKey);
+  return resendInstance;
+}
 
 export const sendEmailVerification = async (email: string, token: string, isResetPassword: boolean = false) => {
-    try {
+  const resend = getResend();
+  if (!resend) {
+    console.warn(`[mail] No se envió email a ${email}: AUTH_RESEND_KEY no configurada.`);
+    return { error: true };
+  }
+
+  try {
         let subject = '';
         let htmlContent = '';
 

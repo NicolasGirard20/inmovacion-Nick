@@ -44,6 +44,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           throw new Error("Tu cuenta está inactiva. Contacta a un administrador.");
         }
 
+        if (!user.emailVerified) {
+          throw new Error("Por favor, revisa la verificación de correo electrónico");
+        }
+
         return user;
       },
     }),

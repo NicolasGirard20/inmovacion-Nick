@@ -23,10 +23,11 @@ export const loginAction = async (values: z.infer<typeof loginSchema>) => {
     });
     return { success: true };
   } catch (error) {
+    console.error('[loginAction]', error);
     if (error instanceof AuthError) {
       return { error: error.cause?.err?.message };
     }
-    return { error: 'Error 500' };
+    return { error: 'Ocurrió un error inesperado. Intenta nuevamente más tarde.' };
   }
 };
 

@@ -121,7 +121,7 @@ model Cliente {
   descripcion     String?           @db.Text
   activo          Boolean           @default(true)
 
-  tiposCliente    ClienteTipo[]   
+  tiposCliente    ClienteTipo[]
 
   inmuebles   Inmueble[]
   contratos_1 Contrato[]   @relation("Cliente1")
