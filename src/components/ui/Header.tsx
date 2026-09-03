@@ -3,7 +3,8 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,8 +16,8 @@ export default function Header() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const titulo = "GBS & Asociados"; // ← este texto lo podés cambiar dinámicamente
-
 
   const modules: [string, string, any][] = [
     ["Clientes", "/clientes", User],
@@ -28,6 +29,15 @@ export default function Header() {
     ["Cobranzas a Clientes", "/cobranzas", DollarSign],
     ["Usuarios", "/usuarios", Users],
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   console.log("Session:", session);
 
@@ -43,42 +53,51 @@ export default function Header() {
   return (
     <>
       <header
-        className="
+        className={`
           sticky top-0 z-50
           w-full
-          border-b shadow-sm
           transition-all duration-300
-        "
+          ${isScrolled ? 'border-b shadow-md' : 'border-b shadow-sm'}
+        `}
         style={{
-          background: 'linear-gradient(to right, rgba(99,186,233,0.05), rgba(252,194,56,0.05), transparent)',
+          background: isScrolled 
+            ? 'rgba(255, 255, 255, 0.95)' 
+            : 'linear-gradient(to right, rgba(99,186,233,0.05), rgba(252,194,56,0.05), transparent)',
           backdropFilter: 'blur(8px)',           // ← mantiene el efecto vidrio
           WebkitBackdropFilter: 'blur(8px)',
-          borderColor: '#e5e7eb',
+          borderColor: isScrolled ? '#e5e7eb' : 'rgba(229, 231, 235, 0.5)',
         }}
       >
-        <div className="px-8 py-4 flex justify-between items-center">
+        <div className="px-6 sm:px-8 py-3.5 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push("/")}
-              className="p-2 rounded-xl transition-all duration-200"
-              style={{ backgroundColor: '#e8f6fc' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#d8eef9';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#e8f6fc';
-              }}
+              className="flex items-center gap-3 group focus:outline-none transition-all duration-200 text-left rounded-xl p-1 -ml-1 hover:bg-slate-100/60"
+              title="GBS & Asociados - Ir al inicio"
             >
-              <Home className="w-6 h-6" style={{ color: '#63bae9' }} />
+              {/* Contenedor del Logo con relación de aspecto proporcional */}
+              <div className="relative h-11 w-10 sm:h-12 sm:w-11 flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
+                <Image
+                  src="/logo.png"
+                  alt="Logo GBS & Asociados"
+                  fill
+                  sizes="(max-width: 640px) 40px, 44px"
+                  className="object-contain drop-shadow-sm"
+                  priority
+                />
+              </div>
+
+              {/* Título de la marca y subtítulo institucional */}
+              <div className="flex flex-col justify-center">
+                <span className="text-lg sm:text-xl font-bold tracking-tight text-[#4a4a4a] group-hover:text-[#2e2e2e] transition-colors leading-tight">
+                  {titulo}
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-medium tracking-wide text-[#8a8a8a] hidden xs:block">
+                  Estudio Jurídico e Inmobiliario
+                </span>
+              </div>
             </button>
-
-            <span className="text-xl font-bold" style={{ color: '#686363' }}>
-              {titulo}
-            </span>
           </div>
-
-
-          
 
           <div className="flex items-center gap-3">
             {session ? (
@@ -173,7 +192,7 @@ export default function Header() {
 
       {session && (
         <div
-          className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl transform transition-all duration-300 z-50 ${
+          className={`fixed top-0 right-0 h-full w-80 bg-gray-50 shadow-2xl transform transition-all duration-300 z-50 ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
           style={{ borderLeft: '1px solid #e5e7eb' }}
