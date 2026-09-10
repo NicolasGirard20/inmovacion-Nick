@@ -1,178 +1,178 @@
-//src/app/page.tsx
 import Header from '@/components/ui/Header';
 import {
-  Search,
-  ArrowRight,
-  Check,
-  Home,
-  Phone,
-  Mail,
-  MapPin,
-  Shield,
-  Clock,
-  Award,
-  Users,
-  Globe,
-  Share2,
-  MessageCircle,
+  Building2, Scale, KeyRound, Handshake, FileText,
+  ShieldCheck, FileSignature, Users, ScrollText, BookOpen,
+  BadgeDollarSign, Home, Clock, Award, MapPin, Check,
+  Phone, Mail, MessageCircle, ArrowRight, Landmark,
+  Gavel, Star, type LucideIcon
 } from 'lucide-react';
 
-const HERO_STATS = [
-  { number: '30+', label: 'Propiedades' },
+type Stat = {
+  number: string;
+  label: string;
+};
+
+type Service = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+};
+
+type Value = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+};
+
+const HERO_STATS: Stat[] = [
+  { number: '30+', label: 'Propiedades gestionadas' },
   { number: '100+', label: 'Clientes satisfechos' },
   { number: '15+', label: 'Años de experiencia' },
   { number: '24hs', label: 'Tiempo de respuesta' },
 ];
 
-const PROPERTY_TYPES = [
-  {
-    icon: Home,
-    title: 'Departamentos en alquiler',
-    desc: 'Monoambientes, 2, 3 y 4 ambientes en Libertador San Martín',
-    features: ['Amoblados', 'Sin garantía', 'Listo para mudarse'],
-    gradient: 'from-brand-primary to-brand-primary-dark',
-  },
-  {
-    icon: Home,
-    title: 'Casas y terrenos',
-    desc: 'Con jardín, parrilla, terraza o pileta en Entre Ríos',
-    features: ['Zonas exclusivas', 'Amplios espacios', 'Excelente ubicación'],
-    gradient: 'from-brand-accent to-[#e6af32]',
-  },
-  {
-    icon: Home,
-    title: 'Propiedades en venta',
-    desc: 'Departamentos, casas y oportunidades únicas en la región',
-    features: ['Financiación', 'Escrituración', 'Asesoramiento legal'],
-    gradient: 'from-brand-primary-dark to-brand-primary',
-  },
+const INMOBILIARIA_SERVICES: Service[] = [
+  { icon: KeyRound, title: 'Alquileres', desc: 'Departamentos monoambientes, 2, 3 y 4 ambientes' },
+  { icon: Handshake, title: 'Ventas', desc: 'Casas, departamentos y terrenos en la región' },
+  { icon: Building2, title: 'Administración', desc: 'Gestión integral de propiedades y consorcios' },
+  { icon: BadgeDollarSign, title: 'Tasaciones', desc: 'Valoración profesional de tu propiedad' },
 ];
 
-const WHY_US = [
+const ABOGACIA_SERVICES: Service[] = [
+  { icon: Scale, title: 'Derecho Civil', desc: 'Contratos, obligaciones y responsabilidad civil' },
+  { icon: FileSignature, title: 'Contratos Inmobiliarios', desc: 'Redacción, revisión y ejecución contractual' },
+  { icon: ScrollText, title: 'Sucesiones', desc: 'Tramitación integral de sucesiones y testamentos' },
+  { icon: Users, title: 'Derecho de Familia', desc: 'Divorcios, alimentos, régimen patrimonial' },
+];
+
+const VALUES: Value[] = [
   { icon: MapPin, title: 'Conocimiento local', desc: 'Expertos en el mercado de Entre Ríos' },
-  { icon: Shield, title: 'Seguridad garantizada', desc: 'Trámites verificados y seguros' },
+  { icon: ShieldCheck, title: 'Seguridad jurídica', desc: 'Asesoramiento legal en cada operación' },
   { icon: Clock, title: 'Respuesta rápida', desc: 'Atención en menos de 24 horas' },
-  { icon: Award, title: 'Profesionalismo', desc: 'Asesoramiento especializado' },
-  { icon: Users, title: 'Atención personalizada', desc: 'Servicio adaptado a tus necesidades' },
-  { icon: Check, title: 'Propiedades verificadas', desc: 'Todas nuestras propiedades están validadas' },
-  { icon: Home, title: 'Múltiples garantías', desc: 'Aceptamos diferentes tipos de garantía' },
-  { icon: Phone, title: 'Soporte continuo', desc: 'Estamos disponibles cuando nos necesites' },
+  { icon: Star, title: 'Calidad garantizada', desc: 'Servicio profesional certificado' },
+  { icon: Users, title: 'Atención personalizada', desc: 'Soluciones a medida para cada cliente' },
+  { icon: Award, title: 'Trayectoria', desc: 'Más de 15 años en el mercado regional' },
 ];
 
-const CONTACT_METHODS = [
-  {
-    href: 'tel:03447123456',
-    icon: Phone,
-    iconBg: 'bg-sky-500',
-    iconColor: 'text-white',
-    title: '03447-123456',
-    subtitle: 'Lun a Vie • 9 a 18 hs',
-    subtitle2: 'Sáb • 9 a 13 hs',
-  },
-  {
-    href: 'https://wa.me/5491123456789',
-    icon: MessageCircle,
-    iconBg: 'bg-green-500',
-    iconColor: 'text-white',
-    title: 'WhatsApp',
-    subtitle: 'Respuesta inmediata',
-    subtitle2: '24/7 disponible',
-    external: true,
-  },
-  {
-    href: 'mailto:info@libertadorsanmartin.com.ar',
-    icon: Mail,
-    iconBg: 'bg-brand-accent/20',
-    iconColor: 'text-brand-accent',
-    title: 'Email',
-    subtitle: 'info@libertadorsanmartin.com.ar',
-    subtitle2: null,
-  },
-];
-
-function HeroSection() {
+function HeroSplitSection() {
   return (
-    <section className="relative text-white overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/InsideGBS.jpeg')" }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2e2e2e]/90 via-[#3d3d3d]/85 to-black/80" aria-hidden="true" />
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-white/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-72 h-72 bg-white/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32">
-        <div className="text-center">
-          <div className="inline-block mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <p className="text-sm font-medium tracking-wide">INMOBILIARIA EN ENTRE RÍOS</p>
+    <section className="relative overflow-hidden">
+      <div className="grid md:grid-cols-2 min-h-[90vh]">
+        {/* Inmobiliaria */}
+        <div className="relative flex items-center justify-center p-8 md:p-16 min-h-[50vh] md:min-h-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/InsideGBS.jpeg')" }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2e2e2e]/85 via-[#3d3d3d]/80 to-[#4a4a4a]/85" aria-hidden="true" />
+          <div className="absolute inset-0" aria-hidden="true">
+            <div className="absolute top-10 right-10 w-64 h-64 bg-[#63bae9]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-shadow text-brand-accent">
-            GBS y Asociados
-          </h1>
+          <div className="relative text-center md:text-left z-10 max-w-lg">
+            <div className="inline-block mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in-up">
+              <p className="text-xs font-semibold tracking-[0.2em] text-[#fcc238] uppercase">Inmobiliaria</p>
+            </div>
 
-          <p className="text-lg md:text-xl font-light mb-8 max-w-3xl mx-auto opacity-95">
-            Especialistas en alquileres, ventas y administración de propiedades
-          </p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight animate-fade-in-up delay-100">
+              Tu próximo<br />hogar te espera
+            </h2>
 
-          <p className="text-2xl md:text-3xl font-semibold mb-12 text-shadow">
-            Tu próximo hogar te está esperando
-          </p>
+            <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed animate-fade-in-up delay-200">
+              Especialistas en alquileres, ventas y administración de propiedades en Libertador San Martín y toda la región.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <a
-              href="#propiedades"
-              className="group inline-flex items-center gap-3 px-8 py-4 btn-primary text-white font-semibold text-lg rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              <Search className="w-5 h-5" />
-              Buscar propiedades
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <ul className="space-y-2 mb-8 animate-fade-in-up delay-300">
+              {['Departamentos amoblados sin garantía', 'Casas con jardín y espacios amplios', 'Propiedades verificadas y financiables'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-sm text-white/70">
+                  <Check className="w-4 h-4 text-[#fcc238] flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
 
-            <a
-              href="#contacto"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold text-lg rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              <Phone className="w-5 h-5" />
-              Contactar asesor
-            </a>
-          </div>
-
-          {/* Search bar mockup */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <div className="flex gap-2 p-2 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <input
-                type="text"
-                placeholder="Buscar por dirección, ciudad o código postal..."
-                className="flex-1 px-4 py-3 bg-transparent text-white placeholder-white/60 focus:outline-none"
-                aria-label="Buscar propiedades"
-              />
-              <select
-                className="px-4 py-2 bg-white/10 text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-white/30 border border-white/20"
-                aria-label="Tipo de propiedad"
+            <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up delay-400">
+              <a
+                href="#servicios"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#fcc238] text-[#2e2e2e] font-bold rounded-xl hover:bg-[#e6af32] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
-                <option value="">Todos los tipos</option>
-                <option value="alquiler">Alquiler</option>
-                <option value="venta">Venta</option>
-              </select>
-              <button
-                className="px-6 py-3 bg-white text-brand-primary font-semibold rounded-xl hover:bg-white/90 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
-                aria-label="Buscar"
+                <Building2 className="w-5 h-5" />
+                Explorar propiedades
+              </a>
+              <a
+                href="#contacto"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
               >
-                <Search className="w-5 h-5" />
-              </button>
+                <Phone className="w-5 h-5" />
+                Contactar asesor
+              </a>
             </div>
           </div>
+        </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        {/* Abogacía */}
+        <div className="relative flex items-center justify-center p-8 md:p-16 min-h-[50vh] md:min-h-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/FrontGBS.jpeg')" }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a]/90 via-[#2e2e2e]/85 to-[#3d3d3d]/80" aria-hidden="true" />
+          <div className="absolute inset-0" aria-hidden="true">
+            <div className="absolute bottom-10 left-10 w-64 h-64 bg-[#fcc238]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
+          </div>
+
+          <div className="relative text-center md:text-left z-10 max-w-lg">
+            <div className="inline-block mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in-up">
+              <p className="text-xs font-semibold tracking-[0.2em] text-[#63bae9] uppercase">Estudio Jurídico</p>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight animate-fade-in-up delay-100">
+              Tus derechos<br />primero
+            </h2>
+
+            <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed animate-fade-in-up delay-200">
+              Asesoramiento legal integral con enfoque en derecho civil, contratos inmobiliarios, sucesiones y derecho de familia.
+            </p>
+
+            <ul className="space-y-2 mb-8 animate-fade-in-up delay-300">
+              {['Derecho civil y comercial con excelencia', 'Contratos inmobiliarios transparentes', 'Acompañamiento en cada paso del proceso'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-sm text-white/70">
+                  <Check className="w-4 h-4 text-[#63bae9] flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up delay-400">
+              <a
+                href="#servicios"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#63bae9] text-white font-bold rounded-xl hover:bg-[#4ca8d8] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              >
+                <Gavel className="w-5 h-5" />
+                Ver servicios legales
+              </a>
+              <a
+                href="#contacto"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Consulta gratuita
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Bar */}
+      <div className="relative bg-[#2e2e2e] border-t border-white/10">
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {HERO_STATS.map((stat, i) => (
-              <div key={i} className="text-center">
-                <p className="text-3xl font-bold mb-1">{stat.number}</p>
-                <p className="text-sm opacity-90">{stat.label}</p>
+              <div key={i} className="text-center animate-fade-in-up" style={{ animationDelay: `${(i + 5) * 100}ms` }}>
+                <p className="text-2xl md:text-3xl font-bold text-[#fcc238] mb-1">{stat.number}</p>
+                <p className="text-sm text-white/70">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -182,191 +182,128 @@ function HeroSection() {
   );
 }
 
-function PropertyTypesSection() {
+function DualServicesSection() {
   return (
-    <section id="propiedades" className="relative py-20 overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        // style={{ backgroundImage: "url('/images/property-types.jpg')" }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-white/90" aria-hidden="true" />
-      <div className="relative max-w-6xl mx-auto px-6">
+    <section id="servicios" className="py-20 md:py-28 bg-[#f8f9fa]">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-brand-text">
-            ¿Qué estás buscando?
+          <div className="inline-block mb-4 px-4 py-1.5 bg-white rounded-full border border-gray-200 shadow-sm">
+            <p className="text-xs font-semibold tracking-[0.15em] text-[#969696] uppercase">Nuestra experiencia</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#2e2e2e] mb-4">
+            Dos especialidades,<br className="md:hidden" /> un mismo compromiso
           </h2>
-          <p className="text-xl text-brand-text-muted max-w-2xl mx-auto">
-            Encontrá la propiedad perfecta para vos
+          <p className="text-lg text-[#686363] max-w-2xl mx-auto">
+            Integramos servicios inmobiliarios y legales para brindarte soluciones completas y seguras.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {PROPERTY_TYPES.map((item, i) => (
-            <div
-              key={i}
-              className="card-hover p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-brand-primary/30"
-            >
-              <div className={`w-16 h-16 mb-6 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}>
-                <item.icon className="w-8 h-8 text-white" />
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          {/* Inmobiliaria Card */}
+          <div className="group bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#63bae9]/20 to-[#63bae9]/5 flex items-center justify-center">
+                <Building2 className="w-7 h-7 text-[#63bae9]" />
               </div>
-
-              <h3 className="text-2xl font-bold mb-3 text-brand-text">
-                {item.title}
-              </h3>
-
-              <p className="text-brand-text-muted mb-6 leading-relaxed">{item.desc}</p>
-
-              <ul className="space-y-2">
-                {item.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-sm text-brand-text">
-                    <Check className="w-4 h-4 text-brand-primary flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <span className="text-xs font-semibold tracking-[0.15em] text-[#63bae9] uppercase">División</span>
+                <h3 className="text-2xl font-bold text-[#2e2e2e]">Inmobiliaria</h3>
+              </div>
             </div>
-          ))}
-        </div>
 
-        <div className="text-center mt-12">
-          <a
-            href="/propiedades"
-            className="inline-flex items-center gap-3 px-8 py-4 btn-secondary text-brand-text font-semibold text-lg rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
-          >
-            Ver todas las propiedades disponibles
-            <ArrowRight className="w-5 h-5" />
-          </a>
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+              {INMOBILIARIA_SERVICES.map((service, i) => (
+                <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#63bae9]/20 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
+                    <service.icon className="w-5 h-5 text-[#63bae9]" />
+                  </div>
+                  <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
+                  <p className="text-sm text-[#686363]">{service.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="/propiedades"
+              className="inline-flex items-center gap-2 text-[#63bae9] font-semibold hover:text-[#4ca8d8] transition-colors group/link"
+            >
+              Ver todas las propiedades
+              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+            </a>
+          </div>
+
+          {/* Abogacía Card */}
+          <div className="group bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fcc238]/20 to-[#fcc238]/5 flex items-center justify-center">
+                <Scale className="w-7 h-7 text-[#fcc238]" />
+              </div>
+              <div>
+                <span className="text-xs font-semibold tracking-[0.15em] text-[#fcc238] uppercase">División</span>
+                <h3 className="text-2xl font-bold text-[#2e2e2e]">Abogacía</h3>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+              {ABOGACIA_SERVICES.map((service, i) => (
+                <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#fcc238]/20 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
+                    <service.icon className="w-5 h-5 text-[#fcc238]" />
+                  </div>
+                  <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
+                  <p className="text-sm text-[#686363]">{service.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="#contacto"
+              className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link"
+            >
+              Solicitar asesoramiento legal
+              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function WhyChooseUsSection() {
+function ValuesSection() {
   return (
-    <section className="relative py-20 overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/why-us.jpg')" }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-white/85 backdrop-blur-sm" aria-hidden="true" />
+    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#63bae9]/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#fcc238]/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
+      </div>
+
       <div className="relative max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-brand-text">
-            ¿Por qué elegirnos?
+          <div className="inline-block mb-4 px-4 py-1.5 bg-[#f8f9fa] rounded-full border border-gray-200">
+            <p className="text-xs font-semibold tracking-[0.15em] text-[#969696] uppercase">Por qué GBS</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#2e2e2e] mb-4">
+            La diferencia GBS
           </h2>
-          <p className="text-xl text-brand-text-muted max-w-2xl mx-auto">
-            Trabajamos para hacer realidad tu proyecto inmobiliario
+          <p className="text-lg text-[#686363] max-w-2xl mx-auto">
+            Más de 15 años combinando experiencia inmobiliaria con respaldo jurídico.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {WHY_US.map((item, i) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {VALUES.map((value, i) => (
             <div
               key={i}
-              className="flex flex-col items-center text-center p-6 bg-gray-50/50 rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 border border-transparent hover:border-brand-primary/20"
+              className="group p-6 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:bg-white hover:shadow-lg hover:border-[#fcc238]/30 transition-all duration-300"
             >
-              <div className="w-14 h-14 mb-4 rounded-full bg-brand-primary/10 flex items-center justify-center">
-                <item.icon className="w-7 h-7 text-brand-primary" />
+              <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <value.icon className="w-6 h-6 text-[#686363] group-hover:text-[#63bae9] transition-colors duration-300" />
               </div>
-              <h3 className="font-bold text-lg mb-2 text-brand-text">{item.title}</h3>
-              <p className="text-sm text-brand-text-muted">{item.desc}</p>
+              <h3 className="text-lg font-bold text-[#2e2e2e] mb-2">{value.title}</h3>
+              <p className="text-sm text-[#686363] leading-relaxed">{value.desc}</p>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function LocalKnowledgeSection() {
-  return (
-    <section className="relative py-20 overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/FrontGBS.jpeg')" }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-[#5a5a5a]/10" aria-hidden="true" />
-      <div className="relative max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-brand-text">
-              Conocemos Entre Ríos como nadie
-            </h2>
-
-            <p className="text-lg text-brand-text mb-8 leading-relaxed">
-              Somos una inmobiliaria con raíces profundas en Libertador San Martín y toda la provincia de Entre Ríos.
-              Nuestro conocimiento del mercado local nos permite ofrecerte las mejores opciones según tus necesidades.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
-                <div className="w-12 h-12 rounded-lg bg-brand-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1 text-brand-text">
-                    Ubicación privilegiada
-                  </h3>
-                  <p className="text-brand-text-muted">
-                    Propiedades en las mejores zonas de Libertador San Martín, Gualeguaychú y alrededores
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
-                <div className="w-12 h-12 rounded-lg bg-brand-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Award className="w-6 h-6 text-brand-accent" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1 text-brand-text">
-                    Compromiso local
-                  </h3>
-                  <p className="text-brand-text-muted">
-                    Trabajamos con propietarios e inquilinos de la región, entendiendo sus necesidades
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-brand-primary to-brand-primary-dark rounded-3xl opacity-10"></div>
-              <div className="relative bg-white rounded-2xl shadow-2xl p-10 border border-gray-100">
-                <div className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-primary-dark flex items-center justify-center shadow-xl">
-                    <Home className="w-14 h-14 text-white" />
-                  </div>
-                  <div className="mb-2">
-                    <span className="text-5xl font-bold gradient-text">+30</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 text-brand-text">
-                    Propiedades gestionadas
-                  </h3>
-                  <p className="text-brand-text-muted">
-                    En Libertador San Martín y la región
-                  </p>
-
-                  <div className="mt-8 pt-8 border-t border-gray-200">
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div>
-                        <p className="text-2xl font-bold text-brand-primary">100%</p>
-                        <p className="text-sm text-brand-text-muted">Verificadas</p>
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-brand-primary">15+</p>
-                        <p className="text-sm text-brand-text-muted">Años</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -375,40 +312,136 @@ function LocalKnowledgeSection() {
 
 function ContactSection() {
   return (
-    <section id="contacto" className="py-20 bg-gradient-to-br from-[#2e2e2e] to-[#1a1a1a] text-white relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
+    <section id="contacto" className="py-20 md:py-28 bg-gradient-to-br from-[#2e2e2e] to-[#1a1a1a] text-white relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5" aria-hidden="true">
+        <div className="absolute top-10 left-1/3 w-80 h-80 bg-[#63bae9] rounded-full mix-blend-multiply filter blur-3xl"></div>
+        <div className="absolute bottom-10 right-1/3 w-80 h-80 bg-[#fcc238] rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
 
-      <div className="relative max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-          ¿Tenés una consulta?
-        </h2>
-        <p className="text-xl mb-12 opacity-90 max-w-2xl mx-auto">
-          Hablá directamente con un asesor. Estamos para ayudarte a encontrar tu próximo hogar.
-        </p>
+      <div className="relative max-w-5xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <p className="text-xs font-semibold tracking-[0.15em] text-[#fcc238] uppercase">Contacto</p>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Hablemos
+          </h2>
+          <p className="text-lg text-white/70 max-w-xl mx-auto">
+            Ya sea para buscar propiedad o asesorarte legalmente, estamos listos para ayudarte.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {CONTACT_METHODS.map((method, i) => (
-            <a
-              key={i}
-              href={method.href}
-              {...(method.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="card-hover p-8 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              <div className={`w-16 h-16 mx-auto mb-4 rounded-xl ${method.iconBg} flex items-center justify-center`}>
-                {typeof method.icon === 'string' ? (
-                  <span className={`text-2xl font-bold ${method.iconColor}`}>{method.icon}</span>
-                ) : (
-                  <method.icon className={`w-8 h-8 ${method.iconColor}`} />
-                )}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="space-y-6">
+            <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 transition-colors">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#63bae9]/20 flex items-center justify-center">
+                  <Building2 className="w-6 h-6 text-[#63bae9]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg">Consultas inmobiliarias</h3>
+                  <p className="text-sm text-white/60">Alquileres, ventas, tasaciones</p>
+                </div>
               </div>
-              <p className="text-2xl font-bold mb-2">{method.title}</p>
-              <p className="text-sm opacity-90">{method.subtitle}</p>
-              {method.subtitle2 && <p className="text-sm opacity-75 mt-1">{method.subtitle2}</p>}
-            </a>
-          ))}
+              <div className="flex gap-3">
+                <a
+                  href="https://wa.me/5491123456789"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white font-semibold rounded-xl hover:bg-[#20BD5A] transition-all"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp
+                </a>
+                <a
+                  href="mailto:inmobiliaria@gbsasociados.com"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
+                >
+                  <Mail className="w-5 h-5" />
+                  Email
+                </a>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 transition-colors">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#fcc238]/20 flex items-center justify-center">
+                  <Gavel className="w-6 h-6 text-[#fcc238]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg">Consultas legales</h3>
+                  <p className="text-sm text-white/60">Derecho civil, contratos, sucesiones</p>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <a
+                  href="https://wa.me/5491123456789"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white font-semibold rounded-xl hover:bg-[#20BD5A] transition-all"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp
+                </a>
+                <a
+                  href="mailto:legal@gbsasociados.com"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
+                >
+                  <Mail className="w-5 h-5" />
+                  Email
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-8 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+            <h3 className="text-xl font-bold mb-6">Información de contacto</h3>
+
+            <div className="space-y-5">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-[#fcc238]" />
+                </div>
+                <div>
+                  <p className="text-sm text-white/60">Teléfono</p>
+                  <a href="tel:03447123456" className="font-semibold hover:text-[#fcc238] transition-colors">03447-123456</a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-[#63bae9]" />
+                </div>
+                <div>
+                  <p className="text-sm text-white/60">Dirección</p>
+                  <p className="font-semibold">Libertador San Martín, Entre Ríos</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-[#fcc238]" />
+                </div>
+                <div>
+                  <p className="text-sm text-white/60">Horarios</p>
+                  <p className="font-semibold">Lun a Vie 9-18hs • Sáb 9-13hs</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <p className="text-sm text-white/60 mb-4">Respuesta garantizada en menos de 24 horas</p>
+              <a
+                href="https://wa.me/5491123456789"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-[#fcc238] text-[#2e2e2e] font-bold rounded-xl hover:bg-[#e6af32] transition-all shadow-lg hover:shadow-xl"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Escribinos por WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -417,59 +450,47 @@ function ContactSection() {
 
 function FooterSection() {
   return (
-    <footer className="bg-brand-text text-white py-12">
+    <footer className="bg-[#1a1a1a] text-white py-12 border-t border-white/5">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">GBS y Asociados</h3>
-            <p className="text-gray-300 mb-4 leading-relaxed">
-              Tu inmobiliaria de confianza en Entre Ríos. Especialistas en alquileres, ventas y administración de propiedades.
+            <h3 className="text-2xl font-bold mb-2">GBS y Asociados</h3>
+            <p className="text-sm text-[#fcc238] font-semibold tracking-wider mb-4">
+              Inmobiliaria & Estudio Jurídico
             </p>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-primary transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
-                aria-label="Sitio web"
-              >
-                <Globe className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-primary transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
-                aria-label="Compartir"
-              >
-                <Share2 className="w-5 h-5" />
-              </a>
-            </div>
+            <p className="text-gray-400 leading-relaxed mb-4 max-w-md">
+              Soluciones integrales en servicios inmobiliarios y legales en Libertador San Martín y toda la provincia de Entre Ríos.
+            </p>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Servicios</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><a href="#" className="hover:text-brand-primary transition-colors">Alquileres</a></li>
-              <li><a href="#" className="hover:text-brand-primary transition-colors">Ventas</a></li>
-              <li><a href="#" className="hover:text-brand-primary transition-colors">Administración</a></li>
-              <li><a href="#" className="hover:text-brand-primary transition-colors">Tasaciones</a></li>
+            <h4 className="text-sm font-bold tracking-wider text-[#969696] uppercase mb-4">Inmobiliaria</h4>
+            <ul className="space-y-2.5 text-gray-400">
+              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Alquileres</a></li>
+              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Ventas</a></li>
+              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Administración</a></li>
+              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Tasaciones</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Ubicación</h4>
-            <p className="text-gray-300 leading-relaxed">
-              Libertador San Martín<br />
-              Entre Ríos<br />
-              Argentina
-            </p>
+            <h4 className="text-sm font-bold tracking-wider text-[#969696] uppercase mb-4">Servicios Legales</h4>
+            <ul className="space-y-2.5 text-gray-400">
+              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Derecho Civil</a></li>
+              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Contratos</a></li>
+              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Sucesiones</a></li>
+              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Familia</a></li>
+            </ul>
           </div>
         </div>
 
-        <div className="h-px bg-white/10 mb-6"></div>
+        <div className="h-px bg-white/5 mb-6"></div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
-          <p>© 2025 GBS y Asociados • Todos los derechos reservados</p>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+          <p>© {new Date().getFullYear()} GBS y Asociados • Todos los derechos reservados</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-brand-primary transition-colors">Términos y Condiciones</a>
-            <a href="#" className="hover:text-brand-primary transition-colors">Política de Privacidad</a>
+            <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
+            <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
           </div>
         </div>
       </div>
@@ -481,11 +502,12 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
-      <HeroSection />
-      <PropertyTypesSection />
-      <WhyChooseUsSection />
-      <LocalKnowledgeSection />
-      <ContactSection />
+      <main className="flex-1">
+        <HeroSplitSection />
+        <DualServicesSection />
+        <ValuesSection />
+        <ContactSection />
+      </main>
       <FooterSection />
     </div>
   );
