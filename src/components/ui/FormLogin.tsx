@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { loginAction } from '@/actions/auth-action';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { 
@@ -55,13 +55,17 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
     setError(null);
     startTransition(async () => {
       try {
-        const response = await loginAction(values);
-        if (response.error) {
-          setError(response.error);
-        } else {
-          setTimeout(() => {
-            router.push('./');
-          }, 500);
+        const response = await signIn('credentials', {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
+        
+        if (response?.error) {
+          setError('Credenciales inválidas o cuenta no verificada');
+        } else if (response?.ok) {
+          // Hard redirect para asegurar recarga total de la sesión y cookies en cliente
+          window.location.href = '/';
         }
       } catch (err) {
         setError('Error de conexión. Por favor, intenta nuevamente.');
@@ -260,7 +264,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-[#969696]">
-          <p>© 2025 GBS y Asociados. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} GBS y Asociados. Todos los derechos reservados.</p>
         </div>
       </div>
     </div>

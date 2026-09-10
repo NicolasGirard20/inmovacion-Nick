@@ -12,7 +12,7 @@ import { Menu, User, Home, CreditCard, FileText, FileSignature, Settings, Dollar
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +38,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  console.log("Session:", session);
 
   const handleUserSettingsClick = () => {
     if (session?.user) {
@@ -100,7 +98,9 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-3">
-            {session ? (
+            {status === "loading" ? (
+              <div className="h-9 w-28 bg-slate-200/60 animate-pulse rounded-lg" />
+            ) : session ? (
               <>
                 <Button
                   variant="outline"
@@ -151,7 +151,7 @@ export default function Header() {
               </>
             ) : (
               <Button
-                onClick={() => signIn()}
+                onClick={() => router.push("/login")}
                 className="font-semibold transition-all duration-200 rounded-lg shadow-sm hover:shadow-md text-white"
                 style={{ backgroundColor: '#63bae9' }}
                 onMouseEnter={(e) => {

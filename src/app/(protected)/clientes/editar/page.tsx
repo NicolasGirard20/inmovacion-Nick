@@ -142,7 +142,7 @@ export default function EditarClientePage() {
     tipoDocumentoId: cliente.tipoDocumentoId || "",
     numeroDocumento: cliente.numero_documento || "",
     tipoClienteIds: cliente.tiposCliente
-      ? cliente.tiposCliente.map((tc: any) => tc.id_tipo_cliente)
+      ? cliente.tiposCliente.map((tc: any) => String(tc.tipoClienteId ?? tc.tipoCliente?.id_tipo_cliente))
       : [],
     descripcion: cliente.descripcion || "",
   };
