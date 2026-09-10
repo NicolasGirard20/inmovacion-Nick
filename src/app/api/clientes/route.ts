@@ -82,18 +82,6 @@ export async function POST(req: Request) {
       }
     }
 
-    if (body.tiposClienteId) {
-      const exists = await db.tipoCliente.findUnique({
-        where: { id_tipo_cliente: Number(body.tiposClienteId) },
-      });
-      if (!exists) {
-        return NextResponse.json(
-          { error: "El tipo de cliente seleccionado no existe." },
-          { status: 400 }
-        );
-      }
-    }
-
     // ==== Crear cliente ====
     const cliente = await db.cliente.create({
   data: {

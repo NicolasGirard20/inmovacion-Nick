@@ -163,9 +163,11 @@ export default function ClienteForm({
     defaultValues: {
       ...initialData,
       tipoClienteIds:
-        initialData?.tiposCliente?.map((tc: any) =>
-          String(tc.tipoClienteId)
-        ) || [],
+        initialData?.tipoClienteIds?.length
+          ? initialData.tipoClienteIds.map(String)
+          : initialData?.tiposCliente?.map((tc: any) =>
+              String(tc.tipoClienteId ?? tc.tipoCliente?.id_tipo_cliente)
+            ) || [],
     },
   });
 

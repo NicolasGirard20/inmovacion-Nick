@@ -3,6 +3,7 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { QueryProvider } from "@/providers/QueryProvider";
+import { auth } from "../../auth";
 import { Inter, Crimson_Pro } from "next/font/google";
 
 const inter = Inter({
@@ -17,7 +18,9 @@ const crimsonPro = Crimson_Pro({
   display: "swap",
 });
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const session = await auth();
+
   return (
     <html lang="es">
       <body
@@ -26,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           fontFamily: "var(--font-inter), sans-serif",
         }}
       >
-        <SessionProvider>
+        <SessionProvider session={session}>
           <QueryProvider>
             {children}
           </QueryProvider>

@@ -93,7 +93,7 @@ export default function ClientesPage() {
           return c.telefono?.toLowerCase().includes(term);
         case "tipoCliente":
           return c.tiposCliente?.some((tc: any) =>
-            tc.tipoCliente.nombre.toLowerCase().includes(term)
+            (tc.tipoCliente?.nombre ?? tc.nombre)?.toLowerCase().includes(term)
           );
         default:
           return true;
@@ -244,7 +244,8 @@ export default function ClientesPage() {
                     <td className="px-6 py-5">
                       <span className="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-[#63bae9]/15 text-[#63bae9]">
                         {c.tiposCliente?.length > 0
-                          ? c.tiposCliente.map((tc: any) => tc.nombre).join(", ")                          : "Sin tipo"}
+                          ? c.tiposCliente.map((tc: any) => tc.tipoCliente?.nombre ?? tc.nombre).filter(Boolean).join(", ")
+                          : "Sin tipo"}
                       </span>
                     </td>
 

@@ -1,8 +1,8 @@
 {
   "project_name": "inmovacion-Nick",
-  "generated_at": "2026-08-31T22:48:47.875983Z",
-  "total_files": 193,
-  "total_symbols": 4525,
+  "generated_at": "2026-09-06T21:25:01.710590Z",
+  "total_files": 194,
+  "total_symbols": 4527,
   "architecture": {
     "entry_points": [
       "src/lib/supabase/server.ts",
@@ -133,10 +133,10 @@
       "size_lines": 8,
       "summary": "Archivo .ts",
       "imports": [
-        "./.next/types/routes.d.ts",
-        "./.next/types/root-params.d.ts",
-        "./.next/types/routes.d.ts",
-        "./.next/types/root-params.d.ts"
+        "./.next/dev/types/routes.d.ts",
+        "./.next/dev/types/root-params.d.ts",
+        "./.next/dev/types/routes.d.ts",
+        "./.next/dev/types/root-params.d.ts"
       ],
       "exports": [],
       "classes": [],
@@ -1944,6 +1944,28 @@
           "name": "DashBoardPage",
           "line": 8,
           "is_async": true,
+          "docstring": null
+        }
+      ],
+      "complexity": "low"
+    },
+    {
+      "path": "src/app/(protected)/loading.tsx",
+      "language": "tsx",
+      "size_lines": 6,
+      "summary": "Funciones: ProtectedLoading",
+      "imports": [
+        "@/components/ui/Loading"
+      ],
+      "exports": [
+        "ProtectedLoading"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProtectedLoading",
+          "line": 3,
+          "is_async": false,
           "docstring": null
         }
       ],
@@ -4777,7 +4799,7 @@
     {
       "path": "src/app/globals.css",
       "language": "unknown",
-      "size_lines": 258,
+      "size_lines": 261,
       "summary": "Archivo unknown",
       "imports": [],
       "exports": [],
@@ -4788,12 +4810,13 @@
     {
       "path": "src/app/layout.tsx",
       "language": "tsx",
-      "size_lines": 19,
+      "size_lines": 38,
       "summary": "Funciones: RootLayout",
       "imports": [
         "./globals.css",
         "next-auth/react",
         "@/providers/QueryProvider",
+        "next/font/google",
         "./globals.css"
       ],
       "exports": [
@@ -4803,17 +4826,17 @@
       "functions": [
         {
           "name": "RootLayout",
-          "line": 6,
+          "line": 20,
           "is_async": false,
           "docstring": null
         }
       ],
-      "complexity": "low"
+      "complexity": "medium"
     },
     {
       "path": "src/app/page.tsx",
       "language": "tsx",
-      "size_lines": 470,
+      "size_lines": 495,
       "summary": "Funciones: HeroSection, PropertyTypesSection, WhyChooseUsSection, LocalKnowledgeSection, ContactSection",
       "imports": [
         "@/components/ui/Header",
@@ -4826,43 +4849,43 @@
       "functions": [
         {
           "name": "HeroSection",
-          "line": 92,
+          "line": 93,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "PropertyTypesSection",
-          "line": 178,
+          "line": 185,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "WhyChooseUsSection",
-          "line": 233,
+          "line": 246,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "LocalKnowledgeSection",
-          "line": 265,
+          "line": 284,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "ContactSection",
-          "line": 351,
+          "line": 376,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "FooterSection",
-          "line": 393,
+          "line": 418,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "App",
-          "line": 455,
+          "line": 480,
           "is_async": false,
           "docstring": null
         }
@@ -5528,9 +5551,10 @@
     {
       "path": "src/components/ui/Header.tsx",
       "language": "tsx",
-      "size_lines": 278,
-      "summary": "Funciones: Header, handleUserSettingsClick",
+      "size_lines": 297,
+      "summary": "Funciones: Header, handleScroll, handleUserSettingsClick",
       "imports": [
+        "next/image",
         "next-auth/react",
         "next/navigation",
         "@/components/ui/button",
@@ -5544,13 +5568,19 @@
       "functions": [
         {
           "name": "Header",
-          "line": 13,
+          "line": 14,
+          "is_async": false,
+          "docstring": null
+        },
+        {
+          "name": "handleScroll",
+          "line": 34,
           "is_async": false,
           "docstring": null
         },
         {
           "name": "handleUserSettingsClick",
-          "line": 34,
+          "line": 44,
           "is_async": false,
           "docstring": null
         }
@@ -5560,10 +5590,11 @@
     {
       "path": "src/components/ui/Loading.tsx",
       "language": "tsx",
-      "size_lines": 68,
+      "size_lines": 88,
       "summary": "Archivo .tsx",
       "imports": [
-        "react"
+        "react",
+        "next/image"
       ],
       "exports": [
         "Loading"
@@ -34505,6 +34536,7 @@
     "src/app/api/operaciones/route.ts": [],
     "src/app/api/cobranzas/route.ts": [],
     "src/app/api/cobranzas/[id]/route.ts": [],
+    "src/app/(protected)/loading.tsx": [],
     "src/app/(protected)/admin/page.tsx": [],
     "src/app/(protected)/pagos/page.tsx": [],
     "src/app/(protected)/pagos/[id]/page.tsx": [],
