@@ -1,10 +1,12 @@
+import Image from 'next/image';
 import Header from '@/components/ui/Header';
+import HowWeWork from '@/components/ui/HowWeWork';
 import {
   Building2, Scale, KeyRound, Handshake, FileText,
   ShieldCheck, FileSignature, Users, ScrollText, BookOpen,
-  BadgeDollarSign, Home, Clock, Award, MapPin, Check,
-  Phone, Mail, MessageCircle, ArrowRight, Landmark,
-  Gavel, Star, type LucideIcon
+  BadgeDollarSign, Home, Clock, Award, MapPin,
+  Mail, ArrowRight, Landmark,
+  Phone, MessageCircle, Gavel, Star, type LucideIcon
 } from 'lucide-react';
 
 type Stat = {
@@ -54,141 +56,103 @@ const VALUES: Value[] = [
   { icon: Award, title: 'Trayectoria', desc: 'Más de 15 años en el mercado regional' },
 ];
 
-function HeroSplitSection() {
+function HeroUnifiedSection() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="grid md:grid-cols-2 min-h-[90vh]">
-        {/* Inmobiliaria */}
-        <div className="relative flex items-center justify-center p-8 md:p-16 min-h-[50vh] md:min-h-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/images/InsideGBS.jpeg')" }}
-            aria-hidden="true"
+    <section className="relative overflow-hidden min-h-screen flex flex-col">
+      {/* Imagen de fondo */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/FrontGBS.jpeg"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a]/50 via-[#2e2e2e]/40 to-[#3d3d3d]/50" aria-hidden="true" />
+      </div>
+
+      {/* Logo esquina superior derecha */}
+      <div className="absolute top-6 right-6 z-20">
+        <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-xl overflow-hidden shadow-lg" style={{ backgroundColor: '#ffffff' }}>
+          <Image
+            src="/logo.png"
+            alt="GBS & Asociados"
+            fill
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#2e2e2e]/85 via-[#3d3d3d]/80 to-[#4a4a4a]/85" aria-hidden="true" />
-          <div className="absolute inset-0" aria-hidden="true">
-            <div className="absolute top-10 right-10 w-64 h-64 bg-[#63bae9]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
-          </div>
-
-          <div className="relative text-center md:text-left z-10 max-w-lg">
-            <div className="inline-block mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in-up">
-              <p className="text-xs font-semibold tracking-[0.2em] text-[#fcc238] uppercase">Inmobiliaria</p>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight animate-fade-in-up delay-100">
-              Tu próximo<br />hogar te espera
-            </h2>
-
-            <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed animate-fade-in-up delay-200">
-              Especialistas en alquileres, ventas y administración de propiedades en Libertador San Martín y toda la región.
-            </p>
-
-            <ul className="space-y-2 mb-8 animate-fade-in-up delay-300">
-              {['Departamentos amoblados sin garantía', 'Casas con jardín y espacios amplios', 'Propiedades verificadas y financiables'].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-white/70">
-                  <Check className="w-4 h-4 text-[#fcc238] flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up delay-400">
-              <a
-                href="#servicios"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#fcc238] text-[#2e2e2e] font-bold rounded-xl hover:bg-[#e6af32] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                <Building2 className="w-5 h-5" />
-                Explorar propiedades
-              </a>
-              <a
-                href="#contacto"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
-              >
-                <Phone className="w-5 h-5" />
-                Contactar asesor
-              </a>
-            </div>
-          </div>
         </div>
+      </div>
 
-        {/* Abogacía */}
-        <div className="relative flex items-center justify-center p-8 md:p-16 min-h-[50vh] md:min-h-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/images/FrontGBS.jpeg')" }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a]/90 via-[#2e2e2e]/85 to-[#3d3d3d]/80" aria-hidden="true" />
-          <div className="absolute inset-0" aria-hidden="true">
-            <div className="absolute bottom-10 left-10 w-64 h-64 bg-[#fcc238]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
-          </div>
+      {/* Glow decorativo */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-[#fcc238]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-[#63bae9]/10 rounded-full mix-blend-overlay filter blur-3xl"></div>
+      </div>
 
-          <div className="relative text-center md:text-left z-10 max-w-lg">
-            <div className="inline-block mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in-up">
-              <p className="text-xs font-semibold tracking-[0.2em] text-[#63bae9] uppercase">Estudio Jurídico</p>
-            </div>
+      {/* Contenido central */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-6 py-20">
+        <div className="max-w-3xl mx-auto text-center">
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight animate-fade-in-up delay-100">
-              Tus derechos<br />primero
-            </h2>
 
-            <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed animate-fade-in-up delay-200">
-              Asesoramiento legal integral con enfoque en derecho civil, contratos inmobiliarios, sucesiones y derecho de familia.
-            </p>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-4 animate-fade-in-up delay-100 font-serif" style={{ fontFamily: "var(--font-crimson-pro), serif" }}>
+            GBS & Asociados
+          </h1>
 
-            <ul className="space-y-2 mb-8 animate-fade-in-up delay-300">
-              {['Derecho civil y comercial con excelencia', 'Contratos inmobiliarios transparentes', 'Acompañamiento en cada paso del proceso'].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-white/70">
-                  <Check className="w-4 h-4 text-[#63bae9] flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <p className="text-lg md:text-xl text-white font-bold tracking-[0.15em] uppercase mb-4 animate-fade-in-up delay-200">
+            Estudio Jurídico e Inmobiliario
+          </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up delay-400">
-              <a
-                href="#servicios"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#63bae9] text-white font-bold rounded-xl hover:bg-[#4ca8d8] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                <Gavel className="w-5 h-5" />
-                Ver servicios legales
-              </a>
-              <a
-                href="#contacto"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
-              >
-                <MessageCircle className="w-5 h-5" />
-                Consulta gratuita
-              </a>
-            </div>
+          <p className="text-xl md:text-2xl text-white mb-10 leading-relaxed animate-fade-in-up delay-300 font-serif" style={{ fontFamily: "var(--font-crimson-pro), serif" }}>
+            &ldquo;Un espacio donde resolvemos tus problemas&rdquo;
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-400">
+            <a
+              href="#contacto"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#fcc238] text-[#2e2e2e] font-bold rounded-xl hover:bg-[#e6af32] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-lg"
+            >
+              <Building2 className="w-6 h-6" />
+              Consulta Inmobiliaria
+            </a>
+            <a
+              href="#contacto"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#63bae9] text-white font-bold rounded-xl hover:bg-[#4ca8d8] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-lg"
+            >
+              <Scale className="w-6 h-6" />
+              Consulta Legal
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Stats Bar */}
-      <div className="relative bg-[#2e2e2e] border-t border-white/10">
-        <div className="max-w-5xl mx-auto px-6 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {HERO_STATS.map((stat, i) => (
-              <div key={i} className="text-center animate-fade-in-up" style={{ animationDelay: `${(i + 5) * 100}ms` }}>
-                <p className="text-2xl md:text-3xl font-bold text-[#fcc238] mb-1">{stat.number}</p>
-                <p className="text-sm text-white/70">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+      {/* Marquee dentro del hero */}
+      <div className="relative z-10 bg-[#1a1a1a]/80 backdrop-blur-sm py-5">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[...items, ...items, ...items].map((item, i) => (
+            <span key={i} className="mx-6 text-sm font-bold tracking-widest uppercase">
+              <span className="text-[#fcc238]">{item}</span>
+              <span className="text-white/10 mx-6">•</span>
+            </span>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
+const items = [
+  'Alquileres', 'Ventas', 'Administración', 'Tasaciones',
+  'Derecho Civil', 'Contratos', 'Sucesiones', 'Familia',
+  'Monoambientes', '2 Ambientes', 'Casas', 'Terrenos',
+];
+
 function DualServicesSection() {
   return (
-    <section id="servicios" className="py-20 md:py-28 bg-[#f8f9fa]">
+    <section id="servicios" className="py-16 md:py-24 bg-[#f8f9fa]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block mb-4 px-4 py-1.5 bg-white rounded-full border border-gray-200 shadow-sm">
-            <p className="text-xs font-semibold tracking-[0.15em] text-[#969696] uppercase">Nuestra experiencia</p>
+            <p className="text-xs font-semibold tracking-[0.15em] text-[#686363] uppercase">Nuestra experiencia</p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-[#2e2e2e] mb-4">
             Dos especialidades,<br className="md:hidden" /> un mismo compromiso
@@ -200,69 +164,91 @@ function DualServicesSection() {
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Inmobiliaria Card */}
-          <div className="group bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#63bae9]/20 to-[#63bae9]/5 flex items-center justify-center">
-                <Building2 className="w-7 h-7 text-[#63bae9]" />
-              </div>
-              <div>
-                <span className="text-xs font-semibold tracking-[0.15em] text-[#63bae9] uppercase">División</span>
-                <h3 className="text-2xl font-bold text-[#2e2e2e]">Inmobiliaria</h3>
-              </div>
+          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+            <div className="relative h-48 md:h-56 overflow-hidden">
+              <Image
+                src="/images/property-types.jpg"
+                alt="Propiedades inmobiliarias"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              {INMOBILIARIA_SERVICES.map((service, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#63bae9]/20 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
-                    <service.icon className="w-5 h-5 text-[#63bae9]" />
-                  </div>
-                  <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
-                  <p className="text-sm text-[#686363]">{service.desc}</p>
+            <div className="p-8 md:p-10">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#63bae9]/20 to-[#63bae9]/5 flex items-center justify-center">
+                  <Building2 className="w-7 h-7 text-[#63bae9]" />
                 </div>
-              ))}
-            </div>
+                <div>
+                  <span className="text-xs font-semibold tracking-[0.15em] text-[#63bae9] uppercase">División</span>
+                  <h3 className="text-2xl font-bold text-[#2e2e2e]">Inmobiliaria</h3>
+                </div>
+              </div>
 
-            <a
-              href="/propiedades"
-              className="inline-flex items-center gap-2 text-[#63bae9] font-semibold hover:text-[#4ca8d8] transition-colors group/link"
-            >
-              Ver todas las propiedades
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </a>
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                {INMOBILIARIA_SERVICES.map((service, i) => (
+                  <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#63bae9]/20 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
+                      <service.icon className="w-5 h-5 text-[#63bae9]" />
+                    </div>
+                    <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
+                    <p className="text-sm text-[#686363]">{service.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="/propiedades"
+                className="inline-flex items-center gap-2 text-[#63bae9] font-semibold hover:text-[#4ca8d8] transition-colors group/link"
+              >
+                Ver todas las propiedades
+                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
 
           {/* Abogacía Card */}
-          <div className="group bg-white rounded-3xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fcc238]/20 to-[#fcc238]/5 flex items-center justify-center">
-                <Scale className="w-7 h-7 text-[#fcc238]" />
-              </div>
-              <div>
-                <span className="text-xs font-semibold tracking-[0.15em] text-[#fcc238] uppercase">División</span>
-                <h3 className="text-2xl font-bold text-[#2e2e2e]">Abogacía</h3>
-              </div>
+          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+            <div className="relative h-48 md:h-56 overflow-hidden">
+              <Image
+                src="/images/local-knowledge.jpg"
+                alt="Asesoramiento legal"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              {ABOGACIA_SERVICES.map((service, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#fcc238]/20 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
-                    <service.icon className="w-5 h-5 text-[#fcc238]" />
-                  </div>
-                  <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
-                  <p className="text-sm text-[#686363]">{service.desc}</p>
+            <div className="p-8 md:p-10">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fcc238]/20 to-[#fcc238]/5 flex items-center justify-center">
+                  <Scale className="w-7 h-7 text-[#fcc238]" />
                 </div>
-              ))}
-            </div>
+                <div>
+                  <span className="text-xs font-semibold tracking-[0.15em] text-[#fcc238] uppercase">División</span>
+                  <h3 className="text-2xl font-bold text-[#2e2e2e]">Abogacía</h3>
+                </div>
+              </div>
 
-            <a
-              href="#contacto"
-              className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link"
-            >
-              Solicitar asesoramiento legal
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </a>
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                {ABOGACIA_SERVICES.map((service, i) => (
+                  <div key={i} className="p-4 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:border-[#fcc238]/20 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3">
+                      <service.icon className="w-5 h-5 text-[#fcc238]" />
+                    </div>
+                    <h4 className="font-bold text-[#2e2e2e] mb-1">{service.title}</h4>
+                    <p className="text-sm text-[#686363]">{service.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="#contacto"
+                className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link"
+              >
+                Solicitar asesoramiento legal
+                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -278,34 +264,64 @@ function ValuesSection() {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#fcc238]/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-1.5 bg-[#f8f9fa] rounded-full border border-gray-200">
-            <p className="text-xs font-semibold tracking-[0.15em] text-[#969696] uppercase">Por qué GBS</p>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#2e2e2e] mb-4">
-            La diferencia GBS
-          </h2>
-          <p className="text-lg text-[#686363] max-w-2xl mx-auto">
-            Más de 15 años combinando experiencia inmobiliaria con respaldo jurídico.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {VALUES.map((value, i) => (
-            <div
-              key={i}
-              className="group p-6 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:bg-white hover:shadow-lg hover:border-[#fcc238]/30 transition-all duration-300"
-            >
-              <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                <value.icon className="w-6 h-6 text-[#686363] group-hover:text-[#63bae9] transition-colors duration-300" />
-              </div>
-              <h3 className="text-lg font-bold text-[#2e2e2e] mb-2">{value.title}</h3>
-              <p className="text-sm text-[#686363] leading-relaxed">{value.desc}</p>
+        <div className="relative max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-block mb-4 px-4 py-1.5 bg-[#f8f9fa] rounded-full border border-gray-200">
+              <p className="text-xs font-semibold tracking-[0.15em] text-[#686363] uppercase">Por qué GBS</p>
             </div>
-          ))}
+            <h2 className="text-4xl md:text-5xl font-bold text-[#2e2e2e] mb-4">
+              La diferencia GBS
+            </h2>
+            <p className="text-lg text-[#686363] max-w-2xl mx-auto">
+              Más de 15 años combinando experiencia inmobiliaria con respaldo jurídico.
+            </p>
+          </div>
+
+          <div className="relative rounded-3xl overflow-hidden mb-12 h-48 md:h-72">
+            <Image
+              src="/images/why-us.jpg"
+              alt="Oficina GBS & Asociados"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#2e2e2e]/70 via-transparent to-[#2e2e2e]/30" />
+            <div className="absolute inset-0 flex items-center px-8 md:px-16">
+              <div className="max-w-lg">
+                <p className="text-white/80 text-sm md:text-base font-medium tracking-wider uppercase mb-2">Nuestro compromiso</p>
+                <h3 className="text-white text-xl md:text-3xl font-bold leading-tight">
+                  Confianza, experiencia y dedicación en cada servicio
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {VALUES.map((value, i) => (
+              <div
+                key={i}
+                className="group p-6 rounded-2xl bg-[#f8f9fa] border border-gray-100 hover:bg-white hover:shadow-lg hover:border-[#fcc238]/30 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <value.icon className="w-6 h-6 text-[#686363] group-hover:text-[#63bae9] transition-colors duration-300" />
+                </div>
+                <h3 className="text-lg font-bold text-[#2e2e2e] mb-2">{value.title}</h3>
+                <p className="text-sm text-[#686363] leading-relaxed">{value.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats Bar */}
+          <div className="mt-16 bg-[#2e2e2e] py-10 rounded-2xl">
+            <div className="grid grid-cols-2 md:grid-cols-4  gap-6">
+              {HERO_STATS.map((stat, i) => (
+                <div key={i} className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-[#fcc238] mb-1">{stat.number}</p>
+                  <p className="text-sm text-white/70">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
     </section>
   );
 }
@@ -503,7 +519,8 @@ function App() {
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
       <main className="flex-1">
-        <HeroSplitSection />
+        <HeroUnifiedSection />
+        <HowWeWork />
         <DualServicesSection />
         <ValuesSection />
         <ContactSection />
