@@ -9,7 +9,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import Header from "@/components/ui/Header";
 import Loading from "@/components/ui/Loading"; // ✅ AGREGADO
 
 import { Button } from "@/components/ui/button";
@@ -84,7 +83,6 @@ export default function CrearPagoProveedorPage() {
   if (loading)
     return (
       <div className="min-h-screen bg-white font-sans">
-        <Header />
         <Loading message="Cargando formulario de pago..." />
       </div>
     );
@@ -125,8 +123,6 @@ export default function CrearPagoProveedorPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
-
-      <Header />
 
       <div className="container mx-auto p-4 max-w-5xl">
 

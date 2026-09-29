@@ -24,7 +24,6 @@ import {
   CheckCircle, 
   Building 
 } from "lucide-react";
-import Header from "@/components/ui/Header";
 import Modal from '@/components/ui/Modal';
 import { changePassword } from "@/actions/user-actions";
 import { registerSchema } from "@/lib/zod"; // Importa el esquema desde zod.ts
@@ -80,7 +79,6 @@ export default function ChangePasswordPage() {
   if (sessionStatus === "loading") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-        <Header />
         <div className="container mx-auto px-4 py-8 max-w-5xl">
           <div className="space-y-6">
             <Skeleton className="h-10 w-40" />
@@ -148,7 +146,6 @@ export default function ChangePasswordPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      <Header />
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">

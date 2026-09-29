@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Header from "@/components/ui/Header";
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Loading from '@/components/ui/Loading';
@@ -388,8 +388,6 @@ const ErrorMessage = ({ field }: { field: string }) =>
   // ============================
   return (
   <div className="min-h-screen bg-gray-50">
-    <Header />
-
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-5xl mx-auto px-8 py-8 flex items-center gap-6">
         <Button

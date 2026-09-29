@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
-"""Genera coding-rules.json y AGENTS.md skeleton a partir del stack detectado."""
+"""Genera coding-rules.json y DESIGN.md a partir del stack detectado."""
 
 import json
 import os
 import sys
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
 
 
 def generate_coding_rules(stack, project_root):
@@ -66,6 +73,45 @@ def generate_coding_rules(stack, project_root):
         rules["react"]["forms_library"] = "react-hook-form"
         rules["react"]["modals_library"] = "unknown"
         rules["react"]["notifications_library"] = "sonner"
+    elif framework in ("dotnet-mvc", "aspnet-mvc"):
+        rules["csharp"] = {
+            "controllers": "Controllers/*Controller.cs",
+            "models": "Models/*.cs",
+            "views": "Views/{Controller}/{Action}.cshtml",
+            "razor_encoding": "utf-8-sig"
+        }
+        rules["nomenclature"] = {
+            "controllers": "*Controller.cs",
+            "models": "*Model.cs | *ViewModel.cs",
+            "views": "*.cshtml",
+            "folders": "PascalCase",
+            "code_language": "es",
+            "ui_language": "es"
+        }
+        rules["styling"] = {
+            "framework": "bootstrap",
+            "version": "5.3",
+            "ui_library": "bootstrap",
+            "icon_library": "bootstrap-icons-1.11.3",
+            "notifications_library": "sweetalert2"
+        }
+        rules["architecture"] = {
+            "pattern": "MVC (.NET Framework 4.8)",
+            "view_engine": "Razor",
+            "orm": "EntityFramework 6",
+            "controllers_path": "Controllers/",
+            "views_path": "Views/",
+            "models_path": "Models/",
+            "scripts_path": "Scripts/",
+            "content_path": "Content/"
+        }
+        rules["code_quality"] = {
+            "razor_bom_mandatory": True,
+            "lint_before_finish": False,
+            "no_new_deps_without_justification": True
+        }
+        rules.pop("typescript", None)
+        rules.pop("react", None)
 
     if auth:
         rules["security"]["auth_type"] = auth
@@ -83,7 +129,7 @@ def generate_coding_rules(stack, project_root):
     return rules
 
 
-def generate_agents_md(stack, project_root):
+def generate_design_document(stack, project_root):
     framework = stack.get("framework", "unknown")
     styling = stack.get("styling", "unknown")
     ui_lib = stack.get("ui_library", "unknown")
@@ -91,6 +137,60 @@ def generate_agents_md(stack, project_root):
     auth = stack.get("auth", None)
     lang = stack.get("language", "typescript")
     project_name = stack.get("project_name", os.path.basename(project_root))
+
+    if framework in ("dotnet-mvc", "aspnet-mvc"):
+        return f"""# {project_name} — Reglas de Diseño y Arquitectura
+
+> Este documento es la fuente de verdad para cualquier agente o desarrollador que trabaje en este proyecto. Toda regla aquí descrita debe respetarse sin excepción.
+
+---
+
+## 1. Arquitectura del Proyecto
+
+El sistema está desarrollado sobre **ASP.NET MVC (.NET Framework 4.8)** utilizando el motor de vistas **Razor (`.cshtml`)**.
+
+### Estructura de Carpetas
+```
+{_generate_folder_tree(project_root)}
+```
+
+### Capas y Responsabilidades
+1. **Controladores (`Controllers/`)**: Manejan las peticiones HTTP, orquestan la lógica y devuelven vistas Razor o `JsonResult`.
+2. **Modelos y ViewModels (`Models/`)**: Clases de dominio, entidades de Entity Framework y modelos fuertemente tipados para vistas.
+3. **Vistas (`Views/`)**: Vistas Razor (`.cshtml`) organizadas por controlador y vistas parciales compartidas (`Views/Shared/`).
+4. **Recursos Estáticos (`Content/`, `Scripts/`, `Images/`)**: Estilos CSS, scripts del cliente (jQuery, Bootstrap) e imágenes.
+
+---
+
+## 2. Reglas Críticas de Desarrollo
+
+### Codificación Obligatoria: UTF-8 con BOM en Vistas Razor (.cshtml)
+- **OBLIGATORIO**: Todo archivo `.cshtml` DEBE guardarse estrictamente con codificación **UTF-8 con BOM** (`utf-8-sig` / bytes `0xEF, 0xBB, 0xBF`).
+- En .NET Framework sobre IIS, los archivos Razor sin BOM se interpretan por defecto como ANSI (Windows-1252), corrompiendo caracteres con tildes (`á`, `é`, `í`), la `ñ` y signos (`¿`, `¡`).
+- Preferir entidades HTML (`&aacute;`, `&oacute;`, `&ntilde;`, etc.) para blindar textos fijos ante variaciones de encoding.
+
+### Interfaz de Usuario y Componentes Visuales
+- Utilizar exclusivamente **Bootstrap Icons 1.11.3** (`<i class="bi bi-[nombre]"></i>`).
+- Tarjetas de Acción (`.action-card`): bordes redondeados (`border-radius: 16px`), elevación suave y contenedor de ícono con colores semánticos (`.icon-green`, `.icon-purple`, `.icon-amber`, `.icon-blue`).
+- Notificaciones: Usar la función global `ShowAlert(mensaje, tipo)` basada en SweetAlert2.
+- Indicadores de Carga: Usar `ShowLoading()` y `HideLoading()` integrados en `_Layout.cshtml`.
+
+### Seguridad
+- **Prohibido incluir secrets en código o Web.config**: Utilizar `secrets.config` (ignorado en git) referenciado desde `Web.config`: `<appSettings file="secrets.config">`.
+- Usar siempre `@Html.AntiForgeryToken()` en formularios y `[ValidateAntiForgeryToken]` en acciones POST.
+
+---
+
+## 3. Integración con Agentes de IA
+
+| Recurso | Función |
+| :--- | :--- |
+| `.opencode/config.json` | Configuración técnica del agente y triggers |
+| `.agents/init.ps1` / `init.sh` | Inicialización y verificación de estado |
+| `.agents/rules/DESIGN.md` | Guía de diseño visual y patrones de componentes |
+| `.agents/rules/FRONTEND_ENCODING.md` | Regla obligatoria de UTF-8 con BOM |
+| `.agents/skills/project-mapper/` | Mapeo estructurado y filtrado de contexto |
+"""
 
     md = f"""# {project_name} — Reglas de Diseño y Arquitectura
 
@@ -113,7 +213,7 @@ Este proyecto cuenta con un sistema de configuración para agentes de IA. Los si
 ### Flujo de inicio de sesión
 1. El agente lee `.opencode/config.json` para conocer las skills y reglas del proyecto.
 2. Ejecuta `.agents/init.sh` que regenera el mapa del proyecto si es necesario.
-3. Consulta `AGENTS.md` como fuente de verdad para reglas de negocio, stack y convenciones.
+3. Consulta `.agents/rules/DESIGN.md` como fuente de verdad para reglas de negocio, stack y convenciones.
 4. Usa `.agents/rules/coding-rules.json` para validar que los prompts generados respeten las reglas del proyecto.
 5. Antes de enviar prompts críticos, los valida contra `.agents/skills/prompt-toolkit/validator/rules.json`.
 
@@ -194,7 +294,7 @@ npm run lint     # eslint
 
 ## Mantenimiento de este documento
 
-- Actualizar `AGENTS.md` siempre que cambien: estructura de carpetas, stack, convenciones, reglas de seguridad o comandos.
+- Actualizar `.agents/rules/DESIGN.md` siempre que cambien: estructura de carpetas, stack, convenciones, reglas de seguridad o comandos.
 - Reflejar cambios también en `.agents/rules/coding-rules.json`.
 - Si cambian rutas de skills o triggers, actualizar `.opencode/config.json`.
 - Fuente de verdad para cambios estructurales: ejecutar `.agents/init.sh` para regenerar el mapa antes de redactar.
@@ -227,15 +327,25 @@ if __name__ == "__main__":
     stack = json.loads(stack_input) if stack_input.strip() else {}
 
     rules = generate_coding_rules(stack, project_root)
-    agents_md = generate_agents_md(stack, project_root)
+    design_document = generate_design_document(stack, project_root)
 
     rules_dir = os.path.join(project_root, ".agents", "rules")
     os.makedirs(rules_dir, exist_ok=True)
 
-    with open(os.path.join(rules_dir, "coding-rules.json"), "w") as f:
-        json.dump(rules, f, indent=2)
+    with open(os.path.join(rules_dir, "coding-rules.json"), "w", encoding="utf-8") as f:
+        json.dump(rules, f, indent=2, ensure_ascii=False)
     print("coding-rules.json generado")
 
-    with open(os.path.join(project_root, "AGENTS.md"), "w") as f:
-        f.write(agents_md)
-    print("AGENTS.md generado")
+    design_path = os.path.join(rules_dir, "DESIGN.md")
+    if os.path.exists(design_path):
+        print("DESIGN.md ya existe; se conserva")
+    elif os.path.exists(os.path.join(project_root, "AGENTS.md")):
+        with open(os.path.join(project_root, "AGENTS.md"), "r", encoding="utf-8") as source:
+            legacy_document = source.read()
+        with open(design_path, "w", encoding="utf-8") as target:
+            target.write(legacy_document)
+        print("AGENTS.md migrado a DESIGN.md")
+    else:
+        with open(design_path, "w", encoding="utf-8") as f:
+            f.write(design_document)
+        print("DESIGN.md generado")

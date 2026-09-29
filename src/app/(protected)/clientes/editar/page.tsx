@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-import Header from "@/components/ui/Header";
 import Loading from "@/components/ui/Loading"; // ✅ AGREGADO
 
 import { Button } from "@/components/ui/button";
@@ -115,7 +114,6 @@ export default function EditarClientePage() {
   if (loading)
     return (
       <div className="min-h-screen bg-white font-sans">
-        <Header />
         <Loading message="Cargando datos del cliente..." />
       </div>
     );
@@ -123,7 +121,6 @@ export default function EditarClientePage() {
   if (!cliente) {
     return (
       <div className="min-h-screen bg-white font-sans">
-        <Header />
         <p className="p-6 text-red-600">
           No se encontró el cliente o hubo un error.
         </p>
@@ -149,10 +146,6 @@ export default function EditarClientePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
-      <div className="bg-white border-b border-[#969696]/50 w-full">
-        <Header />
-      </div>
-
       <div className="container mx-auto p-4 max-w-5xl">
 
         {/* Volver */}

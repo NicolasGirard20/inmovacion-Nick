@@ -1,5 +1,5 @@
 {
-  "project": "inmovacion-Nick",
+  "project": "inmovacion",
   "typescript": {
     "strict": true,
     "forbid_any": true,
@@ -9,25 +9,29 @@
   "nomenclature": {
     "components": "PascalCase.tsx",
     "services": "camelCase.ts",
-    "pages": "page.tsx | layout.tsx | error.tsx",
+    "pages": "page.tsx | layout.tsx | error.tsx | loading.tsx",
     "folders": "kebab-case",
     "code_language": "en",
     "ui_language": "es"
   },
   "styling": {
     "framework": "tailwindcss",
+    "version": "4",
     "forbid_css_in_js": true,
     "forbid_inline_styles": true,
-    "ui_library": "shadcn/ui",
+    "ui_library": "radix-ui",
     "icon_library": "lucide-react",
-    "chart_library": "recharts"
+    "theme_system": "oklch"
   },
   "architecture": {
+    "framework": "nextjs-app-router",
     "prisma_only_in_services": true,
-    "services_path": "src/services/<dominio>/",
-    "models_path": "src/global/models/index.ts",
-    "validators_path": "src/helpers/validators/",
-    "global_state": "DataContext.tsx",
+    "services_path": "src/actions/",
+    "models_path": "src/types/",
+    "validators_path": "src/lib/zod.ts",
+    "database_client": "src/lib/db.ts",
+    "storage_client": "src/lib/supabase-storage.ts",
+    "global_state": "TanStack React Query + Context API",
     "forbid_new_state_libs": true
   },
   "react": {
@@ -35,13 +39,13 @@
     "use_client_minimal": true,
     "forms_library": "react-hook-form",
     "modals_library": "radix-ui",
-    "notifications_library": "sonner"
+    "notifications_library": "react-hot-toast"
   },
   "security": {
+    "auth_type": "next-auth",
     "forbid_secrets_in_code": true,
     "forbid_passwords_in_logs": true,
     "auth_required_pages": true,
-    "jwt_cookie_name": "user",
     "prisma_prevents_sql_injection": true,
     "validate_inputs_before_persist": true
   },

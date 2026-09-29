@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import RegisterForm from "@/components/ui/RegisterForm"
-import Header from "@/components/ui/Header"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Building, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react"
@@ -42,11 +41,6 @@ export default function NewUserPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white font-sans">
-      {/* Header */}
-      <div className="bg-white border-b border-[#969696]/50 shadow-sm w-full">
-        <Header />
-      </div>
-
       <div className="container mx-auto px-4 py-4 sm:py-6 max-w-5xl">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
@@ -109,7 +103,7 @@ export default function NewUserPage() {
           <RegisterForm
             onSuccess={() => {
               setShowSuccess(true)
-              setTimeout(() => router.push("/usuarios"), 1500)
+              setTimeout(() => router.push("/inicio"), 1500)
             }}
             onError={(message) => setErrorMessage(message)}
             onFormDirtyChange={(isDirty) => setIsFormDirty(isDirty)}

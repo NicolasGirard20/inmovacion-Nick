@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { Save, AlertCircle, FileCheck2, Plus, Trash2, FileSignature, DollarSign, User, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/ui/Header';
+
 import Loading from '@/components/ui/Loading';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Modal from "@/components/ui/Modal";
@@ -415,8 +415,6 @@ const ErrorMessage = ({ field, index }: { field: string; index?: number }) => {
 
  return (
   <div className="min-h-screen bg-gray-50">
-    <Header />
-
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-5xl mx-auto px-8 py-8 flex items-center gap-6">
         <Button

@@ -21,7 +21,7 @@ import { ArrowLeft, Building, Edit, Trash2 } from "lucide-react";
 import { getProveedorById, softDeleteProveedor } from "@/actions/proveedores/proveedor-actions";
 
 // Components
-import Header from "@/components/ui/Header";
+
 import Loading from "@/components/ui/Loading";
 import ConfirmationModal from "@/components/ui/Modal";
 
@@ -67,7 +67,6 @@ export default function ProveedorDetallePage() {
   if (loading)
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <Loading message="Cargando proveedor..." />
       </div>
     );
@@ -78,7 +77,6 @@ export default function ProveedorDetallePage() {
   if (!proveedor)
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <p className="p-6 text-red-600">
           No se encontró el proveedor.
         </p>
@@ -99,7 +97,6 @@ export default function ProveedorDetallePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
 
       <div className="container mx-auto px-4 py-8">
 

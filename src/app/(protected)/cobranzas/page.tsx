@@ -9,7 +9,7 @@ import { useState, useEffect, JSXElementConstructor, Key, ReactElement, ReactNod
 import { DollarSign, PlusCircle, AlertCircle, Trash2, FileSignature, Filter, Calendar, User, X, Home, CheckCircle, XCircle, Edit3, ArrowLeft  } from 'lucide-react';
 // Iconos SVG importados como componentes React.
 
-import Header from '@/components/ui/Header';
+
 // Componente visual para el encabezado de la página.
 
 import { useRouter } from "next/navigation";
@@ -322,8 +322,6 @@ const toggleActivaMutation = useMutation({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <header className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">

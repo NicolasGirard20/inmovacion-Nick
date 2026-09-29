@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { FileText, Download, AlertCircle, Loader2 } from 'lucide-react';
-import Header from '@/components/ui/Header';
 
 // Importar el visor como componente dinámico (solo cliente)
 const DocxViewer = dynamic(() => import('@/components/DocxViewer'), {
@@ -82,8 +81,6 @@ const fileRes = await fetch(`${contrato.archivoPath}?t=${timestamp}`);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="flex items-center gap-3 sm:gap-4">

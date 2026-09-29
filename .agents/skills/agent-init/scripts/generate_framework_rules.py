@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
-"""Genera coding-rules.json específico para frameworks sin template dedicado.
+"""Genera coding-rules.json y DESIGN.md para frameworks sin template dedicado.
 
-Recibe el stack detectado por detect_stack.py por stdin y genera SOLO
-.agents/rules/coding-rules.json (sin AGENTS.md, que queda para el usuario).
+Recibe el stack detectado por detect_stack.py por stdin y genera
+.agents/rules/coding-rules.json y .agents/rules/DESIGN.md.
 Si el framework no está en el diccionario, genera reglas genéricas.
 """
 
 import json
 import os
 import sys
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
 
 
 def _base_rules(stack, project_root):
@@ -238,6 +245,15 @@ if __name__ == "__main__":
     rules_dir = os.path.join(project_root, ".agents", "rules")
     os.makedirs(rules_dir, exist_ok=True)
 
-    with open(os.path.join(rules_dir, "coding-rules.json"), "w") as f:
-        json.dump(rules, f, indent=2)
+    with open(os.path.join(rules_dir, "coding-rules.json"), "w", encoding="utf-8") as f:
+        json.dump(rules, f, indent=2, ensure_ascii=False)
     print("coding-rules.json generado (fallback por framework)")
+
+    design_script = os.path.join(os.path.dirname(__file__), "generate_design.py")
+    import subprocess
+    subprocess.run(
+        [sys.executable, design_script, project_root],
+        input=json.dumps(stack),
+        text=True,
+        check=True,
+    )

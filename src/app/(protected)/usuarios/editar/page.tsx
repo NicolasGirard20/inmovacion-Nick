@@ -28,7 +28,6 @@ import {
   Edit3, 
   Building 
 } from "lucide-react";
-import Header from "@/components/ui/Header";
 import Modal from '@/components/ui/Modal';
 import { getUserById, updateUser } from "@/actions/user-actions";
 import { PhoneInputField } from "@/components/ui/PhoneInputField";
@@ -174,7 +173,6 @@ export default function EditUserPage() {
   if (!userId) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-        <Header />
         <div className="container mx-auto px-4 py-8 max-w-5xl">
           <div className="flex items-center gap-3 mb-8">
             <Button
@@ -200,7 +198,6 @@ export default function EditUserPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      <Header />
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">

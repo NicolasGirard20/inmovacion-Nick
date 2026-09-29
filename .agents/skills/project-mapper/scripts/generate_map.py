@@ -1,477 +1,395 @@
 #!/usr/bin/env python3
-"""
-Project Mapper - Generador de mapas estructurados para proyectos de código.
-Integrado nativamente con el ecosistema Antigravity.
+"""Generate a compact structural map of a source project.
+
+Python uses the stdlib ``ast`` parser. JavaScript/TypeScript uses conservative
+declaration patterns: only function declarations and clearly-shaped top-level
+arrow declarations are reported, so assignments and destructuring are ignored.
+For type-aware TS/TSX analysis, tree-sitter or ts-morph would be preferable,
+but this skill intentionally remains dependency-free.
 """
 
-import os
-import sys
-import json
-import ast
-import re
 import argparse
+import ast
+import fnmatch
+import json
+import os
+import re
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
-from datetime import datetime
-from typing import Dict, List, Set, Any, Optional
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Set
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 
 LANGUAGE_MAP = {
-    '.py': 'python',
-    '.js': 'javascript',
-    '.ts': 'typescript',
-    '.jsx': 'jsx',
-    '.tsx': 'tsx',
-    '.go': 'go',
-    '.rs': 'rust',
-    '.java': 'java',
-    '.kt': 'kotlin',
-    '.rb': 'ruby',
-    '.php': 'php',
-    '.cs': 'csharp',
-    '.cpp': 'cpp',
-    '.c': 'c',
-    '.swift': 'swift',
+    ".py": "python", ".js": "javascript", ".ts": "typescript",
+    ".jsx": "jsx", ".tsx": "tsx", ".go": "go", ".rs": "rust",
+    ".java": "java", ".kt": "kotlin", ".rb": "ruby", ".php": "php",
+    ".cs": "csharp", ".cpp": "cpp", ".c": "c", ".swift": "swift",
 }
 
 
+def compact_symbol(symbol: Dict[str, Any], include_lines: bool) -> Dict[str, Any]:
+    """Drop unstable/default fields to keep each symbol small."""
+    result = {key: value for key, value in symbol.items() if value not in (None, False, [], "")}
+    if not include_lines:
+        result.pop("line", None)
+    return result
+
+
 class PythonSymbolExtractor(ast.NodeVisitor):
-    """Extrae símbolos de archivos Python."""
-    
-    def __init__(self):
+    """Extract actual Python definitions, never assignments or names."""
+
+    def __init__(self, include_lines: bool):
+        self.include_lines = include_lines
         self.imports: List[str] = []
-        self.classes: List[Dict] = []
-        self.functions: List[Dict] = []
+        self.classes: List[Dict[str, Any]] = []
+        self.functions: List[Dict[str, Any]] = []
         self.exports: List[str] = []
-        self.docstrings: Dict[str, str] = {}
-    
-    def visit_Import(self, node):
-        for alias in node.names:
-            self.imports.append(alias.name)
-        self.generic_visit(node)
-    
-    def visit_ImportFrom(self, node):
-        module = node.module or ''
-        for alias in node.names:
-            self.imports.append(f"{module}.{alias.name}")
-        self.generic_visit(node)
-    
-    def visit_ClassDef(self, node):
-        docstring = ast.get_docstring(node)
-        self.classes.append({
-            'name': node.name,
-            'line': node.lineno,
-            'docstring': docstring[:200] if docstring else None,
-            'methods': [n.name for n in node.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
-        })
+
+    def visit_Import(self, node: ast.Import) -> None:
+        self.imports.extend(alias.name for alias in node.names)
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
+        module = "." * node.level + (node.module or "")
+        self.imports.append(module)
+
+    def visit_ClassDef(self, node: ast.ClassDef) -> None:
+        methods = [child.name for child in node.body
+                   if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        symbol = {
+            "name": node.name,
+            "line": node.lineno,
+            "docstring": (ast.get_docstring(node) or "")[:200] or None,
+            "methods": methods,
+        }
+        self.classes.append(compact_symbol(symbol, self.include_lines))
         self.exports.append(node.name)
         self.generic_visit(node)
-    
-    def visit_FunctionDef(self, node):
-        docstring = ast.get_docstring(node)
-        self.functions.append({
-            'name': node.name,
-            'line': node.lineno,
-            'docstring': docstring[:200] if docstring else None,
-            'is_async': False,
-            'args': [arg.arg for arg in node.args.args]
-        })
-        if not node.name.startswith('_'):
+
+    def _function(self, node: ast.AST, is_async: bool) -> None:
+        assert isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        symbol = {
+            "name": node.name,
+            "line": node.lineno,
+            "docstring": (ast.get_docstring(node) or "")[:200] or None,
+            "is_async": is_async,
+            "args": [arg.arg for arg in node.args.args],
+        }
+        self.functions.append(compact_symbol(symbol, self.include_lines))
+        if not node.name.startswith("_"):
             self.exports.append(node.name)
         self.generic_visit(node)
-    
-    def visit_AsyncFunctionDef(self, node):
-        docstring = ast.get_docstring(node)
-        self.functions.append({
-            'name': node.name,
-            'line': node.lineno,
-            'docstring': docstring[:200] if docstring else None,
-            'is_async': True,
-            'args': [arg.arg for arg in node.args.args]
-        })
-        if not node.name.startswith('_'):
-            self.exports.append(node.name)
-        self.generic_visit(node)
+
+    def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
+        self._function(node, False)
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
+        self._function(node, True)
 
 
 class JSSymbolExtractor:
-    """Extrae símbolos de archivos JavaScript/TypeScript."""
-    
-    IMPORT_PATTERNS = [
-        r"import\s+(?:(?:\{[^}]*\}|\*\s+as\s+\w+|\w+)\s+from\s+)?['\"]([^'\"]+)['\"]",
-        r"require\s*\(\s*['\"]([^'\"]+)['\"]\s*\)",
-        r"import\s+['\"]([^'\"]+)['\"]",
-    ]
-    
-    EXPORT_PATTERNS = [
-        r"export\s+(?:default\s+)?(?:function|class|const|let|var|async\s+function)?\s*(\w+)",
-        r"module\.exports\s*=\s*\{([^}]*)\}",
-        r"exports\.(\w+)",
-    ]
-    
-    CLASS_PATTERN = r"(?:export\s+)?class\s+(\w+)(?:\s+extends\s+(\w+))?"
-    FUNCTION_PATTERN = r"(?:export\s+)?(?:async\s+)?function\s+(\w+)"
-    ARROW_FUNCTION_PATTERN = r"(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s+)?(?:\([^)]*\)|[^=]*)\s*=>"
-    METHOD_PATTERN = r"(\w+)\s*\([^)]*\)\s*\{"
-    
-    def __init__(self, content: str):
+    """Conservative JS/TS extractor; declaration-shaped matches only."""
+
+    IMPORT_PATTERNS = (
+        r"\bimport\s+(?:(?:\{[^}]*\}|\*\s+as\s+\w+|[\w$]+)\s+from\s+)?['\"]([^'\"]+)['\"]",
+        r"\brequire\s*\(\s*['\"]([^'\"]+)['\"]\s*\)",
+        r"\bimport\s*\(\s*['\"]([^'\"]+)['\"]\s*\)",
+    )
+    CLASS_PATTERN = re.compile(r"^[ \t]*(?:export\s+)?(?:default\s+)?class\s+([\w$]+)(?:\s+extends\s+([\w$]+))?", re.MULTILINE)
+    FUNCTION_PATTERN = re.compile(r"^[ \t]*(?:export\s+)?(?:default\s+)?(?P<async>async\s+)?function\s+(?P<name>[\w$]+)", re.MULTILINE)
+    # The RHS is limited to parameters or one identifier: no destructuring,
+    # constants, calls, or arbitrary expressions can be mistaken for a function.
+    ARROW_PATTERN = re.compile(
+        r"^[ \t]*(?:export\s+)?(?:const|let|var)\s+(?P<name>[A-Za-z_$][\w$]*)\s*=\s*"
+        r"(?P<async>async\s+)?(?:\([^()\n]*\)|[A-Za-z_$][\w$]*)\s*=>",
+        re.MULTILINE,
+    )
+    METHOD_PATTERN = re.compile(
+        r"^[ \t]+(?P<prefix>(?:(?:public|private|protected|static|async|get|set)\s+)*)"
+        r"(?P<name>[A-Za-z_$][\w$]*)\s*\([^\)\n]*\)\s*\{",
+        re.MULTILINE,
+    )
+    EXPORT_PATTERN = re.compile(
+        r"\bexport\s+(?:default\s+)?(?:async\s+)?(?:function|class|const|let|var)\s+([\w$]+)"
+    )
+
+    def __init__(self, content: str, include_lines: bool):
         self.content = content
+        self.include_lines = include_lines
         self.imports: List[str] = []
-        self.classes: List[Dict] = []
-        self.functions: List[Dict] = []
+        self.classes: List[Dict[str, Any]] = []
+        self.functions: List[Dict[str, Any]] = []
         self.exports: List[str] = []
-    
-    def extract(self):
-        # Imports
+
+    def _symbol(self, name: str, start: int, **values: Any) -> Dict[str, Any]:
+        return compact_symbol({"name": name, "line": self.content[:start].count("\n") + 1, **values}, self.include_lines)
+
+    def extract(self) -> "JSSymbolExtractor":
         for pattern in self.IMPORT_PATTERNS:
             self.imports.extend(re.findall(pattern, self.content))
-        
-        # Clases
-        for match in re.finditer(self.CLASS_PATTERN, self.content):
-            self.classes.append({
-                'name': match.group(1),
-                'line': self.content[:match.start()].count('\n') + 1,
-                'extends': match.group(2),
-                'docstring': None
-            })
-        
-        # Funciones
-        for match in re.finditer(self.FUNCTION_PATTERN, self.content):
-            self.functions.append({
-                'name': match.group(1),
-                'line': self.content[:match.start()].count('\n') + 1,
-                'is_async': 'async' in match.group(0),
-                'docstring': None
-            })
-        
-        # Arrow functions exportadas
-        for match in re.finditer(self.ARROW_FUNCTION_PATTERN, self.content):
-            self.functions.append({
-                'name': match.group(1),
-                'line': self.content[:match.start()].count('\n') + 1,
-                'is_async': 'async' in match.group(0),
-                'docstring': None
-            })
-        
-        # Exports
-        for pattern in self.EXPORT_PATTERNS:
-            matches = re.findall(pattern, self.content)
-            for m in matches:
-                if isinstance(m, str):
-                    self.exports.append(m.strip())
-                elif isinstance(m, tuple):
-                    self.exports.extend([x.strip() for x in m[0].split(',') if x.strip()])
-        
+        self.imports = sorted(set(self.imports))
+        for match in self.CLASS_PATTERN.finditer(self.content):
+            self.classes.append(self._symbol(match.group(1), match.start(), extends=match.group(2)))
+        for match in self.FUNCTION_PATTERN.finditer(self.content):
+            self.functions.append(self._symbol(match.group("name"), match.start(), is_async=bool(match.group("async"))))
+        for match in self.ARROW_PATTERN.finditer(self.content):
+            self.functions.append(self._symbol(match.group("name"), match.start(), is_async=bool(match.group("async"))))
+        reserved = {"if", "for", "while", "switch", "catch", "with"}
+        for match in self.METHOD_PATTERN.finditer(self.content):
+            if match.group("name") not in reserved:
+                self.functions.append(self._symbol(
+                    match.group("name"), match.start(),
+                    is_async="async" in match.group("prefix")))
+        self.functions.sort(key=lambda symbol: symbol.get("line", 0))
+        self.exports = sorted(set(match.group(1) for match in self.EXPORT_PATTERN.finditer(self.content)))
         return self
 
 
-class ProjectMapper:
-    """Mapea un proyecto completo generando un JSON estructurado."""
-    
-    IGNORE_DIRS = {
-        '.git', '.venv', 'venv', 'node_modules', '__pycache__', '.pytest_cache',
-        'dist', 'build', '.idea', '.vscode', '.agents', '.agent', 'coverage',
-        '.tox', 'htmlcov', '.mypy_cache', '.ruff_cache', '.next', 'out',
-        '.gitignore', '.dockerignore', '.env', '.env.local',
+class FileWalker:
+    """Walk source files while applying default and user glob exclusions."""
+
+    DEFAULT_EXCLUDES = {
+        ".git/**", ".venv/**", "venv/**", "node_modules/**", "__pycache__/**",
+        ".pytest_cache/**", "dist/**", "build/**", ".next/**", "out/**",
+        "coverage/**", "target/**", "vendor/**", "**/*.min.js", "**/*.min.css",
+        "package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "pnpm-lock.yaml",
+        "bun.lockb", "*.tsbuildinfo", "*.pyc", "*.pyo", "*.so", "*.dll",
+        "*.dylib", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.ico", "*.svg",
+        "*.woff", "*.woff2", "*.ttf", "*.eot", "*.mp3", "*.mp4", "*.zip",
+        "*.tar", "*.gz", "*.rar", "*.7z", "*.pdf", "*.log", ".env", ".env.*",
+        ".DS_Store",
     }
-    
-    IGNORE_FILES = {
-        '.pyc', '.pyo', '.pyd', '.so', '.dll', '.dylib', '.egg', '.whl',
-        '.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico', '.woff', '.woff2',
-        '.ttf', '.eot', '.mp3', '.mp4', '.wav', '.avi', '.mov', '.zip',
-        '.tar', '.gz', '.rar', '.7z', '.pdf', '.doc', '.docx', '.xls',
-        '.lock', '.log', '.min.js', '.min.css',
-    }
-    
-    def __init__(self, project_path: Path):
+
+    def __init__(self, project_path: Path, excludes: Sequence[str]):
         self.project_path = project_path.resolve()
-        self.files_data: List[Dict[str, Any]] = []
-        self.dependency_graph: Dict[str, List[str]] = {}
-        self.entry_points: List[str] = []
-        self.total_symbols = 0
-        self.all_imports: Dict[str, List[str]] = {}
-    
-    def should_ignore(self, path: Path) -> bool:
-        if any(part in self.IGNORE_DIRS for part in path.parts):
-            return True
-        if path.suffix.lower() in self.IGNORE_FILES:
-            return True
-        if path.name.startswith('.') and path.is_file():
-            return True
-        return False
-    
-    def extract_python_symbols(self, content: str, file_path: Path) -> Dict[str, Any]:
-        try:
-            tree = ast.parse(content)
-            extractor = PythonSymbolExtractor()
-            extractor.visit(tree)
-            
-            self.total_symbols += len(extractor.classes) + len(extractor.functions)
-            
-            return {
-                'imports': extractor.imports,
-                'classes': extractor.classes,
-                'functions': extractor.functions,
-                'exports': extractor.exports,
-                'summary': self._generate_summary(content, file_path, extractor),
-            }
-        except SyntaxError as e:
-            return {
-                'imports': [],
-                'classes': [],
-                'functions': [],
-                'exports': [],
-                'summary': f"Archivo Python (error de sintaxis: {e.msg})",
-            }
-    
-    def extract_js_symbols(self, content: str, file_path: Path) -> Dict[str, Any]:
-        extractor = JSSymbolExtractor(content)
-        extractor.extract()
-        
-        self.total_symbols += len(extractor.classes) + len(extractor.functions)
-        
-        return {
-            'imports': extractor.imports,
-            'classes': extractor.classes,
-            'functions': extractor.functions,
-            'exports': extractor.exports,
-            'summary': self._generate_summary(content, file_path, extractor),
-        }
-    
-    def _generate_summary(self, content: str, file_path: Path, extractor) -> str:
-        parts = []
-        name = file_path.name.lower()
-        stem = file_path.stem.lower()
-        
-        # Detectar patrón por nombre
-        if any(x in name for x in ['test', 'spec', '__tests__']):
-            parts.append("Archivo de tests")
-        elif any(x in name for x in ['config', 'settings', '.env', 'rc']):
-            parts.append("Configuración")
-        elif any(x in stem for x in ['main', 'app', 'index', 'server', 'cli']):
-            parts.append("Punto de entrada")
-            self.entry_points.append(str(file_path.relative_to(self.project_path)))
-        elif any(x in stem for x in ['route', 'controller', 'handler']):
-            parts.append("Maneja rutas/endpoints")
-        elif any(x in stem for x in ['model', 'schema', 'entity', 'dto']):
-            parts.append("Define modelos de datos")
-        elif any(x in stem for x in ['service', 'usecase', 'interactor']):
-            parts.append("Lógica de negocio")
-        elif any(x in stem for x in ['util', 'helper', 'common', 'shared']):
-            parts.append("Utilidades")
-        elif any(x in stem for x in ['middleware', 'guard', 'interceptor']):
-            parts.append("Middleware/infraestructura")
-        elif any(x in stem for x in ['repository', 'dao', 'db']):
-            parts.append("Acceso a datos")
-        
-        # Detectar por contenido
-        if extractor.classes:
-            class_names = [c['name'] if isinstance(c, dict) else c for c in extractor.classes[:3]]
-            parts.append(f"Clases: {', '.join(class_names)}")
-        
-        funcs = [f['name'] if isinstance(f, dict) else f for f in extractor.functions]
-        public_funcs = [f for f in funcs if not f.startswith('_')]
-        if public_funcs:
-            parts.append(f"Funciones: {', '.join(public_funcs[:5])}")
-        
-        if not parts:
-            if 'class ' in content:
-                parts.append("Contiene clases")
-            elif 'def ' in content or 'function ' in content:
-                parts.append("Contiene funciones")
-            else:
-                parts.append(f"Archivo {file_path.suffix}")
-        
-        return " | ".join(parts)
-    
-    def calculate_complexity(self, content: str) -> str:
-        lines = [l for l in content.split('\n') if l.strip()]
-        if len(lines) < 30:
-            return 'low'
-        elif len(lines) < 100:
-            return 'medium'
+        self.excludes = set(self.DEFAULT_EXCLUDES) | set(excludes)
+
+    def ignored(self, path: Path) -> bool:
+        relative = path.relative_to(self.project_path).as_posix()
+        return any(fnmatch.fnmatch(relative, pattern) or fnmatch.fnmatch(path.name, pattern)
+                   for pattern in self.excludes)
+
+    def files(self) -> Iterable[Path]:
+        for root, dirs, names in os.walk(self.project_path):
+            root_path = Path(root)
+            dirs[:] = [name for name in dirs
+                       if not name.startswith(".") and not self.ignored(root_path / name)]
+            for name in names:
+                path = root_path / name
+                if not self.ignored(path) and path.is_file():
+                    try:
+                        if path.stat().st_size <= 2_000_000:
+                            yield path
+                    except OSError:
+                        continue
+
+
+class DependencyGraph:
+    """Resolve local JS/TS and Python imports; omit external packages."""
+
+    JS_EXTENSIONS = (".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs")
+    PY_EXTENSIONS = (".py",)
+
+    def __init__(self, project_path: Path, files: Sequence[Dict[str, Any]]):
+        self.project_path = project_path
+        self.files = {item["path"] for item in files}
+        self.aliases = self._load_aliases()
+
+    def _load_aliases(self) -> Dict[str, List[str]]:
+        aliases: Dict[str, List[str]] = {}
+        for config_name in ("tsconfig.json", "jsconfig.json"):
+            config_path = self.project_path / config_name
+            if not config_path.exists():
+                continue
+            try:
+                raw = re.sub(r"/\*.*?\*/|//.*?$", "", config_path.read_text(encoding="utf-8"), flags=re.MULTILINE | re.DOTALL)
+                config = json.loads(raw)
+                options = config.get("compilerOptions", {})
+                base = Path(options.get("baseUrl", "."))
+                for key, targets in options.get("paths", {}).items():
+                    aliases[key.rstrip("*")] = [str(base / target.rstrip("*")) for target in targets]
+            except (OSError, json.JSONDecodeError, TypeError):
+                continue
+        return aliases
+
+    def _candidates(self, source: str, importer: str) -> Iterable[str]:
+        roots: List[str] = []
+        if source.startswith("@/"):
+            aliased = source[2:]
+            roots.extend((aliased, str(Path("src") / aliased)))
         else:
-            return 'high'
-    
-    def process_file(self, file_path: Path) -> Optional[Dict[str, Any]]:
-        try:
-            content = file_path.read_text(encoding='utf-8', errors='ignore')
-        except Exception:
-            return None
-        
-        rel_path = str(file_path.relative_to(self.project_path))
-        suffix = file_path.suffix.lower()
-        language = LANGUAGE_MAP.get(suffix, 'unknown')
-        
-        if language == 'python':
-            symbols = self.extract_python_symbols(content, file_path)
-        elif language in ('javascript', 'typescript', 'jsx', 'tsx'):
-            symbols = self.extract_js_symbols(content, file_path)
-        else:
-            symbols = {
-                'imports': [],
-                'classes': [],
-                'functions': [],
-                'exports': [],
-                'summary': f"Archivo {language}",
-            }
-        
-        self.all_imports[rel_path] = symbols['imports']
-        
-        return {
-            'path': rel_path,
-            'language': language,
-            'size_lines': len(content.split('\n')),
-            'summary': symbols['summary'],
-            'imports': symbols['imports'],
-            'exports': symbols['exports'],
-            'classes': symbols['classes'],
-            'functions': symbols['functions'],
-            'complexity': self.calculate_complexity(content),
-        }
-    
-    def build_dependency_graph(self):
-        """Construye el grafo de dependencias resolviendo imports a archivos locales."""
-        file_map = {f['path']: f for f in self.files_data}
-        
-        for file_data in self.files_data:
-            deps = set()
-            imports = file_data.get('imports', [])
-            
-            for imp in imports:
-                # Resolver import a archivo local
-                imp_parts = imp.replace('.', '/').split('/')
-                
-                # Probar varias combinaciones
-                candidates = []
-                base = '/'.join(imp_parts)
-                
-                for ext in ['.py', '.js', '.ts', '.jsx', '.tsx', '']:
-                    candidates.append(base + ext)
-                    candidates.append(base + '/index' + ext)
-                    candidates.append(base + '/__init__' + ext)
-                
-                for candidate in candidates:
-                    if candidate in file_map and candidate != file_data['path']:
+            for alias, targets in self.aliases.items():
+                if source.startswith(alias):
+                    roots.extend(target + source[len(alias):] for target in targets)
+            if source.startswith("."):
+                level = len(source) - len(source.lstrip("."))
+                parent = Path(importer).parent
+                for _ in range(max(level - 1, 0)):
+                    parent = parent.parent
+                roots.append(str(parent / source[level:]))
+            elif not roots:
+                return
+        for root in roots:
+            root = root.replace("\\", "/")
+            for extension in self.JS_EXTENSIONS + self.PY_EXTENSIONS + ("",):
+                candidate = Path(root).with_suffix(extension) if extension else Path(root)
+                yield candidate.as_posix()
+                yield (Path(root) / ("index" + extension)).as_posix()
+                yield (Path(root) / ("__init__" + extension)).as_posix()
+
+    def build(self, files: Sequence[Dict[str, Any]]) -> Dict[str, List[str]]:
+        graph: Dict[str, List[str]] = {}
+        for item in files:
+            deps: Set[str] = set()
+            for source in item.get("imports", []):
+                for candidate in self._candidates(source, item["path"]):
+                    if candidate in self.files and candidate != item["path"]:
                         deps.add(candidate)
                         break
-            
-            self.dependency_graph[file_data['path']] = sorted(list(deps))
-    
-    def detect_architecture(self) -> Dict[str, Any]:
-        dirs = set()
-        for f in self.files_data:
-            parts = Path(f['path']).parts
-            if len(parts) > 1:
-                dirs.add(parts[0])
-        
-        core, utils, tests, config, infra = [], [], [], [], []
-        
-        for d in dirs:
-            dl = d.lower()
-            if any(x in dl for x in ['src', 'app', 'lib', 'core', 'modules', 'components', 'packages']):
-                core.append(d)
-            elif any(x in dl for x in ['test', 'spec', 'tests', '__tests__', 'e2e']):
-                tests.append(d)
-            elif any(x in dl for x in ['util', 'helper', 'tools', 'scripts', 'shared', 'common']):
-                utils.append(d)
-            elif any(x in dl for x in ['config', 'settings', 'env', 'docker', 'k8s', '.github']):
-                config.append(d)
-            elif any(x in dl for x in ['infra', 'deploy', 'terraform', 'ansible']):
-                infra.append(d)
-        
-        return {
-            'entry_points': self.entry_points or ['(detectar manualmente)'],
-            'core_modules': sorted(core),
-            'utils': sorted(utils),
-            'tests': sorted(tests),
-            'config': sorted(config),
-            'infrastructure': sorted(infra),
-            'all_directories': sorted(dirs),
-        }
-    
-    def estimate_compression(self) -> str:
-        if not self.files_data:
-            return "0%"
-        total_lines = sum(f['size_lines'] for f in self.files_data)
-        map_lines = len(self.files_data) * 12
-        if total_lines == 0:
-            return "0%"
-        ratio = (1 - map_lines / total_lines) * 100
-        return f"{min(ratio, 95):.1f}%"
-    
+            graph[item["path"]] = sorted(deps)
+        return graph
+
+
+class ProjectMapper:
+    """Coordinate walking, language extraction, graph building and output."""
+
+    def __init__(self, project_path: Path, include_lines: bool = False,
+                 light: bool = False, excludes: Sequence[str] = ()):
+        self.project_path = project_path.resolve()
+        self.include_lines = include_lines
+        self.light = light
+        self.walker = FileWalker(self.project_path, excludes)
+        self.entry_points: List[str] = []
+
+    def _summary(self, path: Path, symbols: Dict[str, Any]) -> str:
+        stem = path.stem.lower()
+        parts: List[str] = []
+        if any(token in stem for token in ("main", "app", "index", "server", "cli")):
+            parts.append("Punto de entrada")
+            self.entry_points.append(path.relative_to(self.project_path).as_posix())
+        elif any(token in stem for token in ("test", "spec")):
+            parts.append("Archivo de tests")
+        if symbols["classes"]:
+            parts.append("Clases: " + ", ".join(c["name"] for c in symbols["classes"][:3]))
+        public = [f["name"] for f in symbols["functions"] if not f["name"].startswith("_")]
+        if public:
+            parts.append("Funciones: " + ", ".join(public[:5]))
+        return " | ".join(parts) or f"Archivo {path.suffix or 'sin extensión'}"
+
+    def _extract(self, content: str, path: Path) -> Dict[str, Any]:
+        language = LANGUAGE_MAP.get(path.suffix.lower(), "unknown")
+        if language == "python":
+            try:
+                extractor = PythonSymbolExtractor(self.include_lines)
+                extractor.visit(ast.parse(content))
+                return {key: getattr(extractor, key) for key in ("imports", "classes", "functions", "exports")}
+            except SyntaxError:
+                pass
+        elif language in ("javascript", "typescript", "jsx", "tsx"):
+            extractor = JSSymbolExtractor(content, self.include_lines).extract()
+            return {key: getattr(extractor, key) for key in ("imports", "classes", "functions", "exports")}
+        return {"imports": [], "classes": [], "functions": [], "exports": []}
+
+    def _architecture(self, files: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
+        directories = sorted({Path(item["path"]).parts[0] for item in files
+                              if len(Path(item["path"]).parts) > 1})
+        groups = {"core_modules": [], "utils": [], "tests": [], "config": [], "infrastructure": []}
+        for directory in directories:
+            name = directory.lower()
+            if any(token in name for token in ("src", "app", "lib", "core", "module", "component", "package")):
+                groups["core_modules"].append(directory)
+            elif any(token in name for token in ("test", "spec", "e2e")):
+                groups["tests"].append(directory)
+            elif any(token in name for token in ("util", "helper", "tool", "script", "shared", "common")):
+                groups["utils"].append(directory)
+            elif any(token in name for token in ("config", "setting", "env", "docker", "k8s")):
+                groups["config"].append(directory)
+            elif any(token in name for token in ("infra", "deploy", "terraform", "ansible")):
+                groups["infrastructure"].append(directory)
+        return {"entry_points": self.entry_points or ["(detectar manualmente)"], **groups,
+                "all_directories": directories}
+
     def generate_map(self) -> Dict[str, Any]:
-        print(f"🔍 Escaneando proyecto: {self.project_path}")
-        
-        for root, dirs, files in os.walk(self.project_path):
-            dirs[:] = [d for d in dirs if d not in self.IGNORE_DIRS and not d.startswith('.')]
-            
-            for file in files:
-                file_path = Path(root) / file
-                if self.should_ignore(file_path):
-                    continue
-                
-                file_data = self.process_file(file_path)
-                if file_data:
-                    self.files_data.append(file_data)
-        
-        self.build_dependency_graph()
-        architecture = self.detect_architecture()
-        
-        return {
-            'project_name': self.project_path.name,
-            'generated_at': datetime.utcnow().isoformat() + 'Z',
-            'total_files': len(self.files_data),
-            'total_symbols': self.total_symbols,
-            'architecture': architecture,
-            'files': sorted(self.files_data, key=lambda x: x['path']),
-            'dependency_graph': self.dependency_graph,
-            'metadata': {
-                'mapper_version': '2.0.0',
-                'languages_found': sorted(set(f['language'] for f in self.files_data)),
-                'compression_ratio_estimate': self.estimate_compression(),
+        files: List[Dict[str, Any]] = []
+        total_symbols = 0
+        for path in self.walker.files():
+            try:
+                content = path.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            rel_path = path.relative_to(self.project_path).as_posix()
+            language = LANGUAGE_MAP.get(path.suffix.lower(), "unknown")
+            symbols = self._extract(content, path)
+            total_symbols += len(symbols["classes"]) + len(symbols["functions"])
+            item = {
+                "path": rel_path,
+                "language": language,
+                "size_lines": len(content.splitlines()),
+                "summary": self._summary(path, symbols),
+                "imports": sorted(set(symbols["imports"])),
+                "exports": sorted(set(symbols["exports"])),
+                "classes": symbols["classes"],
+                "functions": symbols["functions"],
+                "complexity": "low" if len(content.splitlines()) < 30 else "medium" if len(content.splitlines()) < 100 else "high",
             }
+            if self.light:
+                item = {key: item[key] for key in ("path", "summary", "imports", "exports", "complexity")}
+            files.append(item)
+
+        files.sort(key=lambda item: item["path"])
+        graph = DependencyGraph(self.project_path, files).build(files)
+        return {
+            "project_name": self.project_path.name,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "total_files": len(files),
+            "total_symbols": total_symbols,
+            "architecture": self._architecture(files),
+            "files": files,
+            "dependency_graph": graph,
+            "metadata": {"mapper_version": "3.0.0", "languages_found": sorted(set(item.get("language", "unknown") for item in files))},
         }
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Project Mapper para Antigravity')
-    parser.add_argument('--project', '-p', type=str, default='.', help='Ruta al proyecto')
-    parser.add_argument('--output', '-o', type=str, required=True, help='Ruta de salida del JSON')
-    parser.add_argument('--force', '-f', action='store_true', help='Forzar regeneración')
-    
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Project Mapper para Antigravity")
+    parser.add_argument("--project", "-p", default=".", help="Ruta al proyecto")
+    parser.add_argument("--output", "-o", required=True, help="Ruta de salida del JSON")
+    parser.add_argument("--force", "-f", action="store_true", help="Forzar regeneración")
+    parser.add_argument("--max-age-hours", type=float, default=2.0)
+    parser.add_argument("--light", action="store_true", help="Solo path, summary, imports, exports y complexity")
+    parser.add_argument("--include-lines", action="store_true", help="Incluir líneas en clases y funciones")
+    parser.add_argument("--exclude", action="append", default=[], help="Patrón glob adicional a ignorar; se puede repetir")
     args = parser.parse_args()
-    
-    project_path = Path(args.project).resolve()
-    output_path = Path(args.output).resolve()
-    
-    # Verificar mapa existente
+    project_path, output_path = Path(args.project).resolve(), Path(args.output).resolve()
+
     if not args.force and output_path.exists():
         try:
-            with open(output_path, 'r', encoding='utf-8') as f:
-                existing = json.load(f)
-            generated = datetime.fromisoformat(existing['generated_at'].replace('Z', '+00:00'))
-            age = (datetime.utcnow() - generated.replace(tzinfo=None)).total_seconds() / 3600
-            
-            if age < 2:
-                print(f"✅ Mapa reciente ({age:.1f}h). Usando existente.")
-                print(f"   Archivo: {output_path}")
+            existing = json.loads(output_path.read_text(encoding="utf-8"))
+            generated = datetime.fromisoformat(existing["generated_at"].replace("Z", "+00:00"))
+            if (datetime.now(timezone.utc) - generated).total_seconds() / 3600 < args.max_age_hours:
+                print(f"Mapa reciente ({output_path}); use --force para regenerar.")
                 return
-        except Exception:
+        except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError):
             pass
-    
-    mapper = ProjectMapper(project_path)
-    project_map = mapper.generate_map()
-    
+
+    project_map = ProjectMapper(project_path, args.include_lines, args.light, args.exclude).generate_map()
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(project_map, f, indent=2, ensure_ascii=False)
-    
-    print(f"✅ Mapa generado: {output_path}")
-    print(f"   📁 Archivos: {project_map['total_files']}")
-    print(f"   🔣 Símbolos: {project_map['total_symbols']}")
-    print(f"   🌐 Lenguajes: {', '.join(project_map['metadata']['languages_found'])}")
-    print(f"   💰 Ahorro estimado: {project_map['metadata']['compression_ratio_estimate']}")
+    serialized = json.dumps(project_map, indent=2, ensure_ascii=False)
+    output_path.write_text(serialized + "\n", encoding="utf-8")
+    size_kb = len((serialized + "\n").encode("utf-8")) / 1024
+    print(f"Mapa generado: {output_path}")
+    print(f"Archivos procesados: {project_map['total_files']}")
+    print(f"Símbolos reales detectados: {project_map['total_symbols']}")
+    print(f"Tamaño JSON: {size_kb:.1f} KB")
+    print(f"Tokens estimados: ~{len(serialized) // 4}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

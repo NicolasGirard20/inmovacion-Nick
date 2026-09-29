@@ -1,4 +1,6 @@
-# 🗺️ Guía de Uso — Project Mapper
+# Guía de uso — Project Mapper
+
+> Los comandos usan `.agents` para una instalación directa. En este repositorio, reemplaza ese prefijo por `local/.agents`.
 
 ## 🚀 Instalación y Requisitos
 
@@ -58,8 +60,20 @@ pip install llmlingua
 
 ```bash
 # Regenerar forzado
-python .\.agent\skills\project-mapper\scripts\generate_map.py --project . --output .\.agent\skills\project-mapper\resources\project_map.json --force
+python .agents/skills/project-mapper/scripts/generate_map.py --project . --output .agents/skills/project-mapper/resources/project_map.json --force
 ```
+
+Para un mapa más pequeño:
+
+```bash
+python3 .agents/skills/project-mapper/scripts/generate_map.py \
+   --project . --output .agents/skills/project-mapper/resources/project_map.json \
+   --light --force
+```
+
+Flags disponibles: `--light`, `--include-lines`, `--exclude "patrón/**"` (se
+puede repetir) y `--output`. El generador imprime archivos procesados,
+símbolos reales, tamaño JSON en KB y tokens estimados (`len(json) / 4`).
 
 ---
 
@@ -80,6 +94,10 @@ python .agents/skills/project-mapper/scripts/compress_context.py --input .agents
 **Parámetros de compresión:**
 - `--ratio 0.3` : Más agresivo (menos tokens, menos detalle).
 - `--ratio 0.6` : Más conservador (más tokens, más detalle).
+- La compresión determinista es el comportamiento por defecto: es rápida,
+  reproducible y no descarga modelos.
+- `--llmlingua` activa LLMLingua de forma explícita cuando está instalado.
+- El compresor conserva los entry points y sus dependencias locales en el grafo.
 
 ---
 
@@ -101,6 +119,16 @@ python .agents/skills/project-mapper/scripts/inject_relevant.py --map .agents/sk
 - `--max-files 10` : Solo los 10 archivos más relevantes.
 - `--dep-depth 2` : Incluye dependencias hasta 2 niveles de profundidad.
 - `--no-deps` : Solo archivos directamente relevantes, sin seguir dependencias.
+- `--light` : Excluye detalle de funciones y clases para reducir tokens.
+- `--include-dependents` : Incluye archivos que importan a los seleccionados.
+- `--min-score 2` : Descarta coincidencias débiles.
+
+Pruebas rápidas de las herramientas:
+
+```bash
+python3 .agents/skills/project-mapper/tests/test_generate_map.py
+python3 .agents/skills/project-mapper/tests/test_context_tools.py
+```
 
 ---
 

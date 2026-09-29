@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/app/(protected)/propiedades/page.tsx
+// src/app/propiedades/page.tsx
 
 'use client';
 
@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
-import Header from '@/components/ui/Header';
 import InmuebleCard from '@/components/InmuebleCard';
 import Filtros from '@/components/Filtros';
 
@@ -313,7 +312,6 @@ const totalGeneral = totalActivos + totalArchivados;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       {/* HEADER */}
       <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">

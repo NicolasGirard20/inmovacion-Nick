@@ -15,7 +15,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Search, Plus, MoreHorizontal, Eye, Edit, UserCheck, UserX, Trash2, Users, LayoutGrid, LayoutList } from "lucide-react"
 import { getUsers } from "@/actions/getUsers"
-import Header from "@/components/ui/Header"
 import { deactivateUser, deleteUser, activateUser } from "@/actions/user-actions"
 import type { User } from "../../../../types/user"
 import Loading from "@/components/ui/Loading"
@@ -425,7 +424,6 @@ export default function UsersPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <Header />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-10">
           <div className="flex items-start justify-between gap-4 mb-3">

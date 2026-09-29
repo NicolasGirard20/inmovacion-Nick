@@ -11,35 +11,42 @@ Este proyecto cuenta con un sistema de configuración para agentes de IA. Los si
 | Archivo | Rol |
 |---------|-----|
 | `.opencode/config.json` | Configuración técnica del agente: skills, triggers, rutas de scripts |
-| `.agents/init.sh` | Script de bootstrap que se ejecuta al iniciar cada sesión (genera mapa del proyecto, verifica dependencias) |
+| `.agents/init.sh` / `.agents/init.py` | Script de bootstrap que se ejecuta al iniciar cada sesión (genera mapa del proyecto, verifica dependencias) |
+| `.agents/rules/DESIGN.md` | Guía de diseño visual, arquitectura, stack y convenciones técnicas |
 | `.agents/rules/coding-rules.json` | Reglas de estilo y arquitectura en formato estructurado para validación automática de prompts |
+| `PRODUCT_REQUIREMENTS.md` | Requerimientos funcionales de producto, criterios de aceptación y alcance |
 | `.agents/skills/project-mapper/` | Skill local que mapea la estructura completa del proyecto y filtra contexto relevante |
 | `.agents/skills/prompt-toolkit/` | Skill local con templates de prompts parametrizables y validador de seguridad |
 
 ### Flujo de inicio de sesión
 1. El agente lee `.opencode/config.json` para conocer las skills y reglas del proyecto.
-2. Ejecuta `.agents/init.sh` que regenera el mapa del proyecto si es necesario.
-3. Consulta `AGENTS.md` como fuente de verdad para reglas de negocio, stack y convenciones.
-4. Usa `.agents/rules/coding-rules.json` para validar que los prompts generados respeten las reglas del proyecto.
-5. Antes de enviar prompts críticos, los valida contra `.agents/skills/prompt-toolkit/validator/rules.json`.
+2. Ejecuta `.agents/init.sh` (o `.agents/init.py`) que regenera el mapa del proyecto si es necesario.
+3. Consulta `.agents/rules/DESIGN.md` y `AGENTS.md` como fuentes de verdad para reglas de negocio, stack y convenciones.
+4. Usa `.agents/rules/coding-rules.json` para validar que las implementaciones respeten las directrices del proyecto.
+5. Antes de enviar prompts o ejecutar tareas críticas, valida el contexto contra las reglas del proyecto.
 
 ---
 
 ## Arquitectura General
 
-- **Proyecto**: `inmovacion` — descripción pendiente.
-- **Stack detectado**:
-  - **Framework**: nextjs
-  - **Lenguaje**: typescript
-  - **Estilos**: tailwindcss
-  - **UI Library**: radix-ui
-  - **ORM**: prisma
-  - **Auth**: next-auth
-  - **App Router**: Next.js App Router
+- **Proyecto**: `inmovacion` (GBS y Asociados) — Gestión inmobiliaria y jurídica (inmuebles, clientes, contratos, cobranzas, pagos a proveedores, rendiciones con IPC, recibos PDF y reportes Excel).
+- **Stack detectado y configurado**:
+  - **Framework**: Next.js 16 (App Router) + React 19
+  - **Lenguaje**: TypeScript (Strict Mode)
+  - **Estilos**: Tailwind CSS v4 + `tw-animate-css` (variables semánticas OKLCH)
+  - **UI Library**: Radix UI Primitives (`@radix-ui/*`) + CVA + `clsx` + `tailwind-merge`
+  - **Iconografía**: `lucide-react`
+  - **ORM & DB**: Prisma ORM + `@prisma/adapter-pg` + PostgreSQL (`src/generated/prisma`)
+  - **Auth**: NextAuth v5 Beta (`auth.ts`, `auth.config.ts`, `src/middleware.ts`)
+  - **Formularios & Validación**: `react-hook-form` + `@hookform/resolvers` + `zod` (`src/lib/zod.ts`)
+  - **Data Fetching & Cache**: TanStack React Query (`@tanstack/react-query`)
+  - **Storage**: Supabase Storage (`src/lib/supabase-storage.ts`)
+  - **Documentos & Reportes**: PDFKit / jsPDF / pdf-lib, ExcelJS, DocxTemplater / PizZip
 
 ### Estructura de carpetas
 ```
 ├── AGENTS.md
+├── PRODUCT_REQUIREMENTS.md
 ├── Propuestas.md
 ├── README.md
 ├── auth.config.ts
@@ -48,63 +55,76 @@ Este proyecto cuenta con un sistema de configuración para agentes de IA. Los si
 ├── eslint.config.mjs
 ├── next-env.d.ts
 ├── next.config.ts
-├── package-lock.json
 ├── package.json
-├── pnpm-lock.yaml
-├── pnpm-workspace.yaml
 ├── postcss.config.mjs
 ├── prisma/
-├── prisma.config.ts
 ├── public/
 ├── scripts/
 ├── src/
-├── tsconfig.json
+│   ├── actions/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   ├── (protected)/
+│   │   ├── api/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── providers.tsx
+│   ├── components/
+│   │   ├── ui/
+│   │   └── ...
+│   ├── db/
+│   ├── generated/prisma/
+│   ├── lib/
+│   ├── middleware.ts
+│   ├── providers/
+│   └── types/
+└── tsconfig.json
 ```
 
 ### Capas
-1. **Rutas/páginas**: componentes de página.
-2. **Componentes**: UI de aplicación.
-3. **Estado global**: Context API.
-4. **Services**: capa de acceso a datos.
-5. **Helpers**: utilidades, validadores, auth.
+1. **Rutas/páginas (`src/app/`)**: Server Components para carga inicial y layouts; Client Components para interactividad puntual.
+2. **Componentes (`src/components/`)**: UI modular dividida en componentes base (`src/components/ui/`) y formularios de dominio.
+3. **Lógica de negocio y Server Actions (`src/actions/`)**: Acciones organizadas por dominio (`clientes`, `pagos`, `proveedores`, `servicios`, `auth`).
+4. **Route Handlers (`src/app/api/`)**: Endpoints dedicados para streams de archivos (PDF, Excel, IPC, templates).
+5. **Servicios y Helpers (`src/lib/`)**: Cliente Prisma (`db.ts`), validadores Zod (`zod.ts`), exportadores PDF/Excel, Supabase Storage y correo.
 
 ---
 
-## Reglas de Diseño
+## Reglas de Diseño y Estilo
 
 ### Nomenclatura
 - Archivos de componentes: `PascalCase.tsx`
-- Services y helpers: `camelCase.ts`
-- Carpetas: `kebab-case`
-- Código en inglés; **labels y mensajes al usuario en español**.
+- Server Actions, services y helpers: `camelCase.ts`
+- Carpetas y rutas: `kebab-case`
+- Código, variables y funciones en inglés; **labels, botones y mensajes al usuario estrictamente en español**.
 
-### Componentes
-- Estilos: **solo clases de Tailwind CSS** (si aplica).
-- Librería de iconos única.
-- Composición sobre herencia.
+### Componentes y UI
+- Estilos: **solo clases de Tailwind CSS v4** con tokens semánticos de `globals.css`.
+- Paleta: Azul marca (`#63bae9`), Amarillo acento (`#fcc238`), Grises y modos claro/oscuro.
+- Iconografía única: `lucide-react`.
+- Estados visuales obligatorios: Skeleton en carga asíncrona, estado vacío descriptivo y toast/alertas amigables ante errores.
 
 ### React / TypeScript
 - TypeScript estricto: **prohibido `any`**.
-- Server Components por defecto; `'use client'` solo donde haga falta.
+- Server Components por defecto; `'use client'` solo en componentes interactivos con estado o hooks.
+- Formularios gestionados exclusivamente con `react-hook-form` y validación Zod.
 
 ---
 
 ## Seguridad (REGLA CRÍTICA)
 
-- **Nunca exponer secrets** en código, logs, ni respuestas de API.
-- **Validación de inputs** antes de persistir.
-- Base de datos: acceso únicamente vía ORM (queries parametrizadas).
+- **Nunca exponer secrets**, tokens ni strings de conexión en código, logs ni respuestas de API.
+- **Validación obligatoria de inputs** con Zod antes de persistir o procesar en servidor.
+- Base de datos: acceso únicamente vía Prisma ORM (queries parametrizadas con `db`).
+- Control de acceso y protección de rutas gestionado por `src/middleware.ts` y roles (`admin` / `user`).
 
-## Estilo de código
-
-- Lint antes de considerar terminado un cambio.
-- Imports con path alias; evitar imports relativos profundos.
-- Sin comentarios obvios; comentarios solo para lógica no evidente.
+---
 
 ## Comandos
 
 ```bash
-npm run dev      # desarrollo
+npm run dev      # desarrollo con Turbopack
 npm run build    # build de producción
 npm run start    # servidor de producción
 npm run lint     # eslint
@@ -114,7 +134,6 @@ npm run lint     # eslint
 
 ## Mantenimiento de este documento
 
-- Actualizar `AGENTS.md` siempre que cambien: estructura de carpetas, stack, convenciones, reglas de seguridad o comandos.
-- Reflejar cambios también en `.agents/rules/coding-rules.json`.
+- Mantener sincronizados `AGENTS.md`, `.agents/rules/DESIGN.md` y `.agents/rules/coding-rules.json`.
 - Si cambian rutas de skills o triggers, actualizar `.opencode/config.json`.
-- Fuente de verdad para cambios estructurales: ejecutar `.agents/init.sh` para regenerar el mapa antes de redactar.
+- Para regenerar el mapa del proyecto, ejecutar `.agents/init.sh`.

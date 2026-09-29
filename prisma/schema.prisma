@@ -54,6 +54,7 @@ model User {
   updatedCobranzas   Cobranza[]   @relation("UpdatedCobranzas")
   createdRendiciones Rendicion[]  @relation("CreatedRendiciones")
   updatedRendiciones Rendicion[]  @relation("UpdatedRendiciones")
+  navigationLogs     NavigationLog[]
 
   @@map("users")
 }
@@ -491,4 +492,17 @@ model PagoProveedor {
   fecha_modificacion DateTime   @updatedAt
 
   @@map("pago_proveedor")
+}
+
+model NavigationLog {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  module    String   @db.VarChar(100)
+  path      String   @db.VarChar(500)
+  visitedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, visitedAt(sort: Desc)])
+  @@map("navigation_logs")
 }

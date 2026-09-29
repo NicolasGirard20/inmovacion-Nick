@@ -20,7 +20,6 @@ import { ArrowLeft, FileText, Edit, Trash2, Download } from "lucide-react";
 import { getPagoById, deletePago } from "@/actions/pagos/pagos-actions";
 
 // Components
-import Header from "@/components/ui/Header";
 import Loading from "@/components/ui/Loading";
 import ConfirmationModal from "@/components/ui/Modal";
 
@@ -42,7 +41,6 @@ export default function PagoDetallePage() {
   if (isNaN(id)) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="p-10 text-center text-red-500 text-xl">
           Error: ID inválido
         </div>
@@ -79,7 +77,6 @@ export default function PagoDetallePage() {
   if (loading)
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <Loading message="Cargando pago..." />
       </div>
     );
@@ -90,7 +87,6 @@ export default function PagoDetallePage() {
   if (!pago)
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="p-10 text-center text-red-500 text-xl">
           No se encontró el pago.
         </div>
@@ -119,8 +115,6 @@ export default function PagoDetallePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <div className="container mx-auto px-4 py-8">
 
         {/* Volver */}

@@ -7,7 +7,7 @@
 import { FileText, PlusCircle, Trash2, Pencil, FileSignature, User, Filter, X, Calendar, AlertCircle, ArrowLeft, Home, CheckCircle, XCircle, MapPin } from 'lucide-react';
 // 🔹 Iconos SVG usados en los botones y elementos visuales.
 
-import Header from '@/components/ui/Header';
+
 
 import { useRouter } from "next/navigation";
 // 🔹 Permite navegar programáticamente (router.push).
@@ -342,8 +342,6 @@ const total = data?.total ?? 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <header className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">

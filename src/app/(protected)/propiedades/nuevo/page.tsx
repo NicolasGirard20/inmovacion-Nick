@@ -5,7 +5,6 @@
 import { useRouter } from "next/navigation";
 import { FileSignature,ArrowLeft } from "lucide-react";
 
-import Header from "@/components/ui/Header";
 import FormularioInmueble from "@/components/FormularioInmueble";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -95,8 +94,6 @@ interface ModalConfig {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa]">
-      <Header />
-
       <header className="bg-white shadow-sm border-b">
   <div className="max-w-5xl mx-auto px-8 py-8 flex items-center gap-6">
 

@@ -33,7 +33,7 @@ import {
 
 import { getPagos, deletePago } from "@/actions/pagos/pagos-actions";
 
-import Header from "@/components/ui/Header";
+
 import Loading from "@/components/ui/Loading";
 import ConfirmationModal from "@/components/ui/Modal";
 
@@ -119,8 +119,6 @@ export default function PagosProveedoresPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <Header />
-
       <div className="container mx-auto px-4 py-8 max-w-7xl">
 
         {/* ================= HEADER ================= */}

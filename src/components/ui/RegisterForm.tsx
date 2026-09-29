@@ -60,7 +60,7 @@ export default function RegisterForm({ onSuccess, onError, onFormDirtyChange }: 
             onSuccess()
             form.reset()
             setSuccessMessage(null)
-            router.push("/usuarios")
+            router.push("/inicio")
           }, 1500)
         }
       } catch (err) {

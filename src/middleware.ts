@@ -61,8 +61,8 @@ export default middleware((req) => {
      🔄 3) Redirigir si ya está autenticado e intenta ir a /login
      ------------------------------------------------------------- */
   if (isLoggedIn && nextUrl.pathname === "/login") {
-    console.log("Middleware: Authenticated user accessing /login, redirecting to /");
-    return NextResponse.redirect(new URL("/", nextUrl));
+    console.log("Middleware: Authenticated user accessing /login, redirecting to /inicio");
+    return NextResponse.redirect(new URL("/inicio", nextUrl));
   }
 
   // Si no hubo ninguna condición que bloquee,

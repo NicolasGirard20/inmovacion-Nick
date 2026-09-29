@@ -28,7 +28,6 @@ import {
   AlertCircle, 
   Building 
 } from "lucide-react"
-import Header from "@/components/ui/Header"
 import { getUserById } from "@/actions/user-actions"
 import type { User } from "../../../../../types/user"
 
@@ -72,7 +71,6 @@ export default function UserDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-        <Header />
         <div className="container mx-auto px-4 py-8 max-w-5xl">
           <div className="space-y-8">
             {/* Header skeleton */}
@@ -127,7 +125,6 @@ export default function UserDetailPage() {
   if (error || !user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-        <Header />
         <div className="container mx-auto px-4 py-8 max-w-5xl">
           <div className="flex items-center gap-3 mb-8">
             <Button
@@ -191,7 +188,6 @@ export default function UserDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      <Header />
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Navigation & Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">

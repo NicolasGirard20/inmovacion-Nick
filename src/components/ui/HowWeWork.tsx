@@ -9,7 +9,7 @@ const STEPS = [
 
 export default function HowWeWork() {
   return (
-    <section className="py-16 md:py-24 bg-[#f8f9fa]">
+    <section id="como-trabajamos" className="py-16 md:py-24 bg-[#f8f9fa]">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header centrado como las otras secciones */}
         <div className="text-center mb-16">

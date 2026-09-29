@@ -65,7 +65,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
           setError('Credenciales inválidas o cuenta no verificada');
         } else if (response?.ok) {
           // Hard redirect para asegurar recarga total de la sesión y cookies en cliente
-          window.location.href = '/';
+          window.location.href = '/inicio';
         }
       } catch (err) {
         setError('Error de conexión. Por favor, intenta nuevamente.');

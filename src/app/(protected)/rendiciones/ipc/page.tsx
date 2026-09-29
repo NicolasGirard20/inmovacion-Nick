@@ -5,7 +5,7 @@
 
 import { useState, useRef } from 'react';
 import { TrendingUp, ArrowLeft, Upload, Trash2, FileSpreadsheet, Loader2, AlertCircle, Calendar, X, Pencil } from 'lucide-react';
-import Header from '@/components/ui/Header';
+
 import toast from 'react-hot-toast';
 import * as XLSX from 'xlsx';
 import Loading from '@/components/ui/Loading'; 
@@ -322,8 +322,6 @@ if (isLoading) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-
       <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">

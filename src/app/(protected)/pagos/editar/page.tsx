@@ -10,7 +10,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 // UI
-import Header from "@/components/ui/Header";
 import Loading from "@/components/ui/Loading";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -117,7 +116,6 @@ export default function EditarPagoProveedorPage() {
   if (loading)
     return (
       <div className="min-h-screen bg-white font-sans">
-        <Header />
         <Loading message="Cargando datos del pago..." />
       </div>
     );
@@ -159,8 +157,6 @@ export default function EditarPagoProveedorPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
-
-      <Header />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
 

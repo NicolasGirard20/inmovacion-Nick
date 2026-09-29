@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
-"""
-Compresión de contexto con LLMLingua para Antigravity.
-Reduce el tamaño del mapa del proyecto manteniendo la información esencial.
+"""Reduce project maps deterministically, with optional LLMLingua support.
+
+Deterministic compression is the default because it is reproducible, fast and
+does not require downloading a model. LLMLingua remains available through
+``--llmlingua`` for agents that explicitly need linguistic compression.
 """
 
-import sys
-import json
 import argparse
+import json
+import sys
+from copy import deepcopy
 from pathlib import Path
+from typing import Any, Dict, List
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 try:
     # pyrefly: ignore [missing-import]
@@ -15,179 +26,158 @@ try:
     LLMLINGUA_AVAILABLE = True
 except ImportError:
     LLMLINGUA_AVAILABLE = False
-    print("⚠️  LLMLingua no instalado. Usando compresión alternativa.")
-    print("   Instalar: pip install llmlingua")
+    PromptCompressor = None
 
 
 class ContextCompressor:
-    """Comprime mapas de proyecto usando LLMLingua o fallback."""
-    
-    def __init__(self, model_name: str = None, use_llmlingua2: bool = True):
+    """Compress maps while preserving their public structure."""
+
+    def __init__(self, model_name: str = None, use_llmlingua2: bool = True,
+                 use_llmlingua: bool = False):
         self.compressor = None
-        
-        if LLMLINGUA_AVAILABLE:
+        if use_llmlingua and LLMLINGUA_AVAILABLE:
             try:
                 self.compressor = PromptCompressor(
-                    model_name=model_name or "microsoft/llmlingua-2-bert-base-multilingual-cased-meetingbank",
-                    use_llmlingua2=use_llmlingua2
+                    model_name=model_name or
+                    "microsoft/llmlingua-2-bert-base-multilingual-cased-meetingbank",
+                    use_llmlingua2=use_llmlingua2,
                 )
-                print("✅ LLMLingua-2 cargado correctamente")
-            except Exception as e:
-                print(f"⚠️  Error cargando LLMLingua: {e}")
-                print("   Usando compresión alternativa")
-    
-    def compress_with_llmlingua(self, text: str, ratio: float = 0.4) -> str:
-        """Comprime texto usando LLMLingua."""
-        if not self.compressor:
-            return self._fallback_compress(text, ratio)
-        
-        try:
-            result = self.compressor.compress_prompt_llmlingua2(
-                text,
-                rate=ratio,
-                force_tokens=['path', 'exports', 'dependencies', 'summary']
-            )
-            return result['compressed_prompt']
-        except Exception as e:
-            print(f"⚠️  Error en compresión LLMLingua: {e}")
-            return self._fallback_compress(text, ratio)
-    
-    def _fallback_compress(self, text: str, ratio: float) -> str:
-        """Compresión alternativa cuando LLMLingua no está disponible."""
-        # Estrategia: eliminar campos menos críticos y resumir
-        try:
-            data = json.loads(text)
-        except json.JSONDecodeError:
-            # Si no es JSON, truncar
-            target_len = int(len(text) * ratio)
-            return text[:target_len] + "\n...[truncado]..."
-        
-        # Comprimir estructura del mapa
-        if 'files' in data:
-            compressed_files = []
-            for f in data['files']:
-                # Mantener solo campos esenciales
-                compressed = {
-                    'path': f.get('path'),
-                    'summary': f.get('summary'),
-                    'exports': f.get('exports', []),
-                    'dependencies': f.get('dependencies', []),
-                    'complexity': f.get('complexity'),
-                }
-                compressed_files.append(compressed)
-            data['files'] = compressed_files
-        
-        # Eliminar metadatos verbose
-        if 'metadata' in data:
-            data['metadata']['compression_note'] = f"Fallback compression at {ratio*100:.0f}%"
-        
-        return json.dumps(data, indent=2, ensure_ascii=False)
-    
-    def compress_map(self, input_path: Path, ratio: float = 0.4) -> dict:
-        """Comprime un mapa de proyecto completo."""
-        with open(input_path, 'r', encoding='utf-8') as f:
-            original_data = json.load(f)
-        
-        original_text = json.dumps(original_data)
-        original_tokens = len(original_text) // 4  # Estimación aproximada
-        
-        print(f"📊 Tokens originales estimados: ~{original_tokens}")
-        print(f"🎯 Ratio de compresión objetivo: {ratio*100:.0f}%")
-        
-        # Comprimir el texto completo
-        compressed_text = self.compress_with_llmlingua(original_text, ratio)
-        
-        # Intentar parsear de vuelta
-        try:
-            compressed_data = json.loads(compressed_text)
-        except json.JSONDecodeError:
-            # Si LLMLingua devuelve texto no-JSON, reconstruir
-            compressed_data = self._reconstruct_from_compressed(original_data, ratio)
-        
-        compressed_tokens = len(json.dumps(compressed_data)) // 4
-        actual_ratio = compressed_tokens / original_tokens if original_tokens > 0 else 0
-        
-        compressed_data['metadata'] = compressed_data.get('metadata', {})
-        compressed_data['metadata']['compression'] = {
-            'original_tokens_estimate': original_tokens,
-            'compressed_tokens_estimate': compressed_tokens,
-            'target_ratio': ratio,
-            'actual_ratio': round(actual_ratio, 2),
-            'method': 'llmlingua-2' if self.compressor else 'fallback',
+                print("LLMLingua-2 cargado correctamente")
+            except Exception as error:
+                print(f"Aviso: no se pudo cargar LLMLingua ({error}); usando modo determinista")
+        elif use_llmlingua:
+            print("Aviso: LLMLingua no está instalado; usando modo determinista")
+
+    @staticmethod
+    def _compact_map(original: Dict[str, Any], ratio: float,
+                     light: bool = True) -> Dict[str, Any]:
+        """Keep important files and filter the graph to the retained paths."""
+        result = deepcopy(original)
+        files = original.get("files", [])
+        entry_points = set(original.get("architecture", {}).get("entry_points", []))
+        keep_count = max(1, min(len(files), int(len(files) * ratio))) if files else 0
+
+        prioritized = sorted(
+            files,
+            key=lambda file_data: (
+                file_data.get("path") in entry_points,
+                {"high": 3, "medium": 2, "low": 1}.get(file_data.get("complexity"), 0),
+                len(file_data.get("exports", [])),
+                file_data.get("path", ""),
+            ),
+            reverse=True,
+        )
+        by_path = {file_data.get("path"): file_data for file_data in files}
+        selected_paths = {path for path in entry_points if path in by_path}
+        graph = original.get("dependency_graph", {})
+        pending = list(selected_paths)
+        while pending:
+            path = pending.pop()
+            for dependency in graph.get(path, []):
+                if dependency in by_path and dependency not in selected_paths:
+                    selected_paths.add(dependency)
+                    pending.append(dependency)
+        selected = [file_data for file_data in prioritized
+                    if file_data.get("path") in selected_paths]
+        selected.extend(file_data for file_data in prioritized
+                        if file_data.get("path") not in selected_paths
+                        and len(selected) < keep_count)
+        if light:
+            selected = [
+                {key: file_data.get(key) for key in
+                 ("path", "summary", "imports", "exports", "complexity")}
+                for file_data in selected
+            ]
+
+        result["files"] = sorted(selected, key=lambda file_data: file_data.get("path", ""))
+        result["total_files"] = len(result["files"])
+        # Keep the original count because light mode intentionally removes symbol details.
+        result["total_symbols"] = original.get("total_symbols", 0)
+
+        kept_paths = {file_data["path"] for file_data in result["files"]}
+        graph = original.get("dependency_graph", {})
+        result["dependency_graph"] = {
+            path: [dependency for dependency in dependencies if dependency in kept_paths]
+            for path, dependencies in graph.items()
+            if path in kept_paths
         }
-        
-        return compressed_data
-    
-    def _reconstruct_from_compressed(self, original: dict, ratio: float) -> dict:
-        """Reconstruye el mapa comprimido manteniendo estructura."""
-        result = {
-            'project_name': original.get('project_name'),
-            'generated_at': original.get('generated_at'),
-            'total_files': original.get('total_files'),
-            'architecture': original.get('architecture', {}),
-            'files': [],
-            'dependency_graph': original.get('dependency_graph', {}),
-            'metadata': original.get('metadata', {}),
-        }
-        
-        # Seleccionar archivos más relevantes (entry points + complejidad alta)
-        files = original.get('files', [])
-        
-        # Siempre incluir entry points
-        entry_points = set(result['architecture'].get('entry_points', []))
-        
-        # Priorizar por complejidad y exports
-        prioritized = sorted(files, key=lambda f: (
-            f['path'] in entry_points,
-            {'high': 3, 'medium': 2, 'low': 1}.get(f.get('complexity', 'low'), 0),
-            len(f.get('exports', [])),
-        ), reverse=True)
-        
-        # Tomar solo el ratio solicitado
-        keep_count = max(1, int(len(prioritized) * ratio))
-        result['files'] = prioritized[:keep_count]
-        result['total_files'] = len(result['files'])
-        
-        # Filtrar grafo de dependencias
-        kept_paths = {f['path'] for f in result['files']}
-        result['dependency_graph'] = {
-            k: [d for d in v if d in kept_paths]
-            for k, v in result.get('dependency_graph', {}).items()
-            if k in kept_paths
-        }
-        
         return result
 
+    def _fallback_compress(self, data: Dict[str, Any], ratio: float) -> Dict[str, Any]:
+        return self._compact_map(data, ratio, light=True)
 
-def main():
-    parser = argparse.ArgumentParser(description='Comprime mapas de proyecto con LLMLingua')
-    parser.add_argument('--input', '-i', type=str, required=True, help='Mapa de entrada JSON')
-    parser.add_argument('--output', '-o', type=str, required=True, help='Mapa comprimido de salida')
-    parser.add_argument('--ratio', '-r', type=float, default=0.4, help='Ratio de compresión (0.1-0.9)')
-    parser.add_argument('--model', '-m', type=str, default=None, help='Modelo LLMLingua alternativo')
-    
+    def _llmlingua_compress(self, text: str, ratio: float) -> str:
+        try:
+            result = self.compressor.compress_prompt_llmlingua2(
+                text, rate=ratio,
+                force_tokens=["path", "exports", "imports", "dependency_graph", "summary"],
+            )
+            return result["compressed_prompt"]
+        except Exception as error:
+            print(f"Aviso: error en LLMLingua ({error}); usando modo determinista")
+            return ""
+
+    def compress_map(self, input_path: Path, ratio: float = 0.4) -> Dict[str, Any]:
+        if not 0.1 <= ratio <= 0.9:
+            raise ValueError("ratio debe estar entre 0.1 y 0.9")
+        original_data = json.loads(input_path.read_text(encoding="utf-8"))
+        original_text = json.dumps(original_data, ensure_ascii=False)
+        original_tokens = len(original_text) // 4
+        print(f"Tokens originales estimados: ~{original_tokens}")
+        print(f"Ratio objetivo: {ratio * 100:.0f}%")
+
+        compressed_data: Dict[str, Any]
+        method = "deterministic"
+        if self.compressor:
+            try:
+                compressed_data = json.loads(self._llmlingua_compress(original_text, ratio))
+                method = "llmlingua-2"
+            except (json.JSONDecodeError, TypeError):
+                compressed_data = self._fallback_compress(original_data, ratio)
+        else:
+            compressed_data = self._fallback_compress(original_data, ratio)
+
+        compressed_text = json.dumps(compressed_data, ensure_ascii=False)
+        compressed_tokens = len(compressed_text) // 4
+        metadata = compressed_data.setdefault("metadata", {})
+        metadata["compression"] = {
+            "original_tokens_estimate": original_tokens,
+            "compressed_tokens_estimate": compressed_tokens,
+            "target_ratio": ratio,
+            "actual_ratio": round(compressed_tokens / original_tokens, 2) if original_tokens else 0,
+            "method": method,
+        }
+        return compressed_data
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Comprime mapas de proyecto")
+    parser.add_argument("--input", "-i", required=True, help="Mapa JSON de entrada")
+    parser.add_argument("--output", "-o", required=True, help="Mapa JSON de salida")
+    parser.add_argument("--ratio", "-r", type=float, default=0.4,
+                        help="Proporción de archivos conservados (0.1-0.9)")
+    parser.add_argument("--model", "-m", default=None, help="Modelo LLMLingua alternativo")
+    parser.add_argument("--llmlingua", action="store_true",
+                        help="Usar LLMLingua opcionalmente; por defecto es determinista")
     args = parser.parse_args()
-    
-    input_path = Path(args.input).resolve()
-    output_path = Path(args.output).resolve()
-    
+    if not 0.1 <= args.ratio <= 0.9:
+        parser.error("--ratio debe estar entre 0.1 y 0.9")
+
+    input_path, output_path = Path(args.input).resolve(), Path(args.output).resolve()
     if not input_path.exists():
-        print(f"❌ Error: No existe {input_path}")
-        sys.exit(1)
-    
-    compressor = ContextCompressor(model_name=args.model)
+        parser.error(f"No existe el mapa de entrada: {input_path}")
+
+    compressor = ContextCompressor(model_name=args.model, use_llmlingua=args.llmlingua)
     compressed = compressor.compress_map(input_path, ratio=args.ratio)
-    
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(compressed, f, indent=2, ensure_ascii=False)
-    
-    meta = compressed['metadata']['compression']
-    print(f"✅ Mapa comprimido guardado: {output_path}")
-    print(f"   📉 Tokens: ~{meta['original_tokens_estimate']} → ~{meta['compressed_tokens_estimate']}")
-    print(f"   📊 Ratio real: {meta['actual_ratio']*100:.1f}%")
-    print(f"   🔧 Método: {meta['method']}")
+    output_path.write_text(json.dumps(compressed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    meta = compressed["metadata"]["compression"]
+    print(f"Mapa comprimido guardado: {output_path}")
+    print(f"Tokens: ~{meta['original_tokens_estimate']} -> ~{meta['compressed_tokens_estimate']}")
+    print(f"Ratio real: {meta['actual_ratio'] * 100:.1f}%")
+    print(f"Método: {meta['method']}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

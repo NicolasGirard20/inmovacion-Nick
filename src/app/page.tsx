@@ -6,7 +6,7 @@ import {
   ShieldCheck, FileSignature, Users, ScrollText, BookOpen,
   BadgeDollarSign, Home, Clock, Award, MapPin,
   Mail, ArrowRight, Landmark,
-  Phone, MessageCircle, Gavel, Star, type LucideIcon
+  MessageCircle, Gavel, Star, type LucideIcon
 } from 'lucide-react';
 
 type Stat = {
@@ -258,7 +258,7 @@ function DualServicesSection() {
 
 function ValuesSection() {
   return (
-    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+    <section id="por-que-gbs" className="py-20 md:py-28 bg-white relative overflow-hidden">
       <div className="absolute inset-0" aria-hidden="true">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#63bae9]/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#fcc238]/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -416,11 +416,11 @@ function ContactSection() {
             <div className="space-y-5">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-[#fcc238]" />
+                  <MessageCircle className="w-5 h-5 text-[#25D366]" />
                 </div>
                 <div>
-                  <p className="text-sm text-white/60">Teléfono</p>
-                  <a href="tel:03447123456" className="font-semibold hover:text-[#fcc238] transition-colors">03447-123456</a>
+                  <p className="text-sm text-white/60">WhatsApp</p>
+                  <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-[#25D366] transition-colors">Escribinos por WhatsApp</a>
                 </div>
               </div>
 
@@ -428,9 +428,21 @@ function ContactSection() {
                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5 text-[#63bae9]" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-white/60">Dirección</p>
-                  <p className="font-semibold">Libertador San Martín, Entre Ríos</p>
+                  <p className="font-semibold mb-2">Libertador San Martín, Entre Ríos</p>
+                  <div className="w-full h-40 rounded-xl overflow-hidden">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3347.5!2d-59.5!3d-32.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDMwJzAwLjAiUyA1OcKwMzAnMDAuMCJX!5e0!3m2!1ses!2sar!4v1"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Ubicación GBS & Asociados"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -443,19 +455,7 @@ function ContactSection() {
                   <p className="font-semibold">Lun a Vie 9-18hs • Sáb 9-13hs</p>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-8 pt-8 border-t border-white/10">
-              <p className="text-sm text-white/60 mb-4">Respuesta garantizada en menos de 24 horas</p>
-              <a
-                href="https://wa.me/5491123456789"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-[#fcc238] text-[#2e2e2e] font-bold rounded-xl hover:bg-[#e6af32] transition-all shadow-lg hover:shadow-xl"
-              >
-                <MessageCircle className="w-5 h-5" />
-                Escribinos por WhatsApp
-              </a>
             </div>
           </div>
         </div>

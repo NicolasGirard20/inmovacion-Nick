@@ -4,7 +4,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { FileText, Save, AlertCircle, Calendar, DollarSign, Building2, User, FileType, Lock, CheckCircle2, ChevronRight } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
-import Header from '@/components/ui/Header';
 import Combobox from '@/components/ui/combobox';
 import { z } from 'zod';
 import Modal from '@/components/ui/Modal';
@@ -636,8 +635,6 @@ if (contrato && (contrato.firmado || !contrato.activo)) {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-
       <div className="max-w-5xl mx-auto px-6 py-16">
         <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           <div 
@@ -728,8 +725,6 @@ if (contrato && (contrato.firmado || !contrato.activo)) {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f8f9fa' }}>
-      <Header />
-
       <div className="bg-gradient-to-br from-white to-gray-50" style={{ borderBottom: '1px solid #e5e7eb' }}>
         <div className="max-w-6xl mx-auto px-6 py-10">
           <div className="flex items-start gap-6">
