@@ -1,8 +1,8 @@
 {
-  "project": "inmovacion-Nick",
+  "project": "inmovacion",
   "agent": {
     "on_session_start": ".agents/init.sh",
-    "rules_source": "AGENTS.md",
+    "rules_source": ".agents/rules/DESIGN.md",
     "coding_rules": ".agents/rules/coding-rules.json"
   },
   "skills": {

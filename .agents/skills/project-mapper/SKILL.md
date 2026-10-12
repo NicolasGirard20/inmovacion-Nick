@@ -1,119 +1,254 @@
 ---
 name: project-mapper
-description: Mapea la estructura completa de un proyecto, comprime el contexto con LLMLingua e inyecta solo las partes relevantes según la tarea. Actívala cuando el usuario necesite entender, refactorizar o modificar código que implique múltiples archivos.
+description: Genera un indice liviano del proyecto y selecciona solo el contexto relevante para tareas que involucran multiples archivos.
 ---
 
 # Project Mapper
 
 ## Objetivo
-Reducir el costo de tokens del agente generando un mapa estructurado del proyecto, comprimiéndolo con LLMLingua e inyectando solo el contexto relevante para cada tarea específica.
 
-## Consideraciones
+Reducir lecturas y consumo de tokens mediante un mapa estructurado del proyecto.
+El mapa es un indice de navegacion; no reemplaza la lectura de los archivos
+fuente relevantes.
 
-- Resolver primero la raíz del proyecto y la ubicación de la skill. En este repositorio la instalación es `local/.agents`; en un proyecto instalado directamente es `.agents`.
-- No leer `node_modules` ni `pnpm-lock.yaml` sin avisar al usuario y obtener confirmación explícita.
-- El mapa es un índice, no sustituye la lectura de los archivos fuente relevantes.
-- No inferir patrones arquitectónicos que no estén respaldados por archivos, imports, configuración o tests.
+La activacion debe decidirla el agente consumidor segun el alcance de la tarea.
+Esta skill no debe forzar su ejecucion para cambios locales o consultas que
+puedan resolverse con un archivo ya identificado.
 
 ## Cuándo activar
 
-Esta skill DEBE activarse automáticamente cuando:
+Activar cuando:
 
-1. El usuario inicia una nueva sesión de trabajo y no existe un mapa reciente (< 2 horas)
-2. El usuario pide: "mapea el proyecto", "entendé la estructura", "explicame el código"
-3. La tarea implica leer o modificar más de 2 archivos
-4. El usuario menciona: refactor, arquitectura, dependencias, módulos, estructura
-5. El agente detecta que está leyendo los mismos archivos múltiples veces
+- La tarea involucra mas de dos archivos.
+- Se necesita entender estructura, arquitectura, modulos o dependencias.
+- Se solicita mapear o entender el proyecto.
+- Se realiza un refactor transversal.
+- Se desconoce donde se implementa un comportamiento.
+- Se repiten lecturas o busquedas sobre los mismos archivos.
 
-NO activar cuando:
-- La tarea es trivial (cambiar un string, formatear código)
-- Solo se edita 1 archivo que ya está abierto en contexto
-- El usuario dice explícitamente "no uses el mapper"
+No activar cuando:
 
-## Flujo de trabajo
+- La tarea cambia un archivo ya identificado.
+- La consulta puede resolverse con el archivo abierto.
+- Solo se modifica un string, formato o valor local.
+- El usuario solicita explicitamente no usar el mapper.
 
-### Paso 1: Generar el mapa del proyecto
-Ejecuta al inicio si el mapa no existe o está obsoleto. Usa `--force` solo cuando hubo cambios externos importantes o el usuario lo pide.
+## Seguridad y alcance
+
+- Resolver primero la raiz del proyecto y la ubicacion de la skill.
+- Buscar la skill en este orden:
+  `.agents/skills/project-mapper/`
+  `local/.agents/skills/project-mapper/`
+- La instalacion valida debe contener:
+  `SKILL.md`,
+  `scripts/generate_map.py`,
+  `scripts/inject_relevant.py`.
+- No leer `node_modules`, archivos binarios, builds, logs, archivos minificados
+  ni lockfiles sin justificacion.
+- No leer `pnpm-lock.yaml` sin avisar al usuario y obtener confirmacion.
+- No inferir arquitectura que no este respaldada por archivos, imports,
+  configuracion o tests.
+- El mapa no autoriza a leer todos los archivos que contiene.
+
+Si la skill no esta disponible, informar:
+
+> No puedo iniciar el plan porque la skill project-mapper no esta presente en
+> el proyecto.
+
+No producir un plan parcial si el mapper es obligatorio para la tarea.
+
+## Reutilizacion de artefactos
+
+Usar estos artefactos dentro de `resources/`:
+
+- `project_map.json`: indice del proyecto.
+- `context_task.json`: seleccion de contexto para una tarea concreta.
+- `project_map_compressed.json`: alternativa comprimida, solo cuando sea necesaria.
+
+Reutilizar `project_map.json` si existe y tiene menos de dos horas.
+
+Reutilizar `context_task.json` solo si corresponde a la misma tarea o a una
+consulta equivalente. Verificar su antiguedad y su consulta antes de usarlo.
+
+Regenerar el mapa sin `--force` cuando:
+
+- No existe.
+- Esta obsoleto.
+- Hubo cambios externos relevantes.
+- El contexto reutilizado no encuentra la implementacion esperada.
+
+Usar `--force` solo si el usuario lo solicita o si una regeneracion normal no
+detecta cambios importantes.
+
+## Generacion del mapa
+
+Ejecutar desde la raiz del proyecto.
+
+Linux/macOS:
+
+```bash
+python3 <skill>/scripts/generate_map.py \
+  --project . \
+  --output <skill>/resources/project_map.json
+```
+
+Windows:
 
 ```powershell
-python .agents/skills/project-mapper/scripts/generate_map.py --project . --output .agents/skills/project-mapper/resources/project_map.json
+python <skill>\scripts\generate_map.py `
+  --project . `
+  --output <skill>\resources\project_map.json
 ```
+
+Preferir una salida liviana cuando el proyecto sea grande:
 
 ```bash
-python3 .agents/skills/project-mapper/scripts/generate_map.py --project . --output .agents/skills/project-mapper/resources/project_map.json
+python3 <skill>/scripts/generate_map.py \
+  --project . \
+  --output <skill>/resources/project_map.json \
+  --light
 ```
 
-Opciones para reducir el mapa:
+Usar `--include-lines` solo si se necesitan lineas de clases o funciones para
+localizar una implementacion concreta.
+
+## Seleccion de contexto
+
+La consulta debe ser corta, especifica y normalizada. Incluir:
+
+- El comportamiento que se quiere entender o modificar.
+- Nombres de dominio, archivos o simbolos conocidos.
+- El tipo de cambio esperado.
+
+Eliminar saludos, contexto repetido y explicaciones narrativas.
+
+Configuracion inicial recomendada:
 
 ```bash
-python3 .agents/skills/project-mapper/scripts/generate_map.py \
-  --project . --output /tmp/project_map.json --light --include-lines \
-  --exclude "docs/**" --exclude "fixtures/**" --force
+python3 <skill>/scripts/inject_relevant.py \
+  --map <skill>/resources/project_map.json \
+  --query "comportamiento y simbolos relevantes" \
+  --output <skill>/resources/context_task.json \
+  --max-files 8 \
+  --dep-depth 1 \
+  --min-score 2 \
+  --map-token-limit 2500 \
+  --context-token-limit 4000 \
+  --max-expansion-ratio 3
 ```
 
-`--light` conserva únicamente `path`, `summary`, `imports`, `exports` y
-`complexity` por archivo. `--include-lines` es optativo y agrega líneas solo a
-clases y funciones. Por defecto se excluyen lockfiles, `node_modules`,
-`dist/build/.next`, binarios, logs, archivos minificados y directorios ocultos.
-Se pueden repetir patrones adicionales con `--exclude`.
+Usar `--light` en la primera pasada cuando solo sea necesario localizar
+archivos.
 
-El extractor Python usa `ast`. Para TS/TSX se usan patrones conservadores sin
-dependencias: declaraciones `function`, flechas con forma inequívoca y
-métodos. Para análisis semántico completo convendría migrar a tree-sitter o
-ts-morph, pero no es necesario para generar este índice liviano.
+No usar `--include-dependents` por defecto. Activarlo solo para analizar:
 
-Smoke test:
+- Impactos de una modificacion.
+- Callers.
+- Contratos publicos.
+- Eventos.
+- Dependencias inversas.
+
+## Expansion progresiva
+
+Seguir este orden:
+
+1. Consultar el mapa.
+2. Leer los archivos con mayor relevancia.
+3. Leer un test, caller o contrato representativo.
+4. Verificar imports y dependencias directas.
+5. Expandir solo si existe una incertidumbre concreta.
+
+No aumentar mas de una vez `--max-files`, `--dep-depth` o los limites de tokens.
+Toda expansion debe indicar:
+
+- Que incertidumbre resuelve.
+- Que archivos adicionales incorpora.
+- Por que no puede resolverse con el contexto actual.
+
+Mantener siempre la seleccion minima que permita validar el diagnostico.
+
+## Metricas de eficiencia
+
+Conservar y revisar:
+
+- `efficiency.status`
+- `map_tokens`
+- `context_tokens`
+- Expansion de dependencias
+- Cantidad de archivos seleccionados
+
+Interpretacion:
+
+- `OK`: leer los archivos seleccionados y sus tests relevantes.
+- `WARN`: reducir archivos, dependencias o usar `--light` antes de leer mas.
+- `BYPASS`: reformular una vez la consulta usando nombres de archivos o
+  simbolos observados. Si vuelve a ocurrir, detener la exploracion y explicar
+  el bloqueo.
+
+Nunca resolver un `BYPASS` leyendo globalmente todo el proyecto.
+
+## Compresion
+
+Comprimir solo despues de reducir archivos y dependencias.
+
+Usar `compress_context.py` cuando el mapa o el contexto sigan superando el
+presupuesto y la informacion necesaria no pueda reducirse mas:
 
 ```bash
-python3 .agents/skills/project-mapper/tests/test_generate_map.py
+python3 <skill>/scripts/compress_context.py \
+  --input <skill>/resources/project_map.json \
+  --output <skill>/resources/project_map_compressed.json \
+  --ratio 0.4
 ```
 
+Preferir:
 
-### Paso 2: Inyectar contexto relevante (inject_relevant.py)
-Ejecuta de forma automática DESPUÉS del paso 1 y antes de cada tarea concreta para filtrar solo los archivos necesarios de acuerdo a la tarea.
+1. Reducir `--max-files`.
+2. Reducir `--dep-depth`.
+3. Usar `--light`.
+4. Reformular la consulta.
+5. Comprimir como ultimo recurso.
 
-```powershell
-python .\.agents\skills\project-mapper\scripts\inject_relevant.py --map .\.agents\skills\project-mapper\resources\project_map.json --query "descripción de tu tarea aquí" --output .\.agents\skills\project-mapper\resources\context_task.json
-```
+## Lectura posterior
 
-```bash
-python3 .agents/skills/project-mapper/scripts/inject_relevant.py --map .agents/skills/project-mapper/resources/project_map.json --query "descripción de tu tarea aquí" --output .agents/skills/project-mapper/resources/context_task.json
-```
-(Puedes incluir flags como `--max-files 10` o `--dep-depth 2` si necesitas controlar la cantidad de dependencias a inyectar). Si la skill está instalada en `local/.agents`, sustituye `.agents` por `local/.agents`.
+Leer `context_task.json` como indice, no como una orden de leer todos sus
+archivos.
 
-El resultado incluye `efficiency.status` (`OK`, `WARN` o `BYPASS`) y métricas
-para detectar consultas débiles, mapas grandes, contexto por encima del
-presupuesto, mapas obsoletos y expansión excesiva de dependencias. Los límites
-se pueden ajustar con `--map-token-limit`, `--context-token-limit` y
-`--max-expansion-ratio`. `BYPASS` indica que no hubo coincidencias directas y
-conviene reformular la consulta o no usar el mapper.
+Priorizar:
 
-Opciones adicionales de `inject_relevant.py`:
+1. Archivos que implementan directamente el comportamiento.
+2. Tests relacionados.
+3. Contratos, interfaces o tipos.
+4. Callers relevantes.
+5. Configuracion estrictamente necesaria.
 
-- `--light`: excluye funciones y clases del contexto.
-- `--include-dependents`: incluye archivos que importan a los seleccionados.
-- `--min-score 2`: exige un puntaje mínimo de relevancia.
-- El selector normaliza acentos y nombres `camelCase`/`snake_case`, y ordena empates de forma determinista.
+Usar busquedas directas solo para verificar archivos o simbolos ya identificados
+por el contexto inyectado.
 
-### Paso 3: Comprimir contexto (compress_context.py)
-Ejecuta SOLO de manera excepcional, cuando el mapa o los archivos inyectados son demasiado grandes (>4000 tokens estimados) o si el agente detecta que el contexto se ha vuelto demasiado largo.
+## Reglas de diseño frontend
 
-```powershell
-python .\.agents\skills\project-mapper\scripts\compress_context.py --input .\.agents\skills\project-mapper\resources\project_map.json --output .\.agents\skills\project-mapper\resources\project_map_compressed.json --ratio 0.4
-```
+Si existe `.agents/rules/DESIGN.md` o
+`local/.agents/rules/DESIGN.md`, consultarlo antes de proponer cambios de
+frontend.
 
-```bash
-python3 .agents/skills/project-mapper/scripts/compress_context.py --input .agents/skills/project-mapper/resources/project_map.json --output .agents/skills/project-mapper/resources/project_map_compressed.json --ratio 0.4
-```
-(El ratio se puede ajustar a 0.3 para compresión más agresiva o 0.6 para ser más conservador).
+Si existen otros archivos de reglas en esas carpetas, enumerarlos y consultar
+los que sean aplicables al cambio. No asumir que solo `DESIGN.md` define las
+convenciones del proyecto.
 
-## Paso 4: Verificación de DESIGN.md
-Si existe `DESIGN.md` en `.agents/rules/` (o `local/.agents/rules/`), consúltalo antes de proponer cambios de frontend. Si no existe, no lo crees automáticamente salvo que el usuario lo solicite o el proyecto necesite documentar su diseño.
+No crear ni actualizar `DESIGN.md` automaticamente. Solo hacerlo si el usuario
+lo solicita o si forma parte explicita del alcance.
 
-Cuando se cree o actualice, debe basarse únicamente en evidencia del proyecto y contener:
-- **Contenido fundamental de `DESIGN.md`**:
-  - **Arquitectura del Proyecto**: Estructura de carpetas, capas del sistema y organización del código.
-  - **Patrones de Diseño**: Definición de los patrones arquitectónicos y de componentes detectados en el proyecto (ej. Atomic Design, Custom Hooks, Redux/Zustand, MVC, etc.).
-  - **Reglas de Consistencia**: Normas estrictas a cumplir para preservar el mismo patrón de diseño en cualquier nueva funcionalidad o refactor.
-  - **Consideraciones Anti-Alucinación Frontend**: Guías sobre sistema de estilos, tokens visuales, nomenclatura, librería de UI y convenciones para evitar alucinaciones o invención de estilos incongruentes al desarrollar interfaces de usuario.
+## Registro del diagnostico
 
+El resultado del analisis debe indicar:
+
+- Si el mapper fue activado y por que.
+- Si se reutilizaron o regeneraron artefactos.
+- La consulta utilizada.
+- Los archivos seleccionados.
+- Las metricas de eficiencia.
+- Cualquier expansion aplicada y su justificacion.
+- Las incertidumbres que permanezcan sin resolver.
+
+El objetivo es que los agentes posteriores reciban rutas y hallazgos concretos
+sin tener que repetir la exploracion.

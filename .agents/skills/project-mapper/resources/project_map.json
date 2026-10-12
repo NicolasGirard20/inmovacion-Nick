@@ -1,10 +1,11 @@
 {
   "project_name": "inmovacion-Nick",
-  "generated_at": "2026-09-29T20:30:50.875481+00:00",
-  "total_files": 215,
-  "total_symbols": 413,
+  "generated_at": "2026-10-01T19:19:25.124523+00:00",
+  "total_files": 217,
+  "total_symbols": 415,
   "architecture": {
     "entry_points": [
+      "src/app/propiedades/PropiedadesClient.tsx",
       "src/lib/supabase/server.ts",
       "src/generated/prisma/client.js",
       "src/generated/prisma/index-browser.js",
@@ -16,6 +17,7 @@
       "src/generated/prisma/runtime/index-browser.d.ts",
       "src/components/ClienteForm.tsx",
       "src/components/layout/AppHeader.tsx",
+      "src/components/layout/AppShell.tsx",
       "src/components/layout/SidebarClient.tsx",
       "src/actions/clientes/getClientes.ts",
       "src/actions/clientes/getTipoClientes.ts",
@@ -41,48 +43,74 @@
   "files": [
     {
       "path": ".gitignore",
+      "language": "unknown",
+      "size_lines": 52,
       "summary": "Archivo sin extensión",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "AGENTS.md",
+      "language": "unknown",
+      "size_lines": 139,
       "summary": "Archivo .md",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "PRODUCT_REQUIREMENTS.md",
+      "language": "unknown",
+      "size_lines": 35,
       "summary": "Archivo .md",
       "imports": [],
       "exports": [],
-      "complexity": "high"
+      "classes": [],
+      "functions": [],
+      "complexity": "medium"
     },
     {
       "path": "Propuestas.md",
+      "language": "unknown",
+      "size_lines": 18,
       "summary": "Archivo .md",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "README.md",
+      "language": "unknown",
+      "size_lines": 1,
       "summary": "Archivo .md",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "auth.config.ts",
+      "language": "typescript",
+      "size_lines": 11,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "auth.ts",
+      "language": "typescript",
+      "size_lines": 74,
       "summary": "Funciones: jwt, session",
       "imports": [
         "./auth.config",
@@ -94,79 +122,126 @@
         "next-auth/providers/credentials"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "jwt"
+        },
+        {
+          "name": "session"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "components.json",
+      "language": "unknown",
+      "size_lines": 22,
       "summary": "Archivo .json",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "eslint.config.mjs",
+      "language": "unknown",
+      "size_lines": 16,
       "summary": "Archivo .mjs",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "next-env.d.ts",
+      "language": "typescript",
+      "size_lines": 7,
       "summary": "Archivo .ts",
       "imports": [
         "./.next/dev/types/root-params.d.ts",
         "./.next/dev/types/routes.d.ts"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "next.config.ts",
+      "language": "typescript",
+      "size_lines": 9,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "package.json",
+      "language": "unknown",
+      "size_lines": 95,
       "summary": "Archivo .json",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "pnpm-workspace.yaml",
+      "language": "unknown",
+      "size_lines": 9,
       "summary": "Archivo .yaml",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "postcss.config.mjs",
+      "language": "unknown",
+      "size_lines": 5,
       "summary": "Archivo .mjs",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "prisma.config.ts",
+      "language": "typescript",
+      "size_lines": 12,
       "summary": "Archivo .ts",
       "imports": [
         "dotenv/config",
         "prisma/config"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "prisma/schema.prisma",
+      "language": "unknown",
+      "size_lines": 508,
       "summary": "Archivo .prisma",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "prisma/seed.ts",
+      "language": "typescript",
+      "size_lines": 351,
       "summary": "Funciones: main",
       "imports": [
         "../src/generated/prisma",
@@ -175,94 +250,151 @@
         "pg"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "main",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "public/rendiciones/1/rendicion.xlsx",
+      "language": "unknown",
+      "size_lines": 190,
       "summary": "Archivo .xlsx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/rendiciones/2/rendicion.xlsx",
+      "language": "unknown",
+      "size_lines": 195,
       "summary": "Archivo .xlsx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/uploads/contracts/1761746675466-Alquiler_Octubre.docx",
+      "language": "unknown",
+      "size_lines": 56,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "public/uploads/contracts/1763532513940-x.docx",
+      "language": "unknown",
+      "size_lines": 52,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "public/uploads/contracts/1763552343443-Depto_12.docx",
+      "language": "unknown",
+      "size_lines": 56,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "public/uploads/contracts/1763560785995-Alquiler_noviembre.docx",
+      "language": "unknown",
+      "size_lines": 52,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "public/uploads/contracts/1764280642268-Alquiler_marzo.docx",
+      "language": "unknown",
+      "size_lines": 54,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "public/uploads/templates/1761746382517-CONTRATO DE ALQUILER DE INMUEBLE.docx",
+      "language": "unknown",
+      "size_lines": 344,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/uploads/templates/1763525720175-CONTRATO DE ALQUILER DE INMUEBLE.docx",
+      "language": "unknown",
+      "size_lines": 437,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/uploads/templates/1763552165207-CONTRATO DE ALQUILER DE INMUEBLE.docx",
+      "language": "unknown",
+      "size_lines": 344,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/uploads/templates/1763560729975-CONTRATO DE ALQUILER DE INMUEBLE.docx",
+      "language": "unknown",
+      "size_lines": 437,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "public/uploads/templates/1764280578618-prueba-template.docx",
+      "language": "unknown",
+      "size_lines": 244,
       "summary": "Archivo .docx",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "scripts/create-admin.ts",
+      "language": "typescript",
+      "size_lines": 83,
       "summary": "Funciones: createAdmin",
       "imports": [
         "../src/generated/prisma",
@@ -272,10 +404,19 @@
         "pg"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "createAdmin",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/actions/auth-action.ts",
+      "language": "typescript",
+      "size_lines": 156,
       "summary": "Funciones: resetPasswordAction, loginAction, registerAction, forgotPasswordAction",
       "imports": [
         "../../auth",
@@ -294,10 +435,31 @@
         "registerAction",
         "resetPasswordAction"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "resetPasswordAction",
+          "is_async": true
+        },
+        {
+          "name": "loginAction",
+          "is_async": true
+        },
+        {
+          "name": "registerAction",
+          "is_async": true
+        },
+        {
+          "name": "forgotPasswordAction",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/actions/clientes/cliente-actions.ts",
+      "language": "typescript",
+      "size_lines": 269,
       "summary": "Punto de entrada | Funciones: validarCliente, createCliente, updateCliente, softDeleteCliente",
       "imports": [
         "@/lib/db"
@@ -307,10 +469,30 @@
         "softDeleteCliente",
         "updateCliente"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "validarCliente"
+        },
+        {
+          "name": "createCliente",
+          "is_async": true
+        },
+        {
+          "name": "updateCliente",
+          "is_async": true
+        },
+        {
+          "name": "softDeleteCliente",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/actions/clientes/getClientes.ts",
+      "language": "typescript",
+      "size_lines": 41,
       "summary": "Punto de entrada | Funciones: getClientes",
       "imports": [
         "@/lib/db"
@@ -318,10 +500,19 @@
       "exports": [
         "getClientes"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getClientes",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/actions/clientes/getTipoClientes.ts",
+      "language": "typescript",
+      "size_lines": 20,
       "summary": "Punto de entrada | Funciones: getTipoClientes",
       "imports": [
         "@/lib/db"
@@ -329,10 +520,19 @@
       "exports": [
         "getTipoClientes"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getTipoClientes",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/clientes/getTipoDocumento.ts",
+      "language": "typescript",
+      "size_lines": 20,
       "summary": "Funciones: getTiposDocumento",
       "imports": [
         "@/lib/db"
@@ -340,10 +540,19 @@
       "exports": [
         "getTiposDocumento"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getTiposDocumento",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/dashboard/getKpis.ts",
+      "language": "typescript",
+      "size_lines": 23,
       "summary": "Funciones: getKpis",
       "imports": [
         "../../../auth",
@@ -352,10 +561,19 @@
       "exports": [
         "getKpis"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getKpis",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/getUsers.ts",
+      "language": "typescript",
+      "size_lines": 10,
       "summary": "Funciones: getUsers",
       "imports": [
         "@/lib/db"
@@ -363,10 +581,19 @@
       "exports": [
         "getUsers"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getUsers",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/navigation/getRecentModules.ts",
+      "language": "typescript",
+      "size_lines": 24,
       "summary": "Funciones: getRecentModules",
       "imports": [
         "../../../auth",
@@ -375,10 +602,19 @@
       "exports": [
         "getRecentModules"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getRecentModules",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/navigation/trackNavigation.ts",
+      "language": "typescript",
+      "size_lines": 15,
       "summary": "Funciones: trackNavigation",
       "imports": [
         "../../../auth",
@@ -388,10 +624,19 @@
       "exports": [
         "trackNavigation"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "trackNavigation",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/pagos/getEstadoPagos.ts",
+      "language": "typescript",
+      "size_lines": 15,
       "summary": "Archivo de tests | Funciones: getEstadosPago",
       "imports": [
         "@/lib/db"
@@ -399,10 +644,19 @@
       "exports": [
         "getEstadosPago"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getEstadosPago",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/pagos/getMediosPagos.ts",
+      "language": "typescript",
+      "size_lines": 15,
       "summary": "Funciones: getMediosPago",
       "imports": [
         "@/lib/db"
@@ -410,10 +664,19 @@
       "exports": [
         "getMediosPago"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getMediosPago",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/pagos/pagos-actions.ts",
+      "language": "typescript",
+      "size_lines": 191,
       "summary": "Funciones: serialize, getPagos, getPagoById, createPago, updatePago",
       "imports": [
         "@/actions/pagos/validaciones",
@@ -426,10 +689,38 @@
         "getPagos",
         "updatePago"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "serialize"
+        },
+        {
+          "name": "getPagos",
+          "is_async": true
+        },
+        {
+          "name": "getPagoById",
+          "is_async": true
+        },
+        {
+          "name": "createPago",
+          "is_async": true
+        },
+        {
+          "name": "updatePago",
+          "is_async": true
+        },
+        {
+          "name": "deletePago",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/actions/pagos/validaciones.ts",
+      "language": "typescript",
+      "size_lines": 87,
       "summary": "Funciones: validateConcepto, validateMonto, validateResponsable, validateComprobante",
       "imports": [],
       "exports": [
@@ -438,10 +729,27 @@
         "validateMonto",
         "validateResponsable"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "validateConcepto"
+        },
+        {
+          "name": "validateMonto"
+        },
+        {
+          "name": "validateResponsable"
+        },
+        {
+          "name": "validateComprobante"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/actions/proveedores/getProveedores.ts",
+      "language": "typescript",
+      "size_lines": 27,
       "summary": "Funciones: getProveedores",
       "imports": [
         "@/lib/db"
@@ -449,10 +757,19 @@
       "exports": [
         "getProveedores"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getProveedores",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/proveedores/proveedor-actions.ts",
+      "language": "typescript",
+      "size_lines": 81,
       "summary": "Funciones: createProveedor, updateProveedor, softDeleteProveedor, getProveedorById",
       "imports": [
         "@/lib/db"
@@ -463,10 +780,31 @@
         "softDeleteProveedor",
         "updateProveedor"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "createProveedor",
+          "is_async": true
+        },
+        {
+          "name": "updateProveedor",
+          "is_async": true
+        },
+        {
+          "name": "softDeleteProveedor",
+          "is_async": true
+        },
+        {
+          "name": "getProveedorById",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/actions/servicios/getTiposServicios.ts",
+      "language": "typescript",
+      "size_lines": 24,
       "summary": "Funciones: getTiposServicio",
       "imports": [
         "@/lib/db"
@@ -474,10 +812,19 @@
       "exports": [
         "getTiposServicio"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getTiposServicio",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/actions/user-actions.ts",
+      "language": "typescript",
+      "size_lines": 180,
       "summary": "Funciones: deactivateUser, activateUser, deleteUser, getUserById, getActiveUsers",
       "imports": [
         "../../auth",
@@ -493,10 +840,43 @@
         "getUserById",
         "updateUser"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "deactivateUser",
+          "is_async": true
+        },
+        {
+          "name": "activateUser",
+          "is_async": true
+        },
+        {
+          "name": "deleteUser",
+          "is_async": true
+        },
+        {
+          "name": "getUserById",
+          "is_async": true
+        },
+        {
+          "name": "getActiveUsers",
+          "is_async": true
+        },
+        {
+          "name": "updateUser",
+          "is_async": true
+        },
+        {
+          "name": "changePassword",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/actions/user/setGroup.ts",
+      "language": "typescript",
+      "size_lines": 14,
       "summary": "Funciones: setGroup",
       "imports": [
         "../../../auth",
@@ -506,10 +886,19 @@
       "exports": [
         "setGroup"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "setGroup",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(auth)/forgot-password/page.tsx",
+      "language": "tsx",
+      "size_lines": 42,
       "summary": "Funciones: ForgotPasswordPage",
       "imports": [
         "@/components/ui/ForgotPasswordForm",
@@ -518,19 +907,31 @@
       "exports": [
         "ForgotPasswordPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ForgotPasswordPage"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/(auth)/layout.tsx",
+      "language": "tsx",
+      "size_lines": 17,
       "summary": "Archivo .tsx",
       "imports": [
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/app/(auth)/login/page.tsx",
+      "language": "tsx",
+      "size_lines": 18,
       "summary": "Funciones: LoginPage",
       "imports": [
         "@/components/ui/FormLogin"
@@ -538,10 +939,19 @@
       "exports": [
         "LoginPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "LoginPage",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(auth)/reset-password/page.tsx",
+      "language": "tsx",
+      "size_lines": 42,
       "summary": "Funciones: ResetPasswordPage",
       "imports": [
         "@/components/ui/ResetPasswordForm",
@@ -551,10 +961,18 @@
       "exports": [
         "ResetPasswordPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ResetPasswordPage"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/(protected)/admin/page.tsx",
+      "language": "tsx",
+      "size_lines": 18,
       "summary": "Funciones: AdminPage",
       "imports": [
         "../../../../auth",
@@ -562,10 +980,19 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AdminPage",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/clientes/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 198,
       "summary": "Funciones: ClienteDetallePage, loadCliente, Data",
       "imports": [
         "@/components/ui/Loading",
@@ -581,10 +1008,25 @@
       "exports": [
         "ClienteDetallePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ClienteDetallePage"
+        },
+        {
+          "name": "loadCliente",
+          "is_async": true
+        },
+        {
+          "name": "Data"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/clientes/crear/page.tsx",
+      "language": "tsx",
+      "size_lines": 173,
       "summary": "Funciones: CrearClientePage, loadData, handleSubmit",
       "imports": [
         "@/components/ClienteForm",
@@ -600,10 +1042,26 @@
       "exports": [
         "CrearClientePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "CrearClientePage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/clientes/editar/page.tsx",
+      "language": "tsx",
+      "size_lines": 204,
       "summary": "Funciones: EditarClientePage, loadData, handleSubmit",
       "imports": [
         "@/components/ClienteForm",
@@ -619,10 +1077,26 @@
       "exports": [
         "EditarClientePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditarClientePage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/clientes/page.tsx",
+      "language": "tsx",
+      "size_lines": 319,
       "summary": "Funciones: ClientesPage, confirmDelete",
       "imports": [
         "@/actions/clientes/cliente-actions",
@@ -641,10 +1115,22 @@
       "exports": [
         "ClientesPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ClientesPage"
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/cobranzas/alta/page.tsx",
+      "language": "tsx",
+      "size_lines": 793,
       "summary": "Funciones: NuevaCobranzaPage, handleCobranzaChange, agregarCobranza, eliminarCobranza, handleSubmit",
       "imports": [
         "@/components/ui/Loading",
@@ -660,10 +1146,36 @@
       "exports": [
         "NuevaCobranzaPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NuevaCobranzaPage"
+        },
+        {
+          "name": "handleCobranzaChange"
+        },
+        {
+          "name": "agregarCobranza"
+        },
+        {
+          "name": "eliminarCobranza"
+        },
+        {
+          "name": "handleSubmit"
+        },
+        {
+          "name": "getInputClass"
+        },
+        {
+          "name": "ErrorMessage"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/cobranzas/modificar/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 630,
       "summary": "Funciones: EditarCobranzaPage, validar, handleSubmit, getInputClass, ErrorMessage",
       "imports": [
         "@/components/ui/Loading",
@@ -679,10 +1191,31 @@
       "exports": [
         "EditarCobranzaPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditarCobranzaPage"
+        },
+        {
+          "name": "validar"
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        },
+        {
+          "name": "getInputClass"
+        },
+        {
+          "name": "ErrorMessage"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/cobranzas/page.tsx",
+      "language": "tsx",
+      "size_lines": 806,
       "summary": "Funciones: CobranzasPage, formatMoney, handleCrear, agruparCobranzas, handleDelete",
       "imports": [
         "@/components/ui/Loading",
@@ -696,10 +1229,30 @@
       "exports": [
         "CobranzasPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "CobranzasPage"
+        },
+        {
+          "name": "formatMoney"
+        },
+        {
+          "name": "handleCrear"
+        },
+        {
+          "name": "agruparCobranzas"
+        },
+        {
+          "name": "handleDelete"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/contratos/editar/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 1334,
       "summary": "Funciones: EditContract, closeNotification, fetchData, fetchInmueble, handleSubmit",
       "imports": [
         "@/components/ui/Modal",
@@ -713,10 +1266,37 @@
       "exports": [
         "EditContract"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditContract"
+        },
+        {
+          "name": "closeNotification"
+        },
+        {
+          "name": "fetchData",
+          "is_async": true
+        },
+        {
+          "name": "fetchInmueble",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        },
+        {
+          "name": "confirmUpdate",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/contratos/nuevo/page.tsx",
+      "language": "tsx",
+      "size_lines": 1163,
       "summary": "Funciones: NewContract, closeNotification, fetchData, fetchInmueble, handleSubmit",
       "imports": [
         "@/components/ui/Modal",
@@ -729,10 +1309,37 @@
       "exports": [
         "NewContract"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NewContract"
+        },
+        {
+          "name": "closeNotification"
+        },
+        {
+          "name": "fetchData",
+          "is_async": true
+        },
+        {
+          "name": "fetchInmueble",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        },
+        {
+          "name": "confirmCreate",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/contratos/page.tsx",
+      "language": "tsx",
+      "size_lines": 961,
       "summary": "Funciones: Contratos, getClienteLabels, handleClickOutside, handleAction, confirmAction",
       "imports": [
         "@/components/ui/Modal",
@@ -743,10 +1350,37 @@
         "use-debounce"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Contratos"
+        },
+        {
+          "name": "getClienteLabels"
+        },
+        {
+          "name": "handleClickOutside"
+        },
+        {
+          "name": "handleAction"
+        },
+        {
+          "name": "confirmAction",
+          "is_async": true
+        },
+        {
+          "name": "closeModal"
+        },
+        {
+          "name": "clearFilters"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/contratos/preview/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 149,
       "summary": "Funciones: ContractPreview, loadContract, handleDownload",
       "imports": [
         "@/components/DocxViewer",
@@ -758,10 +1392,25 @@
       "exports": [
         "ContractPreview"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ContractPreview"
+        },
+        {
+          "name": "loadContract",
+          "is_async": true
+        },
+        {
+          "name": "handleDownload"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/dashboard/page.tsx",
+      "language": "tsx",
+      "size_lines": 21,
       "summary": "Funciones: DashBoardPage",
       "imports": [
         "../../../../auth",
@@ -770,10 +1419,19 @@
       "exports": [
         "DashBoardPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DashBoardPage",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/inicio/page.tsx",
+      "language": "tsx",
+      "size_lines": 22,
       "summary": "Funciones: InicioPage",
       "imports": [
         "../../../../auth",
@@ -785,26 +1443,42 @@
       "exports": [
         "InicioPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "InicioPage",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/layout.tsx",
+      "language": "tsx",
+      "size_lines": 16,
       "summary": "Funciones: ProtectedLayout",
       "imports": [
         "../../../auth",
-        "@/components/layout/AppHeader",
-        "@/components/layout/NavigationTracker",
-        "@/components/layout/Sidebar",
+        "@/components/layout/AppShell",
         "next/headers",
         "next/navigation"
       ],
       "exports": [
         "ProtectedLayout"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProtectedLayout",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/loading.tsx",
+      "language": "tsx",
+      "size_lines": 5,
       "summary": "Funciones: ProtectedLoading",
       "imports": [
         "@/components/ui/Loading"
@@ -812,10 +1486,18 @@
       "exports": [
         "ProtectedLoading"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProtectedLoading"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/pagos/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 211,
       "summary": "Funciones: PagoDetallePage, loadPago, descargarPDF, confirmDelete",
       "imports": [
         "@/actions/pagos/pagos-actions",
@@ -831,10 +1513,29 @@
       "exports": [
         "PagoDetallePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PagoDetallePage"
+        },
+        {
+          "name": "loadPago",
+          "is_async": true
+        },
+        {
+          "name": "descargarPDF"
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/pagos/crear/page.tsx",
+      "language": "tsx",
+      "size_lines": 184,
       "summary": "Funciones: CrearPagoProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/components/PagoProveedorForm",
@@ -850,10 +1551,26 @@
       "exports": [
         "CrearPagoProveedorPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "CrearPagoProveedorPage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/pagos/editar/page.tsx",
+      "language": "tsx",
+      "size_lines": 219,
       "summary": "Funciones: EditarPagoProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/actions/pagos/pagos-actions",
@@ -868,10 +1585,26 @@
       "exports": [
         "EditarPagoProveedorPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditarPagoProveedorPage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/pagos/page.tsx",
+      "language": "tsx",
+      "size_lines": 336,
       "summary": "Funciones: PagosProveedoresPage, confirmDelete",
       "imports": [
         "@/actions/pagos/pagos-actions",
@@ -889,10 +1622,22 @@
       "exports": [
         "PagosProveedoresPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PagosProveedoresPage"
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/propiedades/modificar/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 393,
       "summary": "Funciones: EditarInmueblePage, fetchInmueble, handleUpdate, handleCancel",
       "imports": [
         "@/components/FormularioInmueble",
@@ -910,10 +1655,29 @@
       "exports": [
         "EditarInmueblePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditarInmueblePage"
+        },
+        {
+          "name": "fetchInmueble",
+          "is_async": true
+        },
+        {
+          "name": "handleUpdate",
+          "is_async": true
+        },
+        {
+          "name": "handleCancel"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/propiedades/nuevo/page.tsx",
+      "language": "tsx",
+      "size_lines": 293,
       "summary": "Funciones: NuevoInmueblePage",
       "imports": [
         "@/components/FormularioInmueble",
@@ -928,10 +1692,18 @@
       "exports": [
         "NuevoInmueblePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NuevoInmueblePage"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/proveedores/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 198,
       "summary": "Funciones: ProveedorDetallePage, loadProveedor, confirmDelete",
       "imports": [
         "@/actions/proveedores/proveedor-actions",
@@ -947,10 +1719,26 @@
       "exports": [
         "ProveedorDetallePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProveedorDetallePage"
+        },
+        {
+          "name": "loadProveedor",
+          "is_async": true
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/proveedores/crear/page.tsx",
+      "language": "tsx",
+      "size_lines": 157,
       "summary": "Funciones: CrearProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/components/ProveedorForm",
@@ -965,10 +1753,26 @@
       "exports": [
         "CrearProveedorPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "CrearProveedorPage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/proveedores/editar/page.tsx",
+      "language": "tsx",
+      "size_lines": 203,
       "summary": "Funciones: EditarProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/components/ProveedorForm",
@@ -983,10 +1787,26 @@
       "exports": [
         "EditarProveedorPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditarProveedorPage"
+        },
+        {
+          "name": "loadData",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/proveedores/page.tsx",
+      "language": "tsx",
+      "size_lines": 333,
       "summary": "Funciones: ProveedoresPage, confirmDelete",
       "imports": [
         "@/actions/proveedores/getProveedores",
@@ -1005,10 +1825,22 @@
       "exports": [
         "ProveedoresPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProveedoresPage"
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/rendiciones/alta/page.tsx",
+      "language": "tsx",
+      "size_lines": 610,
       "summary": "Funciones: AltaRendicionPage, toggle, validarGuardar, getInputClass, ErrorMessage",
       "imports": [
         "@/components/ui/Loading",
@@ -1024,10 +1856,30 @@
       "exports": [
         "AltaRendicionPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AltaRendicionPage"
+        },
+        {
+          "name": "toggle"
+        },
+        {
+          "name": "validarGuardar"
+        },
+        {
+          "name": "getInputClass"
+        },
+        {
+          "name": "ErrorMessage"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/rendiciones/ipc/page.tsx",
+      "language": "tsx",
+      "size_lines": 650,
       "summary": "Funciones: IpcManagementPage, handleFileChange, handleDrop, handleDragOver, handleDragLeave",
       "imports": [
         "@/components/ui/Loading",
@@ -1042,10 +1894,43 @@
       "exports": [
         "IpcManagementPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "IpcManagementPage"
+        },
+        {
+          "name": "handleFileChange"
+        },
+        {
+          "name": "handleDrop"
+        },
+        {
+          "name": "handleDragOver"
+        },
+        {
+          "name": "handleDragLeave"
+        },
+        {
+          "name": "handleEdit"
+        },
+        {
+          "name": "handleUpload",
+          "is_async": true
+        },
+        {
+          "name": "handleDelete"
+        },
+        {
+          "name": "formatValor"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/rendiciones/modificar/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 692,
       "summary": "Funciones: ModificarRendicionPage, validarGuardar, toggle, getInputClass, ErrorMessage",
       "imports": [
         "@/components/ui/Loading",
@@ -1061,10 +1946,30 @@
       "exports": [
         "ModificarRendicionPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ModificarRendicionPage"
+        },
+        {
+          "name": "validarGuardar"
+        },
+        {
+          "name": "toggle"
+        },
+        {
+          "name": "getInputClass"
+        },
+        {
+          "name": "ErrorMessage"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/rendiciones/page.tsx",
+      "language": "tsx",
+      "size_lines": 826,
       "summary": "Funciones: RendicionesPage, handleDelete, getRendicionPagadoStatus, handleToggleRendicionPagado",
       "imports": [
         "@/components/ui/Loading",
@@ -1078,10 +1983,27 @@
       "exports": [
         "RendicionesPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "RendicionesPage"
+        },
+        {
+          "name": "handleDelete"
+        },
+        {
+          "name": "getRendicionPagadoStatus"
+        },
+        {
+          "name": "handleToggleRendicionPagado"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/servicios/page.tsx",
+      "language": "tsx",
+      "size_lines": 8,
       "summary": "Funciones: PropiedadesPage",
       "imports": [
         "@/components/ui/EnDesarrollo"
@@ -1089,10 +2011,18 @@
       "exports": [
         "PropiedadesPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PropiedadesPage"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/(protected)/templates/page.tsx",
+      "language": "tsx",
+      "size_lines": 681,
       "summary": "Funciones: TemplatePage, fetchTemplates, handleSearch, handleUpload, handleDelete",
       "imports": [
         "@/components/ui/Modal",
@@ -1100,10 +2030,39 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "TemplatePage"
+        },
+        {
+          "name": "fetchTemplates",
+          "is_async": true
+        },
+        {
+          "name": "handleSearch"
+        },
+        {
+          "name": "handleUpload",
+          "is_async": true
+        },
+        {
+          "name": "handleDelete"
+        },
+        {
+          "name": "confirmDelete",
+          "is_async": true
+        },
+        {
+          "name": "closeModal"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/[id]/page.tsx",
+      "language": "tsx",
+      "size_lines": 420,
       "summary": "Funciones: UserDetailPage, fetchUser, getRoleInfo, getStatusInfo",
       "imports": [
         "@/actions/user-actions",
@@ -1123,10 +2082,28 @@
       "exports": [
         "UserDetailPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "UserDetailPage"
+        },
+        {
+          "name": "fetchUser",
+          "is_async": true
+        },
+        {
+          "name": "getRoleInfo"
+        },
+        {
+          "name": "getStatusInfo"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/cambiar-contrasena/page.tsx",
+      "language": "tsx",
+      "size_lines": 354,
       "summary": "Funciones: ChangePasswordPage, onSubmit, handleCancel",
       "imports": [
         "@/actions/user-actions",
@@ -1151,10 +2128,25 @@
       "exports": [
         "ChangePasswordPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ChangePasswordPage"
+        },
+        {
+          "name": "onSubmit",
+          "is_async": true
+        },
+        {
+          "name": "handleCancel"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/editar/page.tsx",
+      "language": "tsx",
+      "size_lines": 444,
       "summary": "Funciones: EditUserPage, fetchUser, onSubmit, handleCancel",
       "imports": [
         "@/actions/user-actions",
@@ -1180,10 +2172,29 @@
       "exports": [
         "EditUserPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "EditUserPage"
+        },
+        {
+          "name": "fetchUser",
+          "is_async": true
+        },
+        {
+          "name": "onSubmit",
+          "is_async": true
+        },
+        {
+          "name": "handleCancel"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/nuevo/page.tsx",
+      "language": "tsx",
+      "size_lines": 127,
       "summary": "Funciones: NewUserPage, handleCancel",
       "imports": [
         "@/components/ui/Modal",
@@ -1199,10 +2210,21 @@
       "exports": [
         "NewUserPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NewUserPage"
+        },
+        {
+          "name": "handleCancel"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/page.tsx",
+      "language": "tsx",
+      "size_lines": 552,
       "summary": "Funciones: UsersPage, fetchUsers, getModalConfig, TableView, CardsView",
       "imports": [
         "@/actions/getUsers",
@@ -1223,10 +2245,31 @@
       "exports": [
         "UsersPage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "UsersPage"
+        },
+        {
+          "name": "fetchUsers",
+          "is_async": true
+        },
+        {
+          "name": "getModalConfig"
+        },
+        {
+          "name": "TableView"
+        },
+        {
+          "name": "CardsView"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/(protected)/usuarios/perfil/page.tsx",
+      "language": "tsx",
+      "size_lines": 444,
       "summary": "Funciones: ProfilePage, handleBack, fetchUser, getRoleInfo, getStatusInfo",
       "imports": [
         "@/actions/user-actions",
@@ -1246,10 +2289,31 @@
       "exports": [
         "ProfilePage"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ProfilePage"
+        },
+        {
+          "name": "handleBack"
+        },
+        {
+          "name": "fetchUser",
+          "is_async": true
+        },
+        {
+          "name": "getRoleInfo"
+        },
+        {
+          "name": "getStatusInfo"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/auth/[...nextauth]/route.ts",
+      "language": "typescript",
+      "size_lines": 4,
       "summary": "Archivo .ts",
       "imports": [
         "../../../../../auth"
@@ -1257,10 +2321,14 @@
       "exports": [
         "runtime"
       ],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/app/api/auth/verify-email/route.ts",
+      "language": "typescript",
+      "size_lines": 64,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1270,10 +2338,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/barrios/route.ts",
+      "language": "typescript",
+      "size_lines": 17,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1282,10 +2359,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/clientes/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 176,
       "summary": "Funciones: GET, PUT",
       "imports": [
         "@/lib/db",
@@ -1295,10 +2381,23 @@
         "GET",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/clientes/propietarios/route.ts",
+      "language": "typescript",
+      "size_lines": 66,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1307,10 +2406,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/clientes/route.ts",
+      "language": "typescript",
+      "size_lines": 121,
       "summary": "Funciones: GET, POST",
       "imports": [
         "@/lib/db",
@@ -1320,10 +2428,23 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/cobranzas/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 250,
       "summary": "Funciones: GET, DELETE, PUT",
       "imports": [
         "../../../../../auth",
@@ -1335,10 +2456,27 @@
         "GET",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/cobranzas/route.ts",
+      "language": "typescript",
+      "size_lines": 325,
       "summary": "Funciones: GET, POST, normalize",
       "imports": [
         "../../../../auth",
@@ -1349,10 +2487,26 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        },
+        {
+          "name": "normalize"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/contracts/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 254,
       "summary": "Funciones: GET, PUT, PATCH, DELETE",
       "imports": [
         "../../../../../auth",
@@ -1369,10 +2523,31 @@
         "PATCH",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        },
+        {
+          "name": "PATCH",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/contracts/route.ts",
+      "language": "typescript",
+      "size_lines": 305,
       "summary": "Funciones: GET, POST, DELETE",
       "imports": [
         "../../../../auth",
@@ -1388,10 +2563,27 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/estado-pago/route.ts",
+      "language": "typescript",
+      "size_lines": 25,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1402,10 +2594,19 @@
         "dynamic",
         "runtime"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/estados/route.ts",
+      "language": "typescript",
+      "size_lines": 22,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1414,10 +2615,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/images/route.ts",
+      "language": "typescript",
+      "size_lines": 48,
       "summary": "Funciones: POST",
       "imports": [
         "@/lib/db",
@@ -1426,10 +2636,19 @@
       "exports": [
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/inmuebles/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 597,
       "summary": "Funciones: GET, PUT, DELETE, normalize",
       "imports": [
         "../../../../../auth",
@@ -1442,10 +2661,30 @@
         "GET",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        },
+        {
+          "name": "normalize"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/inmuebles/route.ts",
+      "language": "typescript",
+      "size_lines": 392,
       "summary": "Funciones: GET, POST",
       "imports": [
         "../../../../auth",
@@ -1457,10 +2696,23 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/medio-pago/route.ts",
+      "language": "typescript",
+      "size_lines": 26,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1471,10 +2723,19 @@
         "dynamic",
         "runtime"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/operaciones/route.ts",
+      "language": "typescript",
+      "size_lines": 12,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1483,10 +2744,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/pagos/[id]/pdf/route.ts",
+      "language": "typescript",
+      "size_lines": 186,
       "summary": "Funciones: GET, drawRecibo",
       "imports": [
         "@/lib/db",
@@ -1496,10 +2766,22 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "drawRecibo"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/pagos/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 87,
       "summary": "Funciones: serialize, GET, PUT, DELETE",
       "imports": [
         "@/lib/db",
@@ -1512,10 +2794,30 @@
         "dynamic",
         "runtime"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "serialize"
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/pagos/route.ts",
+      "language": "typescript",
+      "size_lines": 134,
       "summary": "Funciones: serialize, GET, POST",
       "imports": [
         "@/actions/pagos/validaciones",
@@ -1528,10 +2830,26 @@
         "dynamic",
         "runtime"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "serialize"
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/proveedores/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 89,
       "summary": "Funciones: GET, PUT",
       "imports": [
         "@/lib/db",
@@ -1542,10 +2860,23 @@
         "GET",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/proveedores/route.ts",
+      "language": "typescript",
+      "size_lines": 99,
       "summary": "Funciones: GET, POST",
       "imports": [
         "@/lib/db",
@@ -1556,10 +2887,23 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/rendiciones/[id]/excel/route.ts",
+      "language": "typescript",
+      "size_lines": 257,
       "summary": "Funciones: calcularSaldoAnterior, GET",
       "imports": [
         "@/lib/db",
@@ -1570,10 +2914,23 @@
         "GET",
         "dynamic"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "calcularSaldoAnterior",
+          "is_async": true
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/rendiciones/[id]/pagado/route.ts",
+      "language": "typescript",
+      "size_lines": 57,
       "summary": "Funciones: PATCH",
       "imports": [
         "../../../../../../auth",
@@ -1583,10 +2940,19 @@
       "exports": [
         "PATCH"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PATCH",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/rendiciones/[id]/route.ts",
+      "language": "typescript",
+      "size_lines": 551,
       "summary": "Funciones: calcularSaldoAnterior, GET, PUT, DELETE",
       "imports": [
         "../../../../../auth",
@@ -1599,10 +2965,31 @@
         "GET",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "calcularSaldoAnterior",
+          "is_async": true
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/rendiciones/ipc/route.ts",
+      "language": "typescript",
+      "size_lines": 164,
       "summary": "Funciones: GET, POST, DELETE, PUT",
       "imports": [
         "@/lib/db",
@@ -1614,10 +3001,31 @@
         "POST",
         "PUT"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        },
+        {
+          "name": "PUT",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/rendiciones/route.ts",
+      "language": "typescript",
+      "size_lines": 727,
       "summary": "Funciones: calcularNumeroRendicion, calcularSaldoAnterior, GET, POST",
       "imports": [
         "../../../../auth",
@@ -1629,10 +3037,30 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "calcularNumeroRendicion"
+        },
+        {
+          "name": "calcularSaldoAnterior",
+          "is_async": true
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/templates/route.ts",
+      "language": "typescript",
+      "size_lines": 255,
       "summary": "Funciones: POST, GET, DELETE",
       "imports": [
         "../../../../auth",
@@ -1647,10 +3075,27 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "is_async": true
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        },
+        {
+          "name": "DELETE",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/app/api/tipo-cliente/route.ts",
+      "language": "typescript",
+      "size_lines": 22,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1658,11 +3103,20 @@
       ],
       "exports": [
         "GET"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
       ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/tipo-documento/route.ts",
+      "language": "typescript",
+      "size_lines": 18,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1671,10 +3125,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/tipos-servicio/route.ts",
+      "language": "typescript",
+      "size_lines": 23,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1685,10 +3148,19 @@
         "dynamic",
         "runtime"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/tipos_inmueble/route.ts",
+      "language": "typescript",
+      "size_lines": 25,
       "summary": "Funciones: GET",
       "imports": [
         "@/lib/db",
@@ -1697,10 +3169,19 @@
       "exports": [
         "GET"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/app/api/ubicaciones/route.ts",
+      "language": "typescript",
+      "size_lines": 41,
       "summary": "Funciones: POST, GET",
       "imports": [
         "@/lib/db",
@@ -1710,10 +3191,23 @@
         "GET",
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "is_async": true
+        },
+        {
+          "name": "GET",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/api/upload/route.ts",
+      "language": "typescript",
+      "size_lines": 34,
       "summary": "Funciones: POST",
       "imports": [
         "@/lib/supabase-storage",
@@ -1722,17 +3216,30 @@
       "exports": [
         "POST"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "POST",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/globals.css",
+      "language": "unknown",
+      "size_lines": 269,
       "summary": "Archivo .css",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/app/layout.tsx",
+      "language": "tsx",
+      "size_lines": 35,
       "summary": "Funciones: RootLayout",
       "imports": [
         "./globals.css",
@@ -1743,10 +3250,18 @@
         "RootLayout",
         "metadata"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "RootLayout"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/app/page.tsx",
+      "language": "tsx",
+      "size_lines": 533,
       "summary": "Funciones: HeroUnifiedSection, DualServicesSection, ValuesSection, ContactSection, FooterSection",
       "imports": [
         "@/components/ui/Header",
@@ -1755,11 +3270,34 @@
         "next/image"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "HeroUnifiedSection"
+        },
+        {
+          "name": "DualServicesSection"
+        },
+        {
+          "name": "ValuesSection"
+        },
+        {
+          "name": "ContactSection"
+        },
+        {
+          "name": "FooterSection"
+        },
+        {
+          "name": "App"
+        }
+      ],
       "complexity": "high"
     },
     {
-      "path": "src/app/propiedades/page.tsx",
-      "summary": "Funciones: PropiedadesPage, fetchInmuebles, fetchArchivados, handleCrear, handleModificar",
+      "path": "src/app/propiedades/PropiedadesClient.tsx",
+      "language": "tsx",
+      "size_lines": 735,
+      "summary": "Punto de entrada | Funciones: PropiedadesClient, fetchInmuebles, fetchArchivados, handleCrear, handleModificar",
       "imports": [
         "@/components/Filtros",
         "@/components/InmuebleCard",
@@ -1773,12 +3311,63 @@
         "react"
       ],
       "exports": [
-        "PropiedadesPage"
+        "PropiedadesClient"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PropiedadesClient"
+        },
+        {
+          "name": "fetchInmuebles",
+          "is_async": true
+        },
+        {
+          "name": "fetchArchivados",
+          "is_async": true
+        },
+        {
+          "name": "handleCrear"
+        },
+        {
+          "name": "handleModificar"
+        },
+        {
+          "name": "handleEliminar"
+        },
+        {
+          "name": "handleToggleArchivar"
+        }
       ],
       "complexity": "high"
     },
     {
+      "path": "src/app/propiedades/page.tsx",
+      "language": "tsx",
+      "size_lines": 25,
+      "summary": "Funciones: PropiedadesPage",
+      "imports": [
+        "../../../auth",
+        "./PropiedadesClient",
+        "@/components/layout/AppShell",
+        "next/headers"
+      ],
+      "exports": [
+        "PropiedadesPage"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PropiedadesPage",
+          "is_async": true
+        }
+      ],
+      "complexity": "low"
+    },
+    {
       "path": "src/app/providers.tsx",
+      "language": "tsx",
+      "size_lines": 17,
       "summary": "Funciones: Providers",
       "imports": [
         "@tanstack/react-query",
@@ -1788,10 +3377,18 @@
       "exports": [
         "Providers"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Providers"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ClienteForm.tsx",
+      "language": "tsx",
+      "size_lines": 370,
       "summary": "Punto de entrada | Funciones: ClienteForm, submitHandler",
       "imports": [
         "@/components/ui/button",
@@ -1807,10 +3404,21 @@
       "exports": [
         "ClienteForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ClienteForm"
+        },
+        {
+          "name": "submitHandler"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/DocxViewer.tsx",
+      "language": "tsx",
+      "size_lines": 309,
       "summary": "Funciones: DocxViewer, render",
       "imports": [
         "docx-preview",
@@ -1820,10 +3428,22 @@
       "exports": [
         "DocxViewer"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DocxViewer"
+        },
+        {
+          "name": "render",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/Filtros.tsx",
+      "language": "tsx",
+      "size_lines": 345,
       "summary": "Funciones: Filtros, handleRemove, aplicar, getOperacionNombre, getTipoNombre",
       "imports": [
         "@/types/filtros",
@@ -1834,10 +3454,33 @@
       "exports": [
         "Filtros"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Filtros"
+        },
+        {
+          "name": "handleRemove"
+        },
+        {
+          "name": "aplicar"
+        },
+        {
+          "name": "getOperacionNombre"
+        },
+        {
+          "name": "getTipoNombre"
+        },
+        {
+          "name": "getEstadoNombre"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/FormularioInmueble.tsx",
+      "language": "tsx",
+      "size_lines": 984,
       "summary": "Funciones: FormularioInmueble, getInputClass, ErrorMessage, handleFileChange, handleRemoveFile",
       "imports": [
         "@/components/ui/Modal",
@@ -1850,10 +3493,46 @@
       "exports": [
         "FormularioInmueble"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FormularioInmueble"
+        },
+        {
+          "name": "getInputClass"
+        },
+        {
+          "name": "ErrorMessage"
+        },
+        {
+          "name": "handleFileChange"
+        },
+        {
+          "name": "handleRemoveFile"
+        },
+        {
+          "name": "handleSetPrincipal"
+        },
+        {
+          "name": "validarFormulario"
+        },
+        {
+          "name": "ejecutarSubmit",
+          "is_async": true
+        },
+        {
+          "name": "toNumberOrNull"
+        },
+        {
+          "name": "handleSubmit"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/InmuebleCard.tsx",
+      "language": "tsx",
+      "size_lines": 286,
       "summary": "Funciones: InmuebleCard, pluralizar",
       "imports": [
         "lucide-react",
@@ -1863,10 +3542,21 @@
       "exports": [
         "InmuebleCard"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "InmuebleCard"
+        },
+        {
+          "name": "pluralizar"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/PagoProveedorForm.tsx",
+      "language": "tsx",
+      "size_lines": 298,
       "summary": "Funciones: formatEuropeanNumber, PagoProveedorForm, submitHandler",
       "imports": [
         "@/components/ui/button",
@@ -1880,10 +3570,24 @@
       "exports": [
         "PagoProveedorForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "formatEuropeanNumber"
+        },
+        {
+          "name": "PagoProveedorForm"
+        },
+        {
+          "name": "submitHandler"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ProveedorForm.tsx",
+      "language": "tsx",
+      "size_lines": 571,
       "summary": "Funciones: validarCUIT, ProveedorForm, submitHandler",
       "imports": [
         "@/components/ui/button",
@@ -1900,10 +3604,24 @@
       "exports": [
         "ProveedorForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "validarCUIT"
+        },
+        {
+          "name": "ProveedorForm"
+        },
+        {
+          "name": "submitHandler"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/SubirImagenes.tsx",
+      "language": "tsx",
+      "size_lines": 100,
       "summary": "Funciones: SubirImagenes, subirArchivo, handleSubmit",
       "imports": [
         "react"
@@ -1911,10 +3629,26 @@
       "exports": [
         "SubirImagenes"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "SubirImagenes"
+        },
+        {
+          "name": "subirArchivo",
+          "is_async": true
+        },
+        {
+          "name": "handleSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/dashboard/KpiCard.tsx",
+      "language": "tsx",
+      "size_lines": 16,
       "summary": "Funciones: KpiCard",
       "imports": [
         "lucide-react"
@@ -1922,10 +3656,18 @@
       "exports": [
         "KpiCard"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "KpiCard"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/dashboard/KpiGrid.tsx",
+      "language": "tsx",
+      "size_lines": 24,
       "summary": "Funciones: fmtCurrency, KpiGrid",
       "imports": [
         "./KpiCard",
@@ -1935,10 +3677,22 @@
       "exports": [
         "KpiGrid"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "fmtCurrency"
+        },
+        {
+          "name": "KpiGrid",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/dashboard/QuickAccess.tsx",
+      "language": "tsx",
+      "size_lines": 22,
       "summary": "Funciones: QuickAccess",
       "imports": [
         "@/actions/navigation/getRecentModules",
@@ -1948,10 +3702,19 @@
       "exports": [
         "QuickAccess"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "QuickAccess",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/layout/AppHeader.tsx",
+      "language": "tsx",
+      "size_lines": 20,
       "summary": "Punto de entrada | Funciones: AppHeader",
       "imports": [
         "./GroupSelector",
@@ -1960,10 +3723,39 @@
       "exports": [
         "AppHeader"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AppHeader"
+        }
+      ],
+      "complexity": "low"
+    },
+    {
+      "path": "src/components/layout/AppShell.tsx",
+      "language": "tsx",
+      "size_lines": 27,
+      "summary": "Punto de entrada | Funciones: AppShell",
+      "imports": [
+        "@/components/layout/AppHeader",
+        "@/components/layout/NavigationTracker",
+        "@/components/layout/Sidebar"
+      ],
+      "exports": [
+        "AppShell"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AppShell"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/layout/GroupSelector.tsx",
+      "language": "tsx",
+      "size_lines": 22,
       "summary": "Funciones: GroupSelector, select",
       "imports": [
         "@/actions/user/setGroup",
@@ -1973,10 +3765,22 @@
       "exports": [
         "GroupSelector"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "GroupSelector"
+        },
+        {
+          "name": "select",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/layout/NavigationTracker.tsx",
+      "language": "tsx",
+      "size_lines": 24,
       "summary": "Funciones: NavigationTracker",
       "imports": [
         "@/actions/navigation/trackNavigation",
@@ -1986,10 +3790,18 @@
       "exports": [
         "NavigationTracker"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "NavigationTracker"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/layout/Sidebar.tsx",
+      "language": "tsx",
+      "size_lines": 29,
       "summary": "Funciones: Sidebar",
       "imports": [
         "./SidebarClient"
@@ -1997,10 +3809,18 @@
       "exports": [
         "Sidebar"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Sidebar"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/layout/SidebarClient.tsx",
+      "language": "tsx",
+      "size_lines": 58,
       "summary": "Punto de entrada | Funciones: SidebarClient, onResize",
       "imports": [
         "lucide-react",
@@ -2012,10 +3832,21 @@
       "exports": [
         "SidebarClient"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "SidebarClient"
+        },
+        {
+          "name": "onResize"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/layout/UserMenu.tsx",
+      "language": "tsx",
+      "size_lines": 25,
       "summary": "Funciones: UserMenu",
       "imports": [
         "next-auth/react",
@@ -2024,10 +3855,18 @@
       "exports": [
         "UserMenu"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "UserMenu"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/Badge.tsx",
+      "language": "tsx",
+      "size_lines": 38,
       "summary": "Funciones: Badge",
       "imports": [
         "@/lib/utils",
@@ -2035,10 +3874,18 @@
         "class-variance-authority"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Badge"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/EnDesarrollo.tsx",
+      "language": "tsx",
+      "size_lines": 39,
       "summary": "Archivo .tsx",
       "imports": [
         "@/components/ui/button",
@@ -2046,10 +3893,14 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/ForgotPasswordForm.tsx",
+      "language": "tsx",
+      "size_lines": 258,
       "summary": "Funciones: ForgotPasswordForm, onSubmit",
       "imports": [
         "@/actions/auth-action",
@@ -2068,10 +3919,22 @@
       "exports": [
         "ForgotPasswordForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ForgotPasswordForm"
+        },
+        {
+          "name": "onSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/FormLogin.tsx",
+      "language": "tsx",
+      "size_lines": 274,
       "summary": "Funciones: onSubmit, togglePasswordVisibility",
       "imports": [
         "@/components/ui/alert",
@@ -2088,10 +3951,22 @@
         "zod"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "onSubmit",
+          "is_async": true
+        },
+        {
+          "name": "togglePasswordVisibility"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/Header.tsx",
+      "language": "tsx",
+      "size_lines": 433,
       "summary": "Funciones: Header, handleScroll, handleUserSettingsClick",
       "imports": [
         "@/components/ui/alert",
@@ -2104,10 +3979,24 @@
       "exports": [
         "Header"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Header"
+        },
+        {
+          "name": "handleScroll"
+        },
+        {
+          "name": "handleUserSettingsClick"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/HowWeWork.tsx",
+      "language": "tsx",
+      "size_lines": 62,
       "summary": "Funciones: HowWeWork",
       "imports": [
         "next/image"
@@ -2115,20 +4004,32 @@
       "exports": [
         "HowWeWork"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "HowWeWork"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/Loading.tsx",
+      "language": "tsx",
+      "size_lines": 88,
       "summary": "Archivo .tsx",
       "imports": [
         "next/image",
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/LogoutButton.tsx",
+      "language": "tsx",
+      "size_lines": 23,
       "summary": "Funciones: LogoutButton, handleClick",
       "imports": [
         "@/components/ui/button",
@@ -2136,19 +4037,39 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "LogoutButton"
+        },
+        {
+          "name": "handleClick",
+          "is_async": true
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/Modal.tsx",
+      "language": "tsx",
+      "size_lines": 153,
       "summary": "Funciones: handleConfirm",
       "imports": [
         "lucide-react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "handleConfirm"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/PhoneInputField.tsx",
+      "language": "tsx",
+      "size_lines": 62,
       "summary": "Funciones: PhoneInputField",
       "imports": [
         "@/components/ui/form",
@@ -2160,10 +4081,18 @@
       "exports": [
         "PhoneInputField"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PhoneInputField"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/RegisterForm.tsx",
+      "language": "tsx",
+      "size_lines": 344,
       "summary": "Funciones: RegisterForm, onSubmit",
       "imports": [
         "@/actions/auth-action",
@@ -2184,10 +4113,22 @@
       "exports": [
         "RegisterForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "RegisterForm"
+        },
+        {
+          "name": "onSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/ResetPasswordForm.tsx",
+      "language": "tsx",
+      "size_lines": 258,
       "summary": "Funciones: ResetPasswordForm, onSubmit",
       "imports": [
         "@/actions/auth-action",
@@ -2207,10 +4148,22 @@
       "exports": [
         "ResetPasswordForm"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ResetPasswordForm"
+        },
+        {
+          "name": "onSubmit",
+          "is_async": true
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/alert.tsx",
+      "language": "tsx",
+      "size_lines": 66,
       "summary": "Funciones: Alert, AlertTitle, AlertDescription",
       "imports": [
         "@/lib/utils",
@@ -2218,10 +4171,24 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Alert"
+        },
+        {
+          "name": "AlertTitle"
+        },
+        {
+          "name": "AlertDescription"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/avatar.tsx",
+      "language": "tsx",
+      "size_lines": 53,
       "summary": "Funciones: Avatar, AvatarImage, AvatarFallback",
       "imports": [
         "@/lib/utils",
@@ -2229,10 +4196,24 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Avatar"
+        },
+        {
+          "name": "AvatarImage"
+        },
+        {
+          "name": "AvatarFallback"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/button.tsx",
+      "language": "tsx",
+      "size_lines": 61,
       "summary": "Funciones: Button",
       "imports": [
         "@/lib/utils",
@@ -2241,20 +4222,54 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Button"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/card.tsx",
+      "language": "tsx",
+      "size_lines": 93,
       "summary": "Funciones: Card, CardHeader, CardTitle, CardDescription, CardAction",
       "imports": [
         "@/lib/utils",
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Card"
+        },
+        {
+          "name": "CardHeader"
+        },
+        {
+          "name": "CardTitle"
+        },
+        {
+          "name": "CardDescription"
+        },
+        {
+          "name": "CardAction"
+        },
+        {
+          "name": "CardContent"
+        },
+        {
+          "name": "CardFooter"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/combobox.tsx",
+      "language": "tsx",
+      "size_lines": 260,
       "summary": "Funciones: Combobox, handleClickOutside, handleKeyDown, handleOptionClick, handleClear",
       "imports": [
         "lucide-react"
@@ -2262,10 +4277,33 @@
       "exports": [
         "Combobox"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Combobox"
+        },
+        {
+          "name": "handleClickOutside"
+        },
+        {
+          "name": "handleKeyDown"
+        },
+        {
+          "name": "handleOptionClick"
+        },
+        {
+          "name": "handleClear"
+        },
+        {
+          "name": "handleInputChange"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/dropdown-menu.tsx",
+      "language": "tsx",
+      "size_lines": 259,
       "summary": "Funciones: DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup",
       "imports": [
         "@/lib/utils",
@@ -2274,10 +4312,60 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "DropdownMenu"
+        },
+        {
+          "name": "DropdownMenuPortal"
+        },
+        {
+          "name": "DropdownMenuTrigger"
+        },
+        {
+          "name": "DropdownMenuContent"
+        },
+        {
+          "name": "DropdownMenuGroup"
+        },
+        {
+          "name": "DropdownMenuItem"
+        },
+        {
+          "name": "DropdownMenuCheckboxItem"
+        },
+        {
+          "name": "DropdownMenuRadioGroup"
+        },
+        {
+          "name": "DropdownMenuRadioItem"
+        },
+        {
+          "name": "DropdownMenuLabel"
+        },
+        {
+          "name": "DropdownMenuSeparator"
+        },
+        {
+          "name": "DropdownMenuShortcut"
+        },
+        {
+          "name": "DropdownMenuSub"
+        },
+        {
+          "name": "DropdownMenuSubTrigger"
+        },
+        {
+          "name": "DropdownMenuSubContent"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/form.tsx",
+      "language": "tsx",
+      "size_lines": 169,
       "summary": "Funciones: FormItem, FormLabel, FormControl, FormDescription, FormMessage",
       "imports": [
         "@/components/ui/label",
@@ -2288,20 +4376,51 @@
         "react-hook-form"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "FormItem"
+        },
+        {
+          "name": "FormLabel"
+        },
+        {
+          "name": "FormControl"
+        },
+        {
+          "name": "FormDescription"
+        },
+        {
+          "name": "FormMessage"
+        },
+        {
+          "name": "useFormField"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/input.tsx",
+      "language": "tsx",
+      "size_lines": 22,
       "summary": "Funciones: Input",
       "imports": [
         "@/lib/utils",
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Input"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/label.tsx",
+      "language": "tsx",
+      "size_lines": 26,
       "summary": "Funciones: Label",
       "imports": [
         "@/lib/utils",
@@ -2309,10 +4428,18 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Label"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/select.tsx",
+      "language": "tsx",
+      "size_lines": 187,
       "summary": "Funciones: Select, SelectGroup, SelectValue, SelectTrigger, SelectContent",
       "imports": [
         "@/lib/utils",
@@ -2321,10 +4448,45 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Select"
+        },
+        {
+          "name": "SelectGroup"
+        },
+        {
+          "name": "SelectValue"
+        },
+        {
+          "name": "SelectTrigger"
+        },
+        {
+          "name": "SelectContent"
+        },
+        {
+          "name": "SelectLabel"
+        },
+        {
+          "name": "SelectItem"
+        },
+        {
+          "name": "SelectSeparator"
+        },
+        {
+          "name": "SelectScrollUpButton"
+        },
+        {
+          "name": "SelectScrollDownButton"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/components/ui/separator.tsx",
+      "language": "tsx",
+      "size_lines": 28,
       "summary": "Funciones: Separator",
       "imports": [
         "@/lib/utils",
@@ -2332,38 +4494,91 @@
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Separator"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/skeleton.tsx",
+      "language": "tsx",
+      "size_lines": 13,
       "summary": "Funciones: Skeleton",
       "imports": [
         "@/lib/utils"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Skeleton"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/components/ui/table.tsx",
+      "language": "tsx",
+      "size_lines": 82,
       "summary": "Funciones: Table, TableHeader, TableBody, TableFooter, TableRow",
       "imports": [
         "@/lib/utils"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Table"
+        },
+        {
+          "name": "TableHeader"
+        },
+        {
+          "name": "TableBody"
+        },
+        {
+          "name": "TableFooter"
+        },
+        {
+          "name": "TableRow"
+        },
+        {
+          "name": "TableHead"
+        },
+        {
+          "name": "TableCell"
+        },
+        {
+          "name": "TableCaption"
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/components/ui/textarea.tsx",
+      "language": "tsx",
+      "size_lines": 18,
       "summary": "Funciones: Textarea",
       "imports": [
         "@/lib/utils",
         "react"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Textarea"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/db/inmuebles.ts",
+      "language": "typescript",
+      "size_lines": 48,
       "summary": "Funciones: obtenerInmuebles",
       "imports": [
         "@/lib/db"
@@ -2371,49 +4586,78 @@
       "exports": [
         "obtenerInmuebles"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "obtenerInmuebles",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/client.d.ts",
+      "language": "typescript",
+      "size_lines": 1,
       "summary": "Punto de entrada",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/client.js",
+      "language": "javascript",
+      "size_lines": 5,
       "summary": "Punto de entrada",
       "imports": [
         "."
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/default.d.ts",
+      "language": "typescript",
+      "size_lines": 1,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/default.js",
+      "language": "javascript",
+      "size_lines": 5,
       "summary": "Archivo .js",
       "imports": [
         "#main-entry-point"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/edge.d.ts",
+      "language": "typescript",
+      "size_lines": 1,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/edge.js",
+      "language": "javascript",
+      "size_lines": 493,
       "summary": "Archivo .js",
       "imports": [
         "#wasm-compiler-loader",
@@ -2421,19 +4665,38 @@
         "./runtime/wasm-compiler-edge.js"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/index-browser.js",
+      "language": "javascript",
+      "size_lines": 517,
       "summary": "Punto de entrada | Clases: PrismaClient | Funciones: constructor, get",
       "imports": [
         "./runtime/index-browser.js"
       ],
       "exports": [],
+      "classes": [
+        {
+          "name": "PrismaClient"
+        }
+      ],
+      "functions": [
+        {
+          "name": "constructor"
+        },
+        {
+          "name": "get"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/index.js",
+      "language": "javascript",
+      "size_lines": 493,
       "summary": "Punto de entrada",
       "imports": [
         "./query_compiler_fast_bg.js",
@@ -2443,31 +4706,47 @@
         "path"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/package.json",
+      "language": "unknown",
+      "size_lines": 139,
       "summary": "Archivo .json",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/query_compiler_fast_bg.js",
+      "language": "javascript",
+      "size_lines": 2,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/query_engine_bg.js",
+      "language": "javascript",
+      "size_lines": 2,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/runtime/client.d.ts",
+      "language": "typescript",
+      "size_lines": 3433,
       "summary": "Punto de entrada",
       "imports": [
         "./generated/prisma/client",
@@ -2476,10 +4755,14 @@
         "@prisma/debug"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/runtime/client.js",
+      "language": "javascript",
+      "size_lines": 110,
       "summary": "Punto de entrada",
       "imports": [
         "./generated/prisma/client",
@@ -2493,51 +4776,75 @@
         "node:path"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/runtime/edge-esm.js",
+      "language": "javascript",
+      "size_lines": 35,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/runtime/edge.js",
+      "language": "javascript",
+      "size_lines": 35,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/runtime/index-browser.d.ts",
+      "language": "typescript",
+      "size_lines": 90,
       "summary": "Punto de entrada",
       "imports": [
         "@prisma/client-runtime-utils"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/runtime/index-browser.js",
+      "language": "javascript",
+      "size_lines": 6,
       "summary": "Punto de entrada",
       "imports": [
         "@prisma/client-runtime-utils"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/runtime/library.d.ts",
+      "language": "typescript",
+      "size_lines": 3982,
       "summary": "Archivo .ts",
       "imports": [
         "@prisma/debug"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/runtime/library.js",
+      "language": "javascript",
+      "size_lines": 147,
       "summary": "Archivo .js",
       "imports": [
         "node:async_hooks",
@@ -2553,17 +4860,25 @@
         "node:util"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/runtime/react-native.js",
+      "language": "javascript",
+      "size_lines": 84,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/runtime/wasm-compiler-edge.js",
+      "language": "javascript",
+      "size_lines": 100,
       "summary": "Archivo .js",
       "imports": [
         "./generated/prisma/client",
@@ -2571,45 +4886,69 @@
         "@prisma/client-runtime-utils"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/runtime/wasm-engine-edge.js",
+      "language": "javascript",
+      "size_lines": 38,
       "summary": "Archivo .js",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/generated/prisma/schema.prisma",
+      "language": "unknown",
+      "size_lines": 506,
       "summary": "Archivo .prisma",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/generated/prisma/wasm-edge-light-loader.mjs",
+      "language": "unknown",
+      "size_lines": 5,
       "summary": "Archivo .mjs",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/wasm-worker-loader.mjs",
+      "language": "unknown",
+      "size_lines": 5,
       "summary": "Archivo .mjs",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/wasm.d.ts",
+      "language": "typescript",
+      "size_lines": 1,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/generated/prisma/wasm.js",
+      "language": "javascript",
+      "size_lines": 532,
       "summary": "Archivo .js",
       "imports": [
         "#wasm-engine-loader",
@@ -2617,10 +4956,14 @@
         "./runtime/wasm-engine-edge.js"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/lib/db.ts",
+      "language": "typescript",
+      "size_lines": 14,
       "summary": "Archivo .ts",
       "imports": [
         "@/generated/prisma",
@@ -2630,19 +4973,50 @@
       "exports": [
         "db"
       ],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/lib/excelGenerator.ts",
+      "language": "typescript",
+      "size_lines": 699,
       "summary": "Funciones: getMonthName, numberToSpanishWords, convertLessThan1000, formatContratoStr, generarExcelRendicion",
       "imports": [],
       "exports": [
         "generarExcelRendicion"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getMonthName"
+        },
+        {
+          "name": "numberToSpanishWords"
+        },
+        {
+          "name": "convertLessThan1000"
+        },
+        {
+          "name": "formatContratoStr"
+        },
+        {
+          "name": "generarExcelRendicion",
+          "is_async": true
+        },
+        {
+          "name": "fmt"
+        },
+        {
+          "name": "crearSeccionEgresos"
+        }
+      ],
       "complexity": "high"
     },
     {
       "path": "src/lib/mail.ts",
+      "language": "typescript",
+      "size_lines": 53,
       "summary": "Funciones: getResend, sendEmailVerification",
       "imports": [
         "resend"
@@ -2650,10 +5024,22 @@
       "exports": [
         "sendEmailVerification"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getResend"
+        },
+        {
+          "name": "sendEmailVerification",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/lib/pdfGenerator.ts",
+      "language": "typescript",
+      "size_lines": 75,
       "summary": "Funciones: generarPDFRecibo",
       "imports": [
         "pdf-lib"
@@ -2661,10 +5047,19 @@
       "exports": [
         "generarPDFRecibo"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "generarPDFRecibo",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/lib/supabase-storage.ts",
+      "language": "typescript",
+      "size_lines": 39,
       "summary": "Funciones: uploadFile, getPublicUrl, deleteFile, listFiles",
       "imports": [
         "./supabase/server"
@@ -2675,10 +5070,30 @@
         "listFiles",
         "uploadFile"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "uploadFile",
+          "is_async": true
+        },
+        {
+          "name": "getPublicUrl"
+        },
+        {
+          "name": "deleteFile",
+          "is_async": true
+        },
+        {
+          "name": "listFiles",
+          "is_async": true
+        }
+      ],
       "complexity": "medium"
     },
     {
       "path": "src/lib/supabase/server.ts",
+      "language": "typescript",
+      "size_lines": 7,
       "summary": "Punto de entrada",
       "imports": [
         "@supabase/supabase-js"
@@ -2686,10 +5101,14 @@
       "exports": [
         "supabaseServer"
       ],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/lib/utils.ts",
+      "language": "typescript",
+      "size_lines": 8,
       "summary": "Funciones: cn",
       "imports": [
         "clsx",
@@ -2698,10 +5117,18 @@
       "exports": [
         "cn"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "cn"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/lib/zod.ts",
+      "language": "typescript",
+      "size_lines": 107,
       "summary": "Archivo .ts",
       "imports": [
         "zod"
@@ -2715,10 +5142,14 @@
         "registerSchema",
         "resetPasswordSchema"
       ],
+      "classes": [],
+      "functions": [],
       "complexity": "high"
     },
     {
       "path": "src/middleware.ts",
+      "language": "typescript",
+      "size_lines": 88,
       "summary": "Archivo .ts",
       "imports": [
         "../auth.config",
@@ -2728,10 +5159,14 @@
       "exports": [
         "config"
       ],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "src/providers/QueryProvider.tsx",
+      "language": "tsx",
+      "size_lines": 24,
       "summary": "Funciones: QueryProvider",
       "imports": [
         "@tanstack/react-query",
@@ -2741,45 +5176,71 @@
       "exports": [
         "QueryProvider"
       ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "QueryProvider"
+        }
+      ],
       "complexity": "low"
     },
     {
       "path": "src/types/filtros.ts",
+      "language": "typescript",
+      "size_lines": 7,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "src/types/inmuebles.ts",
+      "language": "typescript",
+      "size_lines": 89,
       "summary": "Archivo .ts",
       "imports": [
         "@/generated/prisma"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "tsconfig.json",
+      "language": "unknown",
+      "size_lines": 41,
       "summary": "Archivo .json",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "medium"
     },
     {
       "path": "types/next-auth.d.ts",
+      "language": "typescript",
+      "size_lines": 24,
       "summary": "Archivo .ts",
       "imports": [
         "next-auth/jwt"
       ],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     },
     {
       "path": "types/user.ts",
+      "language": "typescript",
+      "size_lines": 13,
       "summary": "Archivo .ts",
       "imports": [],
       "exports": [],
+      "classes": [],
+      "functions": [],
       "complexity": "low"
     }
   ],
@@ -2954,9 +5415,7 @@
       "src/components/ui/EnDesarrollo.tsx"
     ],
     "src/app/(protected)/layout.tsx": [
-      "src/components/layout/AppHeader.tsx",
-      "src/components/layout/NavigationTracker.tsx",
-      "src/components/layout/Sidebar.tsx"
+      "src/components/layout/AppShell.tsx"
     ],
     "src/app/(protected)/loading.tsx": [
       "src/components/ui/Loading.tsx"
@@ -3237,12 +5696,15 @@
       "src/components/ui/Header.tsx",
       "src/components/ui/HowWeWork.tsx"
     ],
-    "src/app/propiedades/page.tsx": [
+    "src/app/propiedades/PropiedadesClient.tsx": [
       "src/components/Filtros.tsx",
       "src/components/InmuebleCard.tsx",
       "src/components/ui/Loading.tsx",
       "src/components/ui/Modal.tsx",
       "src/components/ui/alert.tsx"
+    ],
+    "src/app/propiedades/page.tsx": [
+      "src/components/layout/AppShell.tsx"
     ],
     "src/app/providers.tsx": [],
     "src/components/ClienteForm.tsx": [
@@ -3278,6 +5740,11 @@
       "src/actions/navigation/getRecentModules.ts"
     ],
     "src/components/layout/AppHeader.tsx": [],
+    "src/components/layout/AppShell.tsx": [
+      "src/components/layout/AppHeader.tsx",
+      "src/components/layout/NavigationTracker.tsx",
+      "src/components/layout/Sidebar.tsx"
+    ],
     "src/components/layout/GroupSelector.tsx": [
       "src/actions/user/setGroup.ts"
     ],
@@ -3439,6 +5906,9 @@
   "metadata": {
     "mapper_version": "3.0.0",
     "languages_found": [
+      "javascript",
+      "tsx",
+      "typescript",
       "unknown"
     ]
   }
