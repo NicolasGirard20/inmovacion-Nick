@@ -1,6 +1,6 @@
 {
   "project_name": "inmovacion-Nick",
-  "generated_at": "2026-10-01T19:19:25.124523+00:00",
+  "generated_at": "2026-10-14T20:59:09.931366+00:00",
   "total_files": 217,
   "total_symbols": 415,
   "architecture": {
@@ -3820,11 +3820,11 @@
     {
       "path": "src/components/layout/SidebarClient.tsx",
       "language": "tsx",
-      "size_lines": 58,
+      "size_lines": 62,
       "summary": "Punto de entrada | Funciones: SidebarClient, onResize",
       "imports": [
         "lucide-react",
-        "next-auth/react",
+        "next/image",
         "next/link",
         "next/navigation",
         "react"
@@ -3966,7 +3966,7 @@
     {
       "path": "src/components/ui/Header.tsx",
       "language": "tsx",
-      "size_lines": 433,
+      "size_lines": 324,
       "summary": "Funciones: Header, handleScroll, handleUserSettingsClick",
       "imports": [
         "@/components/ui/alert",

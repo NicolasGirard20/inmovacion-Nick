@@ -1,27 +1,27 @@
 // src/components/ui/PhoneInputField.tsx
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, FieldPath } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
 import { FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { AlertCircle, Phone } from "lucide-react";
 import "react-international-phone/style.css";
 
-interface PhoneInputFieldProps {
-  control: Control<any>;
-  name: string;
+interface PhoneInputFieldProps<T extends FieldValues = FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
   label?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
 }
 
-export function PhoneInputField({
+export function PhoneInputField<T extends FieldValues>({
   control,
   name,
   label = "Teléfono",
   placeholder = "Ingresa tu número",
   required = false,
   disabled = false,
-}: PhoneInputFieldProps) {
+}: PhoneInputFieldProps<T>) {
   return (
     <Controller
       control={control}

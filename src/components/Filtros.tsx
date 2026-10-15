@@ -43,7 +43,7 @@ export default function Filtros({
   onApply,
 }: FiltrosProps) {
   const { data: session } = useSession();
-  const isAdmin = session?.user?.rol === "admin";
+  const isAdmin = session?.user?.role === "admin";
 
   const [open, setOpen] = useState(false);
   const [operaciones, setOperaciones] = useState<Operacion[]>([]);

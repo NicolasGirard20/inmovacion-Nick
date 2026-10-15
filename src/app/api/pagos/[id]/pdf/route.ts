@@ -10,9 +10,10 @@ import {
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = Number(params.id);
+  const { id: idStr } = await params;
+  const id = Number(idStr);
 
   if (isNaN(id)) {
     return NextResponse.json(

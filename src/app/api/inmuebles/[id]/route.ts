@@ -32,9 +32,10 @@ const normalize = (v: any) =>
 /* ============================= GET ============================= */
 export async function GET(
   _req: Request,
-  { params }: { params: Record<string, string> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const numId = Number(params.id);
+  const { id: idStr } = await params;
+  const numId = Number(idStr);
 
   if (isNaN(numId)) {
     return NextResponse.json({ error: "ID inválido" }, { status: 400 });
@@ -167,7 +168,7 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: Record<string, string> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth();
 
@@ -180,7 +181,8 @@ export async function PUT(
 
   const userId = session.user.id;
 
-  const numId = Number(params.id);
+  const { id: idStr } = await params;
+  const numId = Number(idStr);
 
   if (isNaN(numId)) {
     return NextResponse.json(
@@ -514,19 +516,20 @@ const inmueble = await tx.inmueble.update({
 
 export async function DELETE(
   _req: Request,
-  { params }: { params: Record<string, string> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
 
   const session = await auth();
 
   if (!session?.user?.id) {
     return NextResponse.json(
-      { error: "No autenticado" },
+      { error: "No autorizado" },
       { status: 401 }
     );
   }
 
-  const numId = Number(params.id);
+  const { id: idStr } = await params;
+  const numId = Number(idStr);
 
   if (isNaN(numId)) {
     return NextResponse.json(

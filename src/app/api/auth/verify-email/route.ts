@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   });
   
   if (!verifyToken) {
-    return new Response("Token not found"), {status: 400};
+    return new Response("Token not found", {status: 400});
   }
 
   //verificar si el token ya expiró
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
   //eliminar el token
   await db.verificationToken.delete({
     where: {
-      identifier: verifyToken.identifier,
+      token: verifyToken.token,
     }
   });
 

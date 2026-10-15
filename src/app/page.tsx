@@ -242,10 +242,10 @@ function DualServicesSection() {
               </div>
 
               <a
-                href="#contacto"
+                href="/disponibilidad"
                 className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link"
               >
-                Solicitar asesoramiento legal
+                Consultar disponibilidad
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </a>
             </div>

@@ -18,9 +18,10 @@ export const dynamic = "force-dynamic";
 // ===============================
 // GET — Obtener Pago
 // ===============================
-export async function GET(req: NextRequest, { params }: any) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const id = Number(params.id);
+    const { id: idStr } = await params;
+    const id = Number(idStr);
     if (isNaN(id)) return NextResponse.json({ error: "ID inválido" }, { status: 400 });
 
     const pago = await db.pagoProveedor.findUnique({
@@ -42,9 +43,10 @@ export async function GET(req: NextRequest, { params }: any) {
 // ===============================
 // PUT — Actualizar Pago
 // ===============================
-export async function PUT(req: NextRequest, { params }: any) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const id = Number(params.id);
+    const { id: idStr } = await params;
+    const id = Number(idStr);
     const data = await req.json();
 
     const pago = await db.pagoProveedor.update({
@@ -70,9 +72,10 @@ export async function PUT(req: NextRequest, { params }: any) {
 // ===============================
 // DELETE — Soft Delete
 // ===============================
-export async function DELETE(req: NextRequest, { params }: any) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const id = Number(params.id);
+    const { id: idStr } = await params;
+    const id = Number(idStr);
 
     const pago = await db.pagoProveedor.update({
       where: { id_pago: id },

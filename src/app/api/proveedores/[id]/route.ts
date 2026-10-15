@@ -11,9 +11,10 @@ import { proveedorSchema } from "@/lib/zod";
 // ================================
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = Number(params.id);
+  const { id: idStr } = await params;
+  const id = Number(idStr);
 
   if (isNaN(id)) {
     return NextResponse.json(
@@ -41,10 +42,11 @@ export async function GET(
 // ================================
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = Number(params.id);
+    const { id: idStr } = await params;
+    const id = Number(idStr);
 
     if (isNaN(id)) {
       return NextResponse.json(

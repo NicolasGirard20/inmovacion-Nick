@@ -3,7 +3,7 @@ name: agent-init
 description: >-
   Scaffolding automático de configuración de agentes para cualquier proyecto.
   Detecta el stack tecnológico, genera .opencode/config.json, .agents/rules/coding-rules.json,
-  DESIGN.md unificado con reglas de negocio, arquitectura y diseño, y PRODUCT_REQUIREMENTS.md para requisitos de producto. Se activa automáticamente en la primera sesión
+  DESIGN.md unificado con reglas de negocio, arquitectura y diseño. Se activa automáticamente en la primera sesión
   de un proyecto nuevo.
 ---
 
@@ -42,7 +42,6 @@ Si el framework detectado **no tiene template dedicado** (Angular, Vue, Svelte, 
 - `.opencode/config.json` → Configuración técnica del agente
 - `.agents/rules/coding-rules.json` → Reglas estructuradas del proyecto
 - `.agents/rules/DESIGN.md` → Documento unificado de negocio, arquitectura, diseño y convenciones
-- `PRODUCT_REQUIREMENTS.md` → Requerimientos funcionales, atributos de calidad, restricciones y reglas de negocio
 
 ### Paso 4: Generar mapa inicial
 Ejecuta `project-mapper` para generar el primer mapa del proyecto.
@@ -52,7 +51,6 @@ Ejecuta `project-mapper` para generar el primer mapa del proyecto.
 .opencode/config.json
 .agents/rules/coding-rules.json
 .agents/rules/DESIGN.md
-PRODUCT_REQUIREMENTS.md
 .agents/skills/project-mapper/resources/project_map.json
 ```
 
@@ -60,5 +58,4 @@ PRODUCT_REQUIREMENTS.md
 - Verificar que los JSON generados sean válidos.
 - Verificar que `.agents/rules/DESIGN.md` exista y tenga las secciones mínimas.
 - Verificar que `DESIGN.md` no se haya sobrescrito si ya estaba personalizado.
-- Verificar que `PRODUCT_REQUIREMENTS.md` exista y no se haya sobrescrito si ya estaba personalizado.
 - Si el stack no coincide con ningún template, se genera configuración genérica.

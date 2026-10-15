@@ -24,6 +24,7 @@ import {
 
 import ProveedorForm from "@/components/ProveedorForm";
 import type { ProveedorFormValues } from "@/lib/zod";
+import Loading from "@/components/ui/Loading";
 
 export default function EditarProveedorPage() {
   const { data: session, status } = useSession();

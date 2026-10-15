@@ -8,9 +8,9 @@ import { auth } from "../../../../../auth";
 /* =====================================================
    GET — obtener una cobranza por ID
    ===================================================== */
-export async function GET(req: NextRequest, { params }: any) {
-  // Convertimos el parámetro dinámico "id" a número
-  const id_cobranza = Number(params.id);
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const id_cobranza = Number(id);
 
   // Validamos que sea un número válido
   if (isNaN(id_cobranza))
@@ -78,8 +78,9 @@ export async function GET(req: NextRequest, { params }: any) {
    DELETE — eliminar una cobranza por ID
    (solo si está INACTIVA)
    ===================================================== */
-export async function DELETE(req: NextRequest, { params }: any) {
-  const id_cobranza = Number(params.id);
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const id_cobranza = Number(id);
 
   // Validación del ID
   if (isNaN(id_cobranza)) {
@@ -131,8 +132,9 @@ export async function DELETE(req: NextRequest, { params }: any) {
 /* =====================================================
    PUT — actualizar una cobranza existente
    ===================================================== */
-export async function PUT(req: NextRequest, { params }: any) {
-  const id_cobranza = Number(params.id);
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const id_cobranza = Number(id);
 
   const session = await auth();
 

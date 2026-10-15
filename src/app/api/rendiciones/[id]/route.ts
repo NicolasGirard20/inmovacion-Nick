@@ -28,7 +28,7 @@ async function calcularSaldoAnterior(id_inmueble: number, fechaActual: Date) {
 // =========================================================
 // GET — Obtener rendición por ID
 // =========================================================
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
   const id_rendicion = Number(id);
 
@@ -170,7 +170,7 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
 // =========================================================
 // PUT — Actualizar rendición
 // =========================================================
-export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
   const id_rendicion = Number(id);
 
@@ -503,7 +503,7 @@ const monto_total = Number(totalConIPC.toFixed(2));
 // =========================================================
 // DELETE
 // =========================================================
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
   const id_rendicion = Number(id);
 

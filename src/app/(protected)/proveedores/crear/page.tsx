@@ -18,6 +18,7 @@ import { CheckCircle, ArrowLeft, FileText, AlertCircle } from "lucide-react";
 
 import ProveedorForm from "@/components/ProveedorForm";
 import type { ProveedorFormValues } from "@/lib/zod";
+import Loading from "@/components/ui/Loading";
 
 export default function CrearProveedorPage() {
   const { data: session, status } = useSession();

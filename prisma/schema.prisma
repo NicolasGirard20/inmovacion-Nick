@@ -55,6 +55,7 @@ model User {
   createdRendiciones Rendicion[]  @relation("CreatedRendiciones")
   updatedRendiciones Rendicion[]  @relation("UpdatedRendiciones")
   navigationLogs     NavigationLog[]
+  bloquesOcupadosAbogacia BloqueOcupadoAbogacia[]
 
   @@map("users")
 }
@@ -505,4 +506,31 @@ model NavigationLog {
 
   @@index([userId, visitedAt(sort: Desc)])
   @@map("navigation_logs")
+}
+
+model HorarioBaseAbogacia {
+  id         String   @id @default(cuid())
+  diaSemana  Int      @unique
+  horaInicio String   @db.VarChar(5)
+  horaFin    String   @db.VarChar(5)
+  activo     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("horarios_base_abogacia")
+}
+
+model BloqueOcupadoAbogacia {
+  id          String   @id @default(cuid())
+  fecha       DateTime @db.Date
+  horaInicio  String   @db.VarChar(5)
+  horaFin     String   @db.VarChar(5)
+  motivo      String?  @db.VarChar(160)
+  creadoPorId String
+  creadoPor   User     @relation(fields: [creadoPorId], references: [id], onDelete: Restrict)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([fecha])
+  @@map("bloques_ocupados_abogacia")
 }

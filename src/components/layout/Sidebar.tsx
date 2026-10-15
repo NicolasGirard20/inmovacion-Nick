@@ -17,7 +17,7 @@ const inmobiliariaItems = [
 ];
 
 const abogaciaItems = [
-  { label: 'Abogacía – En desarrollo', href: '/abogacia', iconName: 'Scale' },
+  { label: 'Turnos de abogacía', href: '/abogacia/turnos', iconName: 'CalendarClock' },
 ];
 
 export function Sidebar({ user, activeGroup }: SidebarProps) {

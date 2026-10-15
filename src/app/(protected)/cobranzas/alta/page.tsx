@@ -90,13 +90,27 @@ export default function NuevaCobranzaPage() {
     message: "",
   });
 
+  interface ClientRow {
+    id_cliente: number;
+    nombre: string;
+    apellido: string;
+    activo: boolean;
+    tiposCliente: Array<{ tipoCliente: { nombre: string } }>;
+  }
+
+  interface ContratoRow {
+    id_contrato: number;
+    nombre: string;
+    inmueble?: { titulo: string };
+  }
+
   const [clienteSearch, setClienteSearch] = useState('');
   const [showClienteDropdown, setShowClienteDropdown] = useState(false);
 
   const {
     data: clientes = [],
     isLoading: clientesLoading,
-  } = useQuery({
+  } = useQuery<ClientRow[]>({
     queryKey: ['clientes'],
     queryFn: async () => {
       const res = await fetch('/api/clientes');
@@ -116,7 +130,7 @@ export default function NuevaCobranzaPage() {
   const {
     data: contratos = [],
     isLoading: contratosLoading,
-  } = useQuery({
+  } = useQuery<ContratoRow[]>({
     queryKey: ['contratos', selectedCliente],
     enabled: !!selectedCliente, // 👈 CLAVE
     queryFn: async () => {
@@ -383,8 +397,8 @@ const validar = (): boolean => {
 
 
   const clientesFiltrados = clientes
-  .filter((c: any) => c.activo === true) // 👈 SOLO ACTIVOS
-  .filter((c: any) => {
+  .filter((c) => c.activo === true)
+  .filter((c) => {
     const fullName = `${c.nombre} ${c.apellido}`.toLowerCase();
     return fullName.includes(clienteSearch.toLowerCase());
   });

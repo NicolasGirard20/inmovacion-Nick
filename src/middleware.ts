@@ -18,6 +18,7 @@ const publicRoutes = [
   "/api/auth/reset-password",
   "/reset-password",
   "/propiedades",
+  "/disponibilidad",
 ];
 
 // Exportamos nuestro middleware personalizado.
