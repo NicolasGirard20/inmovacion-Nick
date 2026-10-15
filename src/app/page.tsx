@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Header from '@/components/ui/Header';
+import Footer from '@/components/ui/Footer';
 import HowWeWork from '@/components/ui/HowWeWork';
 import {
   Building2, Scale, KeyRound, Handshake, FileText,
@@ -29,7 +30,7 @@ type Value = {
 const HERO_STATS: Stat[] = [
   { number: '30+', label: 'Propiedades gestionadas' },
   { number: '100+', label: 'Clientes satisfechos' },
-  { number: '15+', label: 'Años de experiencia' },
+  { number: '30+', label: 'Años de experiencia' },
   { number: '24hs', label: 'Tiempo de respuesta' },
 ];
 
@@ -53,7 +54,7 @@ const VALUES: Value[] = [
   { icon: Clock, title: 'Respuesta rápida', desc: 'Atención en menos de 24 horas' },
   { icon: Star, title: 'Calidad garantizada', desc: 'Servicio profesional certificado' },
   { icon: Users, title: 'Atención personalizada', desc: 'Soluciones a medida para cada cliente' },
-  { icon: Award, title: 'Trayectoria', desc: 'Más de 15 años en el mercado regional' },
+  
 ];
 
 function HeroUnifiedSection() {
@@ -164,7 +165,7 @@ function DualServicesSection() {
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Inmobiliaria Card */}
-          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden flex flex-col">
             <div className="relative h-48 md:h-56 overflow-hidden">
               <Image
                 src="/images/property-types.jpg"
@@ -174,7 +175,7 @@ function DualServicesSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
-            <div className="p-8 md:p-10">
+            <div className="p-8 md:p-10 flex flex-col flex-1">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#63bae9]/20 to-[#63bae9]/5 flex items-center justify-center">
                   <Building2 className="w-7 h-7 text-[#63bae9]" />
@@ -199,7 +200,7 @@ function DualServicesSection() {
 
               <a
                 href="/propiedades"
-                className="inline-flex items-center gap-2 text-[#63bae9] font-semibold hover:text-[#4ca8d8] transition-colors group/link"
+                className="inline-flex items-center gap-2 text-[#63bae9] font-semibold hover:text-[#4ca8d8] transition-colors group/link mt-auto pt-6"
               >
                 Ver todas las propiedades
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -208,7 +209,7 @@ function DualServicesSection() {
           </div>
 
           {/* Abogacía Card */}
-          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+          <div className="group bg-white rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden flex flex-col">
             <div className="relative h-48 md:h-56 overflow-hidden">
               <Image
                 src="/images/local-knowledge.jpg"
@@ -218,7 +219,7 @@ function DualServicesSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
-            <div className="p-8 md:p-10">
+            <div className="p-8 md:p-10 flex flex-col flex-1">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fcc238]/20 to-[#fcc238]/5 flex items-center justify-center">
                   <Scale className="w-7 h-7 text-[#fcc238]" />
@@ -243,7 +244,7 @@ function DualServicesSection() {
 
               <a
                 href="/disponibilidad"
-                className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link"
+                className="inline-flex items-center gap-2 text-[#fcc238] font-semibold hover:text-[#e6af32] transition-colors group/link mt-auto pt-6"
               >
                 Consultar disponibilidad
                 <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -273,7 +274,7 @@ function ValuesSection() {
               La diferencia GBS
             </h2>
             <p className="text-lg text-[#686363] max-w-2xl mx-auto">
-              Más de 15 años combinando experiencia inmobiliaria con respaldo jurídico.
+              Ofrecemos experiencia y soluciones integrales en un mismo lugar.
             </p>
           </div>
 
@@ -361,7 +362,7 @@ function ContactSection() {
               </div>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/5491123456789"
+                  href="https://wa.me/5493436205284"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white font-semibold rounded-xl hover:bg-[#20BD5A] transition-all"
@@ -391,7 +392,7 @@ function ContactSection() {
               </div>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/5491123456789"
+                  href="https://wa.me/5493434612497"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white font-semibold rounded-xl hover:bg-[#20BD5A] transition-all"
@@ -410,107 +411,43 @@ function ContactSection() {
             </div>
           </div>
 
-          <div className="p-8 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-            <h3 className="text-xl font-bold mb-6">Información de contacto</h3>
-
-            <div className="space-y-5">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-5 h-5 text-[#25D366]" />
-                </div>
-                <div>
-                  <p className="text-sm text-white/60">WhatsApp</p>
-                  <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-[#25D366] transition-colors">Escribinos por WhatsApp</a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+          <div className="p-8 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
                   <MapPin className="w-5 h-5 text-[#63bae9]" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm text-white/60">Dirección</p>
-                  <p className="font-semibold mb-2">Libertador San Martín, Entre Ríos</p>
-                  <div className="w-full h-40 rounded-xl overflow-hidden">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3347.5!2d-59.5!3d-32.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDMwJzAwLjAiUyA1OcKwMzAnMDAuMCJX!5e0!3m2!1ses!2sar!4v1"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Ubicación GBS & Asociados"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5 text-[#fcc238]" />
-                </div>
                 <div>
-                  <p className="text-sm text-white/60">Horarios</p>
-                  <p className="font-semibold">Lun a Vie 9-18hs • Sáb 9-13hs</p>
+                  <h3 className="text-xl font-bold leading-tight">Ubicación</h3>
+                  <p className="text-xs text-white/60">Libertador San Martín, Entre Ríos</p>
                 </div>
               </div>
+              <a
+                href="https://maps.app.goo.gl/CJ4mCUHTz8m9h6Gu5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[#63bae9] hover:text-white transition-all border border-white/10"
+              >
+                Abrir Maps ↗
+              </a>
+            </div>
 
+            <div className="w-full flex-1 min-h-[300px] md:min-h-[330px] rounded-xl overflow-hidden border border-white/10 shadow-inner">
+              <iframe
+                src="https://maps.google.com/maps?q=-32.067752,-60.454276&hl=es&z=16&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación GBS & Asociados"
+              />
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function FooterSection() {
-  return (
-    <footer className="bg-[#1a1a1a] text-white py-12 border-t border-white/5">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8 mb-10">
-          <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-2">GBS y Asociados</h3>
-            <p className="text-sm text-[#fcc238] font-semibold tracking-wider mb-4">
-              Inmobiliaria & Estudio Jurídico
-            </p>
-            <p className="text-gray-400 leading-relaxed mb-4 max-w-md">
-              Soluciones integrales en servicios inmobiliarios y legales en Libertador San Martín y toda la provincia de Entre Ríos.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-bold tracking-wider text-[#969696] uppercase mb-4">Inmobiliaria</h4>
-            <ul className="space-y-2.5 text-gray-400">
-              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Alquileres</a></li>
-              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Ventas</a></li>
-              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Administración</a></li>
-              <li><a href="#" className="hover:text-[#63bae9] transition-colors text-sm">Tasaciones</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-bold tracking-wider text-[#969696] uppercase mb-4">Servicios Legales</h4>
-            <ul className="space-y-2.5 text-gray-400">
-              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Derecho Civil</a></li>
-              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Contratos</a></li>
-              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Sucesiones</a></li>
-              <li><a href="#" className="hover:text-[#fcc238] transition-colors text-sm">Familia</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="h-px bg-white/5 mb-6"></div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-          <p>© {new Date().getFullYear()} GBS y Asociados • Todos los derechos reservados</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
-            <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
-          </div>
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -525,7 +462,7 @@ function App() {
         <ValuesSection />
         <ContactSection />
       </main>
-      <FooterSection />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Scale } from "lucide-react";
 import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
 import { PublicAvailabilityView } from "@/components/abogacia/PublicAvailabilityView";
 import { getPublicAvailabilityData } from "@/lib/abogacia/availability";
 
@@ -59,6 +60,7 @@ export default async function PublicAvailabilityPage() {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -19,6 +19,7 @@ const publicRoutes = [
   "/reset-password",
   "/propiedades",
   "/disponibilidad",
+  "/nosotros",
 ];
 
 // Exportamos nuestro middleware personalizado.

@@ -1,8 +1,8 @@
 {
   "project_name": "inmovacion-Nick",
-  "generated_at": "2026-10-14T20:59:09.931366+00:00",
-  "total_files": 217,
-  "total_symbols": 415,
+  "generated_at": "2026-10-15T18:52:50.170987+00:00",
+  "total_files": 229,
+  "total_symbols": 457,
   "architecture": {
     "entry_points": [
       "src/app/propiedades/PropiedadesClient.tsx",
@@ -161,8 +161,8 @@
       "size_lines": 7,
       "summary": "Archivo .ts",
       "imports": [
-        "./.next/dev/types/root-params.d.ts",
-        "./.next/dev/types/routes.d.ts"
+        "./.next/types/root-params.d.ts",
+        "./.next/types/routes.d.ts"
       ],
       "exports": [],
       "classes": [],
@@ -228,9 +228,31 @@
       "complexity": "low"
     },
     {
+      "path": "prisma/migrations/20261014183000_abogacia_disponibilidad/migration.sql",
+      "language": "unknown",
+      "size_lines": 35,
+      "summary": "Archivo .sql",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "complexity": "medium"
+    },
+    {
+      "path": "prisma/migrations/migration_lock.toml",
+      "language": "unknown",
+      "size_lines": 1,
+      "summary": "Archivo .toml",
+      "imports": [],
+      "exports": [],
+      "classes": [],
+      "functions": [],
+      "complexity": "low"
+    },
+    {
       "path": "prisma/schema.prisma",
       "language": "unknown",
-      "size_lines": 508,
+      "size_lines": 536,
       "summary": "Archivo .prisma",
       "imports": [],
       "exports": [],
@@ -412,6 +434,49 @@
         }
       ],
       "complexity": "medium"
+    },
+    {
+      "path": "src/actions/abogacia/turnos-actions.ts",
+      "language": "typescript",
+      "size_lines": 113,
+      "summary": "Funciones: isAdmin, getAdminTurnosData, saveWeeklySchedule, createOccupiedBlock, deleteOccupiedBlock",
+      "imports": [
+        "../../../auth",
+        "@/lib/abogacia/availability",
+        "@/lib/abogacia/schemas",
+        "@/lib/db",
+        "next/cache"
+      ],
+      "exports": [
+        "createOccupiedBlock",
+        "deleteOccupiedBlock",
+        "getAdminTurnosData",
+        "saveWeeklySchedule"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "isAdmin",
+          "is_async": true
+        },
+        {
+          "name": "getAdminTurnosData",
+          "is_async": true
+        },
+        {
+          "name": "saveWeeklySchedule",
+          "is_async": true
+        },
+        {
+          "name": "createOccupiedBlock",
+          "is_async": true
+        },
+        {
+          "name": "deleteOccupiedBlock",
+          "is_async": true
+        }
+      ],
+      "complexity": "high"
     },
     {
       "path": "src/actions/auth-action.ts",
@@ -951,7 +1016,7 @@
     {
       "path": "src/app/(auth)/reset-password/page.tsx",
       "language": "tsx",
-      "size_lines": 42,
+      "size_lines": 54,
       "summary": "Funciones: ResetPasswordPage",
       "imports": [
         "@/components/ui/ResetPasswordForm",
@@ -965,6 +1030,31 @@
       "functions": [
         {
           "name": "ResetPasswordPage"
+        }
+      ],
+      "complexity": "medium"
+    },
+    {
+      "path": "src/app/(protected)/abogacia/turnos/page.tsx",
+      "language": "tsx",
+      "size_lines": 37,
+      "summary": "Funciones: AbogaciaTurnosPage",
+      "imports": [
+        "../../../../../auth",
+        "@/components/abogacia/AdminAvailabilityManager",
+        "@/lib/abogacia/availability",
+        "lucide-react",
+        "next/navigation"
+      ],
+      "exports": [
+        "AbogaciaTurnosPage",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "AbogaciaTurnosPage",
+          "is_async": true
         }
       ],
       "complexity": "medium"
@@ -1130,7 +1220,7 @@
     {
       "path": "src/app/(protected)/cobranzas/alta/page.tsx",
       "language": "tsx",
-      "size_lines": 793,
+      "size_lines": 807,
       "summary": "Funciones: NuevaCobranzaPage, handleCobranzaChange, agregarCobranza, eliminarCobranza, handleSubmit",
       "imports": [
         "@/components/ui/Loading",
@@ -1738,10 +1828,11 @@
     {
       "path": "src/app/(protected)/proveedores/crear/page.tsx",
       "language": "tsx",
-      "size_lines": 157,
+      "size_lines": 158,
       "summary": "Funciones: CrearProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/components/ProveedorForm",
+        "@/components/ui/Loading",
         "@/components/ui/alert",
         "@/components/ui/button",
         "lucide-react",
@@ -1772,10 +1863,11 @@
     {
       "path": "src/app/(protected)/proveedores/editar/page.tsx",
       "language": "tsx",
-      "size_lines": 203,
+      "size_lines": 204,
       "summary": "Funciones: EditarProveedorPage, loadData, handleSubmit",
       "imports": [
         "@/components/ProveedorForm",
+        "@/components/ui/Loading",
         "@/components/ui/alert",
         "@/components/ui/button",
         "lucide-react",
@@ -2444,7 +2536,7 @@
     {
       "path": "src/app/api/cobranzas/[id]/route.ts",
       "language": "typescript",
-      "size_lines": 250,
+      "size_lines": 252,
       "summary": "Funciones: GET, DELETE, PUT",
       "imports": [
         "../../../../../auth",
@@ -2648,7 +2740,7 @@
     {
       "path": "src/app/api/inmuebles/[id]/route.ts",
       "language": "typescript",
-      "size_lines": 597,
+      "size_lines": 600,
       "summary": "Funciones: GET, PUT, DELETE, normalize",
       "imports": [
         "../../../../../auth",
@@ -2756,7 +2848,7 @@
     {
       "path": "src/app/api/pagos/[id]/pdf/route.ts",
       "language": "typescript",
-      "size_lines": 186,
+      "size_lines": 187,
       "summary": "Funciones: GET, drawRecibo",
       "imports": [
         "@/lib/db",
@@ -2781,7 +2873,7 @@
     {
       "path": "src/app/api/pagos/[id]/route.ts",
       "language": "typescript",
-      "size_lines": 87,
+      "size_lines": 90,
       "summary": "Funciones: serialize, GET, PUT, DELETE",
       "imports": [
         "@/lib/db",
@@ -2849,7 +2941,7 @@
     {
       "path": "src/app/api/proveedores/[id]/route.ts",
       "language": "typescript",
-      "size_lines": 89,
+      "size_lines": 91,
       "summary": "Funciones: GET, PUT",
       "imports": [
         "@/lib/db",
@@ -2903,7 +2995,7 @@
     {
       "path": "src/app/api/rendiciones/[id]/excel/route.ts",
       "language": "typescript",
-      "size_lines": 257,
+      "size_lines": 258,
       "summary": "Funciones: calcularSaldoAnterior, GET",
       "imports": [
         "@/lib/db",
@@ -3226,6 +3318,58 @@
       "complexity": "medium"
     },
     {
+      "path": "src/app/conocenos/page.tsx",
+      "language": "tsx",
+      "size_lines": 371,
+      "summary": "Funciones: ConocenosPage",
+      "imports": [
+        "@/components/ui/Footer",
+        "@/components/ui/Header",
+        "lucide-react",
+        "next/image",
+        "next/link",
+        "react"
+      ],
+      "exports": [
+        "ConocenosPage",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ConocenosPage"
+        }
+      ],
+      "complexity": "high"
+    },
+    {
+      "path": "src/app/disponibilidad/page.tsx",
+      "language": "tsx",
+      "size_lines": 66,
+      "summary": "Funciones: PublicAvailabilityPage",
+      "imports": [
+        "@/components/abogacia/PublicAvailabilityView",
+        "@/components/ui/Footer",
+        "@/components/ui/Header",
+        "@/lib/abogacia/availability",
+        "lucide-react",
+        "next/link"
+      ],
+      "exports": [
+        "PublicAvailabilityPage",
+        "dynamic",
+        "metadata"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "PublicAvailabilityPage",
+          "is_async": true
+        }
+      ],
+      "complexity": "medium"
+    },
+    {
       "path": "src/app/globals.css",
       "language": "unknown",
       "size_lines": 269,
@@ -3261,9 +3405,10 @@
     {
       "path": "src/app/page.tsx",
       "language": "tsx",
-      "size_lines": 533,
-      "summary": "Funciones: HeroUnifiedSection, DualServicesSection, ValuesSection, ContactSection, FooterSection",
+      "size_lines": 484,
+      "summary": "Funciones: HeroUnifiedSection, DualServicesSection, ValuesSection, ContactSection, App",
       "imports": [
+        "@/components/ui/Footer",
         "@/components/ui/Header",
         "@/components/ui/HowWeWork",
         "lucide-react",
@@ -3285,9 +3430,6 @@
           "name": "ContactSection"
         },
         {
-          "name": "FooterSection"
-        },
-        {
           "name": "App"
         }
       ],
@@ -3296,7 +3438,7 @@
     {
       "path": "src/app/propiedades/PropiedadesClient.tsx",
       "language": "tsx",
-      "size_lines": 735,
+      "size_lines": 725,
       "summary": "Punto de entrada | Funciones: PropiedadesClient, fetchInmuebles, fetchArchivados, handleCrear, handleModificar",
       "imports": [
         "@/components/Filtros",
@@ -3307,6 +3449,7 @@
         "@tanstack/react-query",
         "lucide-react",
         "next-auth/react",
+        "next/link",
         "next/navigation",
         "react"
       ],
@@ -3344,12 +3487,14 @@
     {
       "path": "src/app/propiedades/page.tsx",
       "language": "tsx",
-      "size_lines": 25,
+      "size_lines": 29,
       "summary": "Funciones: PropiedadesPage",
       "imports": [
         "../../../auth",
         "./PropiedadesClient",
         "@/components/layout/AppShell",
+        "@/components/ui/Footer",
+        "@/components/ui/Header",
         "next/headers"
       ],
       "exports": [
@@ -3646,6 +3791,102 @@
       "complexity": "high"
     },
     {
+      "path": "src/components/abogacia/AdminAvailabilityManager.tsx",
+      "language": "tsx",
+      "size_lines": 354,
+      "summary": "Funciones: getCalendarDates, getMonthLabel, formatDate, getWeekday, getNextMonth",
+      "imports": [
+        "@/actions/abogacia/turnos-actions",
+        "@/lib/abogacia/availability-types",
+        "@/lib/abogacia/schemas",
+        "@hookform/resolvers/zod",
+        "lucide-react",
+        "react",
+        "react-hook-form"
+      ],
+      "exports": [
+        "AdminAvailabilityManager"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "getCalendarDates"
+        },
+        {
+          "name": "getMonthLabel"
+        },
+        {
+          "name": "formatDate"
+        },
+        {
+          "name": "getWeekday"
+        },
+        {
+          "name": "getNextMonth"
+        },
+        {
+          "name": "initialScheduleForm"
+        },
+        {
+          "name": "AdminAvailabilityManager"
+        },
+        {
+          "name": "onSaveSchedule",
+          "is_async": true
+        },
+        {
+          "name": "onCreateBlock",
+          "is_async": true
+        },
+        {
+          "name": "onDeleteBlock",
+          "is_async": true
+        },
+        {
+          "name": "changeMonth"
+        },
+        {
+          "name": "selectDate"
+        },
+        {
+          "name": "nextHalfHour"
+        }
+      ],
+      "complexity": "high"
+    },
+    {
+      "path": "src/components/abogacia/PublicAvailabilityView.tsx",
+      "language": "tsx",
+      "size_lines": 179,
+      "summary": "Funciones: monthTitle, formatDate, getCalendarDates, whatsappLink, PublicAvailabilityView",
+      "imports": [
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "PublicAvailabilityView"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "monthTitle"
+        },
+        {
+          "name": "formatDate"
+        },
+        {
+          "name": "getCalendarDates"
+        },
+        {
+          "name": "whatsappLink"
+        },
+        {
+          "name": "PublicAvailabilityView"
+        }
+      ],
+      "complexity": "high"
+    },
+    {
       "path": "src/components/dashboard/KpiCard.tsx",
       "language": "tsx",
       "size_lines": 16,
@@ -3898,6 +4139,26 @@
       "complexity": "medium"
     },
     {
+      "path": "src/components/ui/Footer.tsx",
+      "language": "tsx",
+      "size_lines": 52,
+      "summary": "Funciones: Footer",
+      "imports": [
+        "next/link",
+        "react"
+      ],
+      "exports": [
+        "Footer"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "Footer"
+        }
+      ],
+      "complexity": "medium"
+    },
+    {
       "path": "src/components/ui/ForgotPasswordForm.tsx",
       "language": "tsx",
       "size_lines": 258,
@@ -3966,14 +4227,16 @@
     {
       "path": "src/components/ui/Header.tsx",
       "language": "tsx",
-      "size_lines": 324,
+      "size_lines": 360,
       "summary": "Funciones: Header, handleScroll, handleUserSettingsClick",
       "imports": [
         "@/components/ui/alert",
         "@/components/ui/button",
+        "@/components/ui/dropdown-menu",
         "lucide-react",
         "next-auth/react",
         "next/image",
+        "next/link",
         "next/navigation"
       ],
       "exports": [
@@ -4657,7 +4920,7 @@
     {
       "path": "src/generated/prisma/edge.js",
       "language": "javascript",
-      "size_lines": 493,
+      "size_lines": 516,
       "summary": "Archivo .js",
       "imports": [
         "#wasm-compiler-loader",
@@ -4672,7 +4935,7 @@
     {
       "path": "src/generated/prisma/index-browser.js",
       "language": "javascript",
-      "size_lines": 517,
+      "size_lines": 540,
       "summary": "Punto de entrada | Clases: PrismaClient | Funciones: constructor, get",
       "imports": [
         "./runtime/index-browser.js"
@@ -4696,7 +4959,7 @@
     {
       "path": "src/generated/prisma/index.js",
       "language": "javascript",
-      "size_lines": 493,
+      "size_lines": 516,
       "summary": "Punto de entrada",
       "imports": [
         "./query_compiler_fast_bg.js",
@@ -4904,7 +5167,7 @@
     {
       "path": "src/generated/prisma/schema.prisma",
       "language": "unknown",
-      "size_lines": 506,
+      "size_lines": 534,
       "summary": "Archivo .prisma",
       "imports": [],
       "exports": [],
@@ -4959,6 +5222,114 @@
       "classes": [],
       "functions": [],
       "complexity": "high"
+    },
+    {
+      "path": "src/lib/abogacia/availability-types.ts",
+      "language": "typescript",
+      "size_lines": 25,
+      "summary": "Archivo .ts",
+      "imports": [],
+      "exports": [
+        "WEEK_DAYS"
+      ],
+      "classes": [],
+      "functions": [],
+      "complexity": "low"
+    },
+    {
+      "path": "src/lib/abogacia/availability.ts",
+      "language": "typescript",
+      "size_lines": 188,
+      "summary": "Funciones: dateKeyFromParts, getBuenosAiresDateKey, getBuenosAiresMinuteOfDay, getCurrentMonthKey, getNextMonthKey",
+      "imports": [
+        "@/lib/abogacia/availability-types",
+        "@/lib/db",
+        "server-only"
+      ],
+      "exports": [
+        "getAdminAvailabilityData",
+        "getBuenosAiresDateKey",
+        "getBuenosAiresMinuteOfDay",
+        "getCurrentMonthKey",
+        "getDateAtUtcMidnight",
+        "getDateKeyToday",
+        "getMonthDateKeys",
+        "getNextMonthKey",
+        "getPublicAvailabilityData",
+        "getWeekdayForDateKey",
+        "timesOverlap"
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "dateKeyFromParts"
+        },
+        {
+          "name": "getBuenosAiresDateKey"
+        },
+        {
+          "name": "getBuenosAiresMinuteOfDay"
+        },
+        {
+          "name": "getCurrentMonthKey"
+        },
+        {
+          "name": "getNextMonthKey"
+        },
+        {
+          "name": "getMonthDateKeys"
+        },
+        {
+          "name": "dateKeyToUtcDate"
+        },
+        {
+          "name": "minutesFromTime"
+        },
+        {
+          "name": "timeFromMinutes"
+        },
+        {
+          "name": "calculateDayAvailability"
+        },
+        {
+          "name": "getPublicAvailabilityData",
+          "is_async": true
+        },
+        {
+          "name": "getAdminAvailabilityData",
+          "is_async": true
+        },
+        {
+          "name": "getWeekdayForDateKey"
+        },
+        {
+          "name": "getDateKeyToday"
+        },
+        {
+          "name": "getDateAtUtcMidnight"
+        },
+        {
+          "name": "timesOverlap"
+        }
+      ],
+      "complexity": "high"
+    },
+    {
+      "path": "src/lib/abogacia/schemas.ts",
+      "language": "typescript",
+      "size_lines": 43,
+      "summary": "Archivo .ts",
+      "imports": [
+        "zod"
+      ],
+      "exports": [
+        "deleteOccupiedBlockSchema",
+        "occupiedBlockSchema",
+        "weeklyScheduleSchema"
+      ],
+      "classes": [],
+      "functions": [],
+      "complexity": "medium"
     },
     {
       "path": "src/lib/db.ts",
@@ -5149,7 +5520,7 @@
     {
       "path": "src/middleware.ts",
       "language": "typescript",
-      "size_lines": 88,
+      "size_lines": 89,
       "summary": "Archivo .ts",
       "imports": [
         "../auth.config",
@@ -5263,6 +5634,8 @@
     "pnpm-workspace.yaml": [],
     "postcss.config.mjs": [],
     "prisma.config.ts": [],
+    "prisma/migrations/20261014183000_abogacia_disponibilidad/migration.sql": [],
+    "prisma/migrations/migration_lock.toml": [],
     "prisma/schema.prisma": [],
     "prisma/seed.ts": [],
     "public/rendiciones/1/rendicion.xlsx": [],
@@ -5278,6 +5651,11 @@
     "public/uploads/templates/1763560729975-CONTRATO DE ALQUILER DE INMUEBLE.docx": [],
     "public/uploads/templates/1764280578618-prueba-template.docx": [],
     "scripts/create-admin.ts": [],
+    "src/actions/abogacia/turnos-actions.ts": [
+      "src/lib/abogacia/availability.ts",
+      "src/lib/abogacia/schemas.ts",
+      "src/lib/db.ts"
+    ],
     "src/actions/auth-action.ts": [
       "src/lib/db.ts",
       "src/lib/mail.ts",
@@ -5342,6 +5720,10 @@
     "src/app/(auth)/reset-password/page.tsx": [
       "src/components/ui/ResetPasswordForm.tsx",
       "src/components/ui/card.tsx"
+    ],
+    "src/app/(protected)/abogacia/turnos/page.tsx": [
+      "src/components/abogacia/AdminAvailabilityManager.tsx",
+      "src/lib/abogacia/availability.ts"
     ],
     "src/app/(protected)/admin/page.tsx": [
       "src/components/ui/LogoutButton.tsx"
@@ -5470,11 +5852,13 @@
     ],
     "src/app/(protected)/proveedores/crear/page.tsx": [
       "src/components/ProveedorForm.tsx",
+      "src/components/ui/Loading.tsx",
       "src/components/ui/alert.tsx",
       "src/components/ui/button.tsx"
     ],
     "src/app/(protected)/proveedores/editar/page.tsx": [
       "src/components/ProveedorForm.tsx",
+      "src/components/ui/Loading.tsx",
       "src/components/ui/alert.tsx",
       "src/components/ui/button.tsx"
     ],
@@ -5690,9 +6074,20 @@
     "src/app/api/upload/route.ts": [
       "src/lib/supabase-storage.ts"
     ],
+    "src/app/conocenos/page.tsx": [
+      "src/components/ui/Footer.tsx",
+      "src/components/ui/Header.tsx"
+    ],
+    "src/app/disponibilidad/page.tsx": [
+      "src/components/abogacia/PublicAvailabilityView.tsx",
+      "src/components/ui/Footer.tsx",
+      "src/components/ui/Header.tsx",
+      "src/lib/abogacia/availability.ts"
+    ],
     "src/app/globals.css": [],
     "src/app/layout.tsx": [],
     "src/app/page.tsx": [
+      "src/components/ui/Footer.tsx",
       "src/components/ui/Header.tsx",
       "src/components/ui/HowWeWork.tsx"
     ],
@@ -5704,7 +6099,9 @@
       "src/components/ui/alert.tsx"
     ],
     "src/app/propiedades/page.tsx": [
-      "src/components/layout/AppShell.tsx"
+      "src/components/layout/AppShell.tsx",
+      "src/components/ui/Footer.tsx",
+      "src/components/ui/Header.tsx"
     ],
     "src/app/providers.tsx": [],
     "src/components/ClienteForm.tsx": [
@@ -5732,6 +6129,12 @@
       "src/lib/zod.ts"
     ],
     "src/components/SubirImagenes.tsx": [],
+    "src/components/abogacia/AdminAvailabilityManager.tsx": [
+      "src/actions/abogacia/turnos-actions.ts",
+      "src/lib/abogacia/availability-types.ts",
+      "src/lib/abogacia/schemas.ts"
+    ],
+    "src/components/abogacia/PublicAvailabilityView.tsx": [],
     "src/components/dashboard/KpiCard.tsx": [],
     "src/components/dashboard/KpiGrid.tsx": [
       "src/actions/dashboard/getKpis.ts"
@@ -5760,6 +6163,7 @@
     "src/components/ui/EnDesarrollo.tsx": [
       "src/components/ui/button.tsx"
     ],
+    "src/components/ui/Footer.tsx": [],
     "src/components/ui/ForgotPasswordForm.tsx": [
       "src/actions/auth-action.ts",
       "src/components/ui/alert.tsx",
@@ -5779,7 +6183,8 @@
     ],
     "src/components/ui/Header.tsx": [
       "src/components/ui/alert.tsx",
-      "src/components/ui/button.tsx"
+      "src/components/ui/button.tsx",
+      "src/components/ui/dropdown-menu.tsx"
     ],
     "src/components/ui/HowWeWork.tsx": [],
     "src/components/ui/Loading.tsx": [],
@@ -5883,6 +6288,12 @@
     "src/generated/prisma/wasm-worker-loader.mjs": [],
     "src/generated/prisma/wasm.d.ts": [],
     "src/generated/prisma/wasm.js": [],
+    "src/lib/abogacia/availability-types.ts": [],
+    "src/lib/abogacia/availability.ts": [
+      "src/lib/abogacia/availability-types.ts",
+      "src/lib/db.ts"
+    ],
+    "src/lib/abogacia/schemas.ts": [],
     "src/lib/db.ts": [
       "src/generated/prisma/index.js"
     ],

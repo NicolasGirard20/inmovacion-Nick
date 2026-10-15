@@ -3,8 +3,9 @@
 
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
-import { Home, PlusCircle, AlertCircle, User, Calendar, FileSignature, ArrowLeft } from 'lucide-react';
+import { Home, Building2, PlusCircle, AlertCircle, User, Calendar, FileSignature, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -312,33 +313,22 @@ const totalGeneral = totalActivos + totalArchivados;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* HEADER */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#63bae9]">
-              <Home className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-700">Gestión de Propiedades</h1>
-              <p className="text-sm mt-1 text-gray-500">
-                Administra y controla los inmuebles registrados
-              </p>
-            </div>
-          </div>
-          {isAuthenticated && (
-            <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#fef9e7]">
-              <div className="w-2 h-2 rounded-full animate-pulse bg-[#fcc238]" />
-              <span className="text-sm font-medium text-gray-600">
-                {totalGeneral} {totalGeneral === 1 ? 'propiedad' : 'propiedades'}
-              </span>
-            </div>
-          )}
-
-        </div>
-      </header>
-      {/* CONTENIDO */}
       <main className="max-w-7xl mx-auto px-6 py-8">
+        <Link href="/#servicios" className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#5a5a5a] transition-colors hover:text-[#2e2e2e]">
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          Volver a GBS &amp; Asociados
+        </Link>
+
+        <header className="mb-8 border-b border-gray-200 pb-7 sm:mb-10 sm:pb-9">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#63bae9]/20 text-[#4ca8d8]">
+            <Building2 className="h-6 w-6" aria-hidden="true" />
+          </div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#4ca8d8]">Inmobiliaria · GBS &amp; Asociados</p>
+          <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">Propiedades disponibles</h1>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-[#686363]">
+            Explorá los inmuebles disponibles para alquiler y venta en la región. Encontrá tu próximo hogar o inversión.
+          </p>
+        </header>
         {error && (
             <Alert className="mb-6 bg-[#fef9e7] border-l-4 border-[#fcc238]">
               <AlertCircle className="h-4 w-4 text-yellow-500" />

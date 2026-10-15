@@ -1,20 +1,71 @@
 {
-  "project": "{{PROJECT_NAME}}",
+  "project": "inmovacion",
+  "typescript": {
+    "strict": true,
+    "forbid_any": true,
+    "forbid_deep_relative_imports": true,
+    "prefer_path_alias": true,
+    "path_alias": "@/* -> ./src/*"
+  },
   "nomenclature": {
+    "components": "PascalCase.tsx",
+    "actions": "camelCase.ts",
+    "helpers": "camelCase.ts",
+    "pages": "page.tsx | layout.tsx | error.tsx",
     "folders": "kebab-case",
     "code_language": "en",
-    "ui_language": "en"
+    "ui_language": "es"
+  },
+  "styling": {
+    "framework": "tailwindcss",
+    "version": "4",
+    "animation": "tw-animate-css",
+    "design_tokens": "src/app/globals.css",
+    "forbid_css_in_js": true,
+    "forbid_inline_styles": true,
+    "ui_library": "shadcn/ui (radix-ui)",
+    "icon_library": "lucide-react",
+    "brand_colors": {
+      "primary": "#63bae9",
+      "accent": "#fcc238"
+    }
   },
   "architecture": {
-    "principle": "Follow the conventions detected by agent-init and the existing project structure."
+    "framework": "nextjs-app-router",
+    "server_components_by_default": true,
+    "use_client_minimal": true,
+    "actions_path": "src/actions/<dominio>/",
+    "api_routes_path": "src/app/api/",
+    "helpers_path": "src/lib/",
+    "validators_path": "src/lib/zod.ts",
+    "prisma_client_path": "src/lib/db.ts",
+    "prisma_models_path": "src/generated/prisma",
+    "types_path": "src/types/",
+    "ui_components_path": "src/components/ui/",
+    "forbid_new_state_libs": true
+  },
+  "react": {
+    "forms_library": "react-hook-form + zod",
+    "data_fetching_library": "@tanstack/react-query",
+    "modals_library": "radix-ui",
+    "notifications_library": "react-hot-toast"
   },
   "security": {
+    "auth_type": "next-auth",
+    "auth_config": "auth.ts",
+    "route_protection": "src/middleware.ts",
+    "roles": ["admin", "user"],
     "forbid_secrets_in_code": true,
     "forbid_passwords_in_logs": true,
-    "validate_inputs_before_persist": true
+    "auth_required_pages": true,
+    "validate_inputs_before_persist": true,
+    "prisma_prevents_sql_injection": true
   },
   "code_quality": {
     "lint_before_finish": true,
+    "lint_command": "npm run lint",
+    "lint_tool": "tsc --noEmit",
+    "eslint_config": "eslint.config.mjs",
     "no_new_deps_without_justification": true
   }
 }

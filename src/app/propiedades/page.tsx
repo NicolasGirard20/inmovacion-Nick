@@ -2,6 +2,7 @@ import { auth } from '../../../auth';
 import { cookies } from 'next/headers';
 import { AppShell } from '@/components/layout/AppShell';
 import Header from '@/components/ui/Header';
+import Footer from '@/components/ui/Footer';
 import PropiedadesClient from './PropiedadesClient';
 
 export default async function PropiedadesPage() {
@@ -22,6 +23,7 @@ export default async function PropiedadesPage() {
       <main className="flex-1">
         <PropiedadesClient />
       </main>
+      <Footer />
     </div>
   );
 }
