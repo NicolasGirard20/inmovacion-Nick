@@ -80,11 +80,11 @@ export default function Header() {
         `}
         style={{
           background: isScrolled
-            ? "rgba(255, 255, 255, 0.95)"
-            : "linear-gradient(to right, rgba(99,186,233,0.05), rgba(252,194,56,0.05), transparent)",
+            ? "var(--color-brand-white-alpha95)"
+            : "linear-gradient(to right, var(--color-brand-blue-alpha5), var(--color-brand-accent-alpha5), transparent)",
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
-          borderColor: isScrolled ? "#e5e7eb" : "rgba(229, 231, 235, 0.5)",
+          borderColor: isScrolled ? "var(--color-brand-border)" : "var(--color-brand-border-alpha50)",
         }}
       >
         <div className="px-6 sm:px-8 py-2 sm:py-2.5 flex justify-between items-center">
@@ -107,10 +107,10 @@ export default function Header() {
               </div>
 
               <div className="flex flex-col justify-center">
-                <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#4a4a4a] group-hover:text-[#2e2e2e] transition-colors leading-tight">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-brand-text-secondary group-hover:text-brand-text transition-colors leading-tight">
                   {titulo}
                 </span>
-                <span className="text-[11px] sm:text-xs font-medium tracking-wide text-[#8a8a8a] hidden xs:block">
+                <span className="text-[11px] sm:text-xs font-medium tracking-wide text-brand-text-tertiary hidden xs:block">
                   Estudio Jurídico e Inmobiliario
                 </span>
               </div>
@@ -120,17 +120,17 @@ export default function Header() {
           {/* Menú Desktop & Botones de Acción */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Navegación Desktop (4 grupos/ítems) */}
-            <nav className="hidden md:flex items-center gap-1 mr-2" aria-label="Navegación principal">
+            <nav className="hidden lg:flex items-center gap-1 mr-2" aria-label="Navegación principal">
               {/* 1. Principal (Desplegable) */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="group flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-[#686363] hover:text-[#63bae9] hover:bg-[#63bae9]/10 focus:outline-none focus:ring-2 focus:ring-[#63bae9]/20 data-[state=open]:text-[#63bae9] data-[state=open]:bg-[#63bae9]/10 cursor-pointer"
+                    className="group flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 text-brand-text-warm hover:text-brand-blue hover:bg-brand-blue-light focus:outline-none focus:ring-2 focus:ring-brand-blue/20 data-[state=open]:text-brand-blue data-[state=open]:bg-brand-blue-light cursor-pointer"
                     aria-label="Menú principal"
                   >
                     <span>Principal</span>
-                    <ChevronDown className="h-4 w-4 text-[#969696] group-hover:text-[#63bae9] transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="h-4 w-4 text-brand-text-muted-light group-hover:text-brand-blue transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -138,16 +138,16 @@ export default function Header() {
                   sideOffset={8}
                   className="w-56 p-2 rounded-2xl border border-gray-100 shadow-xl bg-white/95 backdrop-blur-md z-50 animate-in fade-in-0 zoom-in-95"
                 >
-                  <div className="px-2 py-1.5 text-[11px] font-semibold text-[#969696] uppercase tracking-wider">
+                  <div className="px-2 py-1.5 text-[11px] font-semibold text-brand-text-muted-light uppercase tracking-wider">
                     Secciones del Sitio
                   </div>
                   {PRINCIPAL_SUBITEMS.map(({ label, href, Icon }) => (
                     <DropdownMenuItem key={href} asChild>
                       <Link
                         href={href}
-                        className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium rounded-xl text-[#686363] hover:text-[#63bae9] hover:bg-[#e8f6fc] transition-colors cursor-pointer w-full"
+                        className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium rounded-xl text-brand-text-warm hover:text-brand-blue hover:bg-brand-blue-light transition-colors cursor-pointer w-full"
                       >
-                        <div className="p-1 rounded-md bg-gray-50 text-[#63bae9]">
+                        <div className="p-1 rounded-md bg-gray-50 text-brand-blue">
                           <Icon className="h-4 w-4" />
                         </div>
                         <span>{label}</span>
@@ -166,8 +166,8 @@ export default function Header() {
                     href={href}
                     className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
-                        ? "text-[#4ca8d8] bg-[#63bae9]/15 font-semibold shadow-xs"
-                        : "text-[#686363] hover:text-[#63bae9] hover:bg-[#63bae9]/10"
+                        ? "text-brand-blue-active bg-brand-blue/15 font-semibold shadow-xs"
+                        : "text-brand-text-warm hover:text-brand-blue hover:bg-brand-blue-light"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -179,7 +179,7 @@ export default function Header() {
 
             {/* Mobile hamburger button */}
             <button
-              className="md:hidden p-2 rounded-lg transition-all duration-200 text-[#686363] hover:bg-slate-100/60 mr-1"
+              className="lg:hidden p-2 rounded-lg transition-all duration-200 text-brand-text-warm hover:bg-slate-100/60 mr-1"
               onClick={() => setPublicMenuOpen(true)}
               aria-label="Abrir menú de navegación"
             >
@@ -193,7 +193,7 @@ export default function Header() {
               <Button
                 variant="outline"
                 size="icon"
-                className="border transition-all duration-200 rounded-lg border-gray-200 text-[#686363] hover:border-[#63bae9] hover:bg-[#e8f6fc] hover:text-[#63bae9]"
+                className="border transition-all duration-200 rounded-lg border-gray-200 text-brand-text-warm hover:border-brand-blue hover:bg-brand-blue-light hover:text-brand-blue"
                 onClick={handleUserSettingsClick}
                 title="Ver perfil"
               >
@@ -202,7 +202,7 @@ export default function Header() {
             ) : (
               <Button
                 onClick={() => router.push("/login")}
-                className="hidden md:inline-flex font-semibold transition-all duration-200 rounded-lg shadow-xs hover:shadow-md text-white bg-[#63bae9] hover:bg-[#4ca8d8] hover:-translate-y-0.5"
+                className="hidden lg:inline-flex font-semibold transition-all duration-200 rounded-lg shadow-xs hover:shadow-md text-white bg-brand-blue hover:bg-brand-blue-active hover:-translate-y-0.5"
               >
                 Iniciar sesión
               </Button>
@@ -215,13 +215,13 @@ export default function Header() {
       {error && (
         <div className="fixed top-20 right-8 z-50 animate-in slide-in-from-top-2 fade-in duration-300">
           <Alert
-            className="shadow-lg border-l-4 rounded-xl max-w-sm bg-[#fff9e6] border-l-[#fcc238] border-[#fcc238]"
+            className="shadow-lg border-l-4 rounded-xl max-w-sm bg-warning-bg border-l-brand-accent border-brand-accent"
           >
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-[#fef3cd]">
-                <AlertCircle className="h-5 w-5 text-[#fcc238]" />
+              <div className="p-2 rounded-lg bg-warning-icon-bg">
+                <AlertCircle className="h-5 w-5 text-brand-accent" />
               </div>
-              <AlertDescription className="text-[#686363]">{error}</AlertDescription>
+              <AlertDescription className="text-brand-text-warm">{error}</AlertDescription>
             </div>
           </Alert>
         </div>
@@ -234,7 +234,7 @@ export default function Header() {
         }`}
       >
         {/* Header del drawer */}
-        <div className="p-5 border-b border-gray-200 bg-[#f8f9fa] flex items-center justify-between">
+        <div className="p-5 border-b border-gray-200 bg-brand-bg flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative h-12 w-11 shrink-0">
               <Image
@@ -246,15 +246,15 @@ export default function Header() {
               />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#4a4a4a] leading-tight">
+              <h2 className="text-base font-bold text-brand-text-secondary leading-tight">
                 Navegación
               </h2>
-              <span className="text-xs text-[#8a8a8a]">GBS &amp; Asociados</span>
+              <span className="text-xs text-brand-text-tertiary">GBS &amp; Asociados</span>
             </div>
           </div>
           <button
             onClick={() => setPublicMenuOpen(false)}
-            className="p-2 rounded-lg transition-all text-[#969696] hover:bg-[#f3f4f6] hover:text-[#686363]"
+            className="p-2 rounded-lg transition-all text-brand-text-muted-light hover:bg-brand-surface hover:text-brand-text-warm"
             aria-label="Cerrar menú"
           >
             <X className="w-5 h-5" />
@@ -265,7 +265,7 @@ export default function Header() {
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
           {/* 1. Bloque Principal */}
           <div>
-            <p className="text-[11px] font-bold text-[#969696] uppercase tracking-wider mb-2 px-2">
+            <p className="text-[11px] font-bold text-brand-text-muted-light uppercase tracking-wider mb-2 px-2">
               Principal
             </p>
             <div className="space-y-1">
@@ -274,9 +274,9 @@ export default function Header() {
                   key={href}
                   href={href}
                   onClick={() => setPublicMenuOpen(false)}
-                  className="w-full px-3 py-2.5 rounded-xl font-medium text-sm flex items-center gap-3 transition-all text-[#686363] hover:bg-[#e8f6fc] hover:text-[#63bae9]"
+                  className="w-full px-3 py-2.5 rounded-xl font-medium text-sm flex items-center gap-3 transition-all text-brand-text-warm hover:bg-brand-blue-light hover:text-brand-blue"
                 >
-                  <div className="p-1.5 rounded-lg bg-[#f3f4f6] text-[#686363]">
+                  <div className="p-1.5 rounded-lg bg-brand-surface text-brand-text-warm">
                     <Icon className="w-4 h-4" />
                   </div>
                   <span>{label}</span>
@@ -287,7 +287,7 @@ export default function Header() {
 
           {/* 2. Bloque Explorar (Propiedades, Disponibilidad, Conócenos) */}
           <div>
-            <p className="text-[11px] font-bold text-[#969696] uppercase tracking-wider mb-2 px-2">
+            <p className="text-[11px] font-bold text-brand-text-muted-light uppercase tracking-wider mb-2 px-2">
               Explorar
             </p>
             <div className="space-y-1">
@@ -300,13 +300,13 @@ export default function Header() {
                     onClick={() => setPublicMenuOpen(false)}
                     className={`w-full px-3 py-2.5 rounded-xl font-medium text-sm flex items-center gap-3 transition-all ${
                       isActive
-                        ? "bg-[#63bae9]/15 text-[#4ca8d8] font-semibold"
-                        : "text-[#686363] hover:bg-[#e8f6fc] hover:text-[#63bae9]"
+                        ? "bg-brand-blue/15 text-brand-blue-active font-semibold"
+                        : "text-brand-text-warm hover:bg-brand-blue-light hover:text-brand-blue"
                     }`}
                   >
                     <div
                       className={`p-1.5 rounded-lg ${
-                        isActive ? "bg-[#63bae9]/20 text-[#4ca8d8]" : "bg-[#f3f4f6] text-[#686363]"
+                        isActive ? "bg-brand-blue/20 text-brand-blue-active" : "bg-brand-surface text-brand-text-warm"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -320,16 +320,16 @@ export default function Header() {
         </div>
 
         {/* Footer del drawer */}
-        <div className="p-5 border-t border-gray-200 bg-[#f8f9fa]">
+        <div className="p-5 border-t border-gray-200 bg-brand-bg">
           {session ? (
             <button
               onClick={() => {
                 setPublicMenuOpen(false);
                 handleUserSettingsClick();
               }}
-              className="w-full px-4 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 border border-gray-200 text-[#4a4a4a] bg-white hover:bg-gray-50 transition-all shadow-xs"
+              className="w-full px-4 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 border border-gray-200 text-brand-text-secondary bg-white hover:bg-gray-50 transition-all shadow-xs"
             >
-              <User className="w-4 h-4 text-[#63bae9]" />
+              <User className="w-4 h-4 text-brand-blue" />
               <span>Mi cuenta</span>
             </button>
           ) : (
@@ -338,7 +338,7 @@ export default function Header() {
                 router.push("/login");
                 setPublicMenuOpen(false);
               }}
-              className="w-full px-4 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all shadow-xs hover:shadow-md bg-[#63bae9] hover:bg-[#4ca8d8]"
+              className="w-full px-4 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all shadow-xs hover:shadow-md bg-brand-blue hover:bg-brand-blue-active"
             >
               <User className="w-4 h-4" />
               <span>Iniciar sesión</span>

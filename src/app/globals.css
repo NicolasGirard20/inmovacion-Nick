@@ -127,9 +127,47 @@
   --color-brand-primary: #5a5a5a;
   --color-brand-primary-dark: #3d3d3d;
   --color-brand-accent: #fcc238;
+  --color-brand-accent-hover: #e6af32;
+  --color-brand-accent-alpha5: rgba(252, 194, 56, 0.05);
+  --color-brand-blue: #63bae9;
+  --color-brand-blue-active: #4ca8d8;
+  --color-brand-blue-light: #e8f6fc;
+  --color-brand-blue-gradient: #4a9fd4;
+  --color-brand-blue-alpha5: rgba(99, 186, 233, 0.05);
   --color-brand-text: #2e2e2e;
   --color-brand-text-muted: #6b6b6b;
+  --color-brand-text-secondary: #4a4a4a;
+  --color-brand-text-tertiary: #8a8a8a;
+  --color-brand-text-warm: #686363;
+  --color-brand-text-muted-light: #969696;
   --color-brand-bg: #f8f9fa;
+  --color-brand-black: #1a1a1a;
+  --color-brand-border: #e5e7eb;
+  --color-brand-border-alpha50: rgba(229, 231, 235, 0.5);
+  --color-brand-surface: #f3f4f6;
+  --color-brand-white: #ffffff;
+  --color-brand-white-alpha95: rgba(255, 255, 255, 0.95);
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BD5A;
+  --color-indicator-green: #22c55e;
+  --color-indicator-red: #ef4444;
+  --color-surface-green: #ecfdf5;
+  --color-surface-red: #fef2f2;
+  --color-warning-bg: #fff9e6;
+  --color-warning-icon-bg: #fef3cd;
+  --color-alert-bg: #fef9e7;
+  --color-gold-bg: #fff8e6;
+  --color-gold-text: #604600;
+  --color-gold-hover: #ffedbd;
+  --color-gold-dot: #c38c00;
+  --color-gold-icon: #80600b;
+  --color-gold-border: #e5c76e;
+  --color-gold-slot-bg: #fffaf0;
+  --color-gold-slot-hover: #fff2cf;
+  --color-gold-title: #9a6c00;
+  --color-gold-heading: #8a650f;
+  --color-calendar-muted: #777;
+  --color-hover-dark: #444;
 }
 
 @keyframes fadeInUp {

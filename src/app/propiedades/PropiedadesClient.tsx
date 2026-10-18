@@ -314,23 +314,23 @@ const totalGeneral = totalActivos + totalArchivados;
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <Link href="/#servicios" className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#5a5a5a] transition-colors hover:text-[#2e2e2e]">
+        <Link href="/#servicios" className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-text">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Volver a GBS &amp; Asociados
         </Link>
 
         <header className="mb-8 border-b border-gray-200 pb-7 sm:mb-10 sm:pb-9">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#63bae9]/20 text-[#4ca8d8]">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue/20 text-brand-blue-active">
             <Building2 className="h-6 w-6" aria-hidden="true" />
           </div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#4ca8d8]">Inmobiliaria · GBS &amp; Asociados</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-blue-active">Inmobiliaria · GBS &amp; Asociados</p>
           <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">Propiedades disponibles</h1>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-[#686363]">
+          <p className="mt-3 max-w-2xl text-base leading-7 text-brand-text-warm">
             Explorá los inmuebles disponibles para alquiler y venta en la región. Encontrá tu próximo hogar o inversión.
           </p>
         </header>
         {error && (
-            <Alert className="mb-6 bg-[#fef9e7] border-l-4 border-[#fcc238]">
+            <Alert className="mb-6 bg-alert-bg border-l-4 border-brand-accent">
               <AlertCircle className="h-4 w-4 text-yellow-500" />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>
@@ -346,7 +346,7 @@ const totalGeneral = totalActivos + totalArchivados;
             onClick={handleCrear}
             className="group relative p-6 rounded-xl font-medium flex items-center gap-4 
                       transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]
-                      bg-[#63bae9] overflow-hidden"
+                      bg-brand-blue overflow-hidden"
           >
             {/* Overlay hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/25 
@@ -357,7 +357,7 @@ const totalGeneral = totalActivos + totalArchivados;
               {/* Cuadrado blanco */}
               <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center 
                               group-hover:rotate-12 transition-transform duration-300 shadow-md">
-                <FileSignature className="w-7 h-7 text-[#63bae9]" strokeWidth={2} />
+                <FileSignature className="w-7 h-7 text-brand-blue" strokeWidth={2} />
               </div>
 
               {/* Texto */}
@@ -394,8 +394,8 @@ const totalGeneral = totalActivos + totalArchivados;
                 Inmuebles Activos
               </h2>
 
-              <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#ecfdf5]">
-                <div className="w-2 h-2 rounded-full animate-pulse bg-[#22c55e]" />
+              <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-surface-green">
+                <div className="w-2 h-2 rounded-full animate-pulse bg-indicator-green" />
                 <span className="text-sm font-medium text-gray-600">
                   {activos.length} {activos.length === 1 ? 'activo' : 'activos'}
                 </span>
@@ -407,8 +407,8 @@ const totalGeneral = totalActivos + totalArchivados;
           <div className="p-6">
           {isLoading && activos.length === 0 ? (
             <div className="text-center py-20">
-              <div className="inline-block w-16 h-16 border-4 border-gray-200 border-t-[#63bae9] rounded-full animate-spin mb-4"></div>
-              <p className="text-lg font-semibold text-[#969696]">
+              <div className="inline-block w-16 h-16 border-4 border-gray-200 border-t-brand-blue rounded-full animate-spin mb-4"></div>
+              <p className="text-lg font-semibold text-brand-text-muted-light">
                 Cargando inmuebles...
               </p>
             </div>
@@ -423,7 +423,7 @@ const totalGeneral = totalActivos + totalArchivados;
                 {activosPagina.map((i) => (
                   <div
                     key={i.id_inmueble}
-                    className="group border-2 border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all relative border-l-4 border-l-[#63bae9]"
+                    className="group border-2 border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all relative border-l-4 border-l-brand-blue"
                   >
                     {/* Tags */}
                       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -531,20 +531,20 @@ const totalGeneral = totalActivos + totalArchivados;
               <button
                 onClick={() => setPaginaActivos(paginaActivos - 1)}
                 disabled={paginaActivos === 1}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#63bae9] to-[#4a9fd4] text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-blue-gradient text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <ArrowLeft className="w-5 h-5" />
                 Anterior
               </button>
 
-              <span className="text-sm font-bold text-[#686363] px-4 py-2 rounded-lg bg-gray-100">
+<span className="text-sm font-bold text-brand-text-warm px-4 py-2 rounded-lg bg-gray-100">
                 Página {paginaActivos} de {Math.ceil(totalActivos / inmueblesPorPagina) || 1}
               </span>
 
               <button
                 onClick={() => setPaginaActivos(paginaActivos + 1)}
                 disabled={paginaActivos >= Math.ceil(totalActivos / inmueblesPorPagina)}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#63bae9] to-[#4a9fd4] text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-blue-gradient text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 Siguiente
                 <ArrowLeft className="w-5 h-5 transform rotate-180" />
@@ -562,8 +562,8 @@ const totalGeneral = totalActivos + totalArchivados;
               </h2>
 
               {/* Contador */}
-              <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#fef2f2]">
-                <div className="w-2 h-2 rounded-full animate-pulse bg-[#ef4444]" />
+              <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-surface-red">
+                <div className="w-2 h-2 rounded-full animate-pulse bg-indicator-red" />
                 <span className="text-sm font-medium text-gray-600">
                   {archivados.length} {archivados.length === 1 ? 'archivado' : 'archivados'}
                 </span>
@@ -684,20 +684,20 @@ const totalGeneral = totalActivos + totalArchivados;
   <button
     onClick={() => setPaginaArchivados(paginaArchivados - 1)}
     disabled={paginaArchivados === 1}
-    className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#63bae9] to-[#4a9fd4] text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+    className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-blue-gradient text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
   >
     <ArrowLeft className="w-5 h-5" />
     Anterior
   </button>
 
-  <span className="text-sm font-bold text-[#686363] px-4 py-2 rounded-lg bg-gray-100">
+  <span className="text-sm font-bold text-brand-text-warm px-4 py-2 rounded-lg bg-gray-100">
     Página {paginaArchivados} de {Math.ceil(totalArchivados / inmueblesPorPagina) || 1}
   </span>
 
   <button
     onClick={() => setPaginaArchivados(paginaArchivados + 1)}
     disabled={paginaArchivados >= Math.ceil(totalArchivados / inmueblesPorPagina)}
-    className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#63bae9] to-[#4a9fd4] text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+    className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-blue-gradient text-white font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
   >
     Siguiente
     <ArrowLeft className="w-5 h-5 transform rotate-180" />

@@ -81,31 +81,31 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center p-4">
       {/* Elementos decorativos de fondo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#63bae9]/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#fcc238]/10 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-brand-blue/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl" />
       </div>
 
       {/* Contenedor principal */}
       <div className="relative w-full max-w-xl md:max-w-2xl lg:max-w-3xl">
         {/* Logo/Branding */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#63bae9] to-[#63bae9]/90 rounded-2xl shadow-lg mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-brand-blue to-brand-blue/90 rounded-2xl shadow-lg mb-4">
             <Building2 className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-[#686363] mb-2">
+          <h1 className="text-2xl font-bold text-brand-text-warm mb-2">
             GBS y Asociados
           </h1>
-          <p className="text-[#969696]">
+          <p className="text-brand-text-muted-light">
             Sistema de Gestión 
           </p>
         </div>
 
         {/* Card principal */}
         <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="bg-gradient-to-r from-[#63bae9]/5 via-[#fcc238]/5 to-transparent rounded-t-lg border-b border-slate-200/50">
+          <CardHeader className="bg-gradient-to-r from-brand-blue/5 via-brand-accent/5 to-transparent rounded-t-lg border-b border-slate-200/50">
             <div className="flex items-center justify-center space-x-2">
-              <Shield className="h-6 w-6 text-[#686363]" />
-              <h2 className="text-xl font-semibold text-[#686363]">
+              <Shield className="h-6 w-6 text-brand-text-warm" />
+              <h2 className="text-xl font-semibold text-brand-text-warm">
                 Iniciar Sesión
               </h2>
             </div>
@@ -114,9 +114,9 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
           <CardContent className="p-8">
             {/* Alertas de estado */}
             {isVerified && (
-              <Alert className="mb-6 border-[#63bae9]/20 bg-[#63bae9]/10 max-w-xl mx-auto">
-                <CheckCircle className="h-4 w-4 text-[#63bae9]" />
-                <AlertDescription className="text-[#686363]">
+              <Alert className="mb-6 border-brand-blue/20 bg-brand-blue/10 max-w-xl mx-auto">
+                <CheckCircle className="h-4 w-4 text-brand-blue" />
+                <AlertDescription className="text-brand-text-warm">
                   ¡Perfecto! Tu correo ha sido verificado. Ya puedes iniciar sesión.
                 </AlertDescription>
               </Alert>
@@ -147,8 +147,8 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-[#686363] font-medium">
-                        <Mail className="h-4 w-4 text-[#63bae9]" />
+                      <FormLabel className="flex items-center gap-2 text-brand-text-warm font-medium">
+                        <Mail className="h-4 w-4 text-brand-blue" />
                         Correo Electrónico
                       </FormLabel>
                       <FormControl>
@@ -156,7 +156,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
                           {...field}
                           type="email"
                           placeholder="usuario@ejemplo.com"
-                          className="h-12 rounded-xl border-[#969696]/20 focus:border-[#63bae9] focus:ring-[#63bae9]/20 transition-all duration-200 text-[#686363] placeholder-[#969696] bg-slate-50/50"
+                          className="h-12 rounded-xl border-brand-text-muted-light/20 focus:border-brand-blue focus:ring-brand-blue/20 transition-all duration-200 text-brand-text-warm placeholder-brand-text-muted-light bg-slate-50/50"
                           disabled={isPending}
                         />
                       </FormControl>
@@ -176,8 +176,8 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-[#686363] font-medium">
-                        <Lock className="h-4 w-4 text-[#63bae9]" />
+                      <FormLabel className="flex items-center gap-2 text-brand-text-warm font-medium">
+                        <Lock className="h-4 w-4 text-brand-blue" />
                         Contraseña
                       </FormLabel>
                       <FormControl>
@@ -186,21 +186,21 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
                             {...field}
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Introduce tu contraseña"
-                            className="h-12 rounded-xl border-[#969696]/20 focus:border-[#63bae9] focus:ring-[#63bae9]/20 transition-all duration-200 text-[#686363] placeholder-[#969696] bg-slate-50/50 pr-12"
+                            className="h-12 rounded-xl border-brand-text-muted-light/20 focus:border-brand-blue focus:ring-brand-blue/20 transition-all duration-200 text-brand-text-warm placeholder-brand-text-muted-light bg-slate-50/50 pr-12"
                             disabled={isPending}
                           />
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-[#63bae9]/10 hover:text-[#63bae9] rounded-lg"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-brand-blue/10 hover:text-brand-blue rounded-lg"
                             onClick={togglePasswordVisibility}
                             disabled={isPending}
                           >
                             {showPassword ? (
-                              <EyeOff className="h-4 w-4 text-[#969696]" />
+                              <EyeOff className="h-4 w-4 text-brand-text-muted-light" />
                             ) : (
-                              <Eye className="h-4 w-4 text-[#969696]" />
+                              <Eye className="h-4 w-4 text-brand-text-muted-light" />
                             )}
                           </Button>
                         </div>
@@ -219,7 +219,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="w-full h-12 bg-gradient-to-r from-[#63bae9] to-[#63bae9]/90 hover:from-[#63bae9]/90 hover:to-[#63bae9]/80 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:transform-none disabled:opacity-70"
+                  className="w-full h-12 bg-gradient-to-r from-brand-blue to-brand-blue/90 hover:from-brand-blue/90 hover:to-brand-blue/80 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:transform-none disabled:opacity-70"
                 >
                   {isPending ? (
                     <>
@@ -240,21 +240,21 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
             <div className="mt-8 text-center space-y-4">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-[#969696]/50" />
+                  <div className="w-full border-t border-brand-text-muted-light/50" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-[#969696]">¿Necesitas ayuda?</span>
+                  <span className="px-4 bg-white text-brand-text-muted-light">¿Necesitas ayuda?</span>
                 </div>
               </div>
               
               <div className="space-y-2">
                 <a 
                   href="/forgot-password" 
-                  className="block text-sm text-[#686363] hover:text-[#63bae9] hover:underline transition-colors duration-200"
+                  className="block text-sm text-brand-text-warm hover:text-brand-blue hover:underline transition-colors duration-200"
                 >
                   ¿Olvidaste tu contraseña?
                 </a>
-                <p className="text-xs text-[#969696]">
+                <p className="text-xs text-brand-text-muted-light">
                   ¿No tienes cuenta? Contacta al administrador
                 </p>
               </div>
@@ -263,7 +263,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ isVerified }) => {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-[#969696]">
+        <div className="text-center mt-8 text-sm text-brand-text-muted-light">
           <p>© {new Date().getFullYear()} GBS y Asociados. Todos los derechos reservados.</p>
         </div>
       </div>

@@ -58,7 +58,7 @@ export function PublicAvailabilityView({ availability }: { availability: PublicA
       <section aria-label="Calendario de disponibilidad" className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-7">
         <div className="mb-6 flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-medium text-[#686363]">Horarios disponibles</p>
+            <p className="text-sm font-medium text-brand-text-warm">Horarios disponibles</p>
             <h2 className="mt-1 text-xl font-semibold capitalize">{monthTitle(monthKey)}</h2>
           </div>
           <div className="flex gap-2">
@@ -83,7 +83,7 @@ export function PublicAvailabilityView({ availability }: { availability: PublicA
           </div>
         </div>
 
-        <div className="mb-2 grid grid-cols-7 text-center text-xs font-semibold uppercase tracking-wide text-[#777]">
+        <div className="mb-2 grid grid-cols-7 text-center text-xs font-semibold uppercase tracking-wide text-calendar-muted">
           {["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"].map((day) => <span key={day} className="py-2">{day}</span>)}
         </div>
         <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
@@ -103,38 +103,38 @@ export function PublicAvailabilityView({ availability }: { availability: PublicA
                 onClick={() => setSelectedDate(item.dateKey)}
                 className={`relative flex aspect-square min-h-11 items-center justify-center rounded-lg text-sm font-medium transition ${
                   isSelected
-                    ? "bg-[#2e2e2e] text-white"
+                    ? "bg-brand-text text-white"
                     : available
-                      ? "bg-[#fff8e6] text-[#604600] hover:bg-[#ffedbd]"
+                      ? "bg-gold-bg text-gold-text hover:bg-gold-hover"
                       : "cursor-not-allowed text-gray-400"
                 }`}
               >
                 {item.day}
-                {available && !isSelected && <span className="absolute bottom-1.5 h-1 w-1 rounded-full bg-[#c38c00]" aria-hidden="true" />}
+                {available && !isSelected && <span className="absolute bottom-1.5 h-1 w-1 rounded-full bg-gold-dot" aria-hidden="true" />}
               </button>
             );
           })}
         </div>
-        <div className="mt-5 flex items-center gap-2 text-xs text-[#686363]">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#c38c00]" aria-hidden="true" />
+        <div className="mt-5 flex items-center gap-2 text-xs text-brand-text-warm">
+          <span className="h-2.5 w-2.5 rounded-full bg-gold-dot" aria-hidden="true" />
           Día con horarios para consultar
         </div>
       </section>
 
       <aside className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-7">
         <div className="flex items-center gap-3 border-b border-gray-100 pb-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#fcc238]/20 text-[#80600b]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-accent/20 text-gold-icon">
             <Clock3 className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
             <h2 className="font-semibold">{selectedDay ? formatDate(selectedDay.fecha) : "Elegí un día"}</h2>
-            <p className="text-sm text-[#686363]">Turnos en bloques de 30 minutos</p>
+            <p className="text-sm text-brand-text-warm">Turnos en bloques de 30 minutos</p>
           </div>
         </div>
 
         {selectedDay?.horarios.length ? (
           <div className="mt-5">
-            <p className="mb-3 text-sm text-[#686363]">Horarios disponibles para consultar:</p>
+            <p className="mb-3 text-sm text-brand-text-warm">Horarios disponibles para consultar:</p>
             <div className="grid grid-cols-2 gap-2">
               {selectedDay.horarios.map((slot) => (
                 <a
@@ -142,16 +142,16 @@ export function PublicAvailabilityView({ availability }: { availability: PublicA
                   href={whatsappLink(selectedDay.fecha, slot)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex min-h-11 items-center justify-center rounded-lg border border-[#e5c76e] bg-[#fffaf0] px-3 text-sm font-semibold text-[#604600] transition hover:bg-[#fff2cf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9a6c00]"
+                  className="flex min-h-11 items-center justify-center rounded-lg border border-gold-border bg-gold-slot-bg px-3 text-sm font-semibold text-gold-text transition hover:bg-gold-slot-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-title"
                 >
                   {slot.inicio}
                 </a>
               ))}
             </div>
-            <p className="mt-4 text-xs leading-5 text-[#686363]">Al seleccionar un horario, se abrirá WhatsApp para coordinar la consulta con el estudio.</p>
+            <p className="mt-4 text-xs leading-5 text-brand-text-warm">Al seleccionar un horario, se abrirá WhatsApp para coordinar la consulta con el estudio.</p>
           </div>
         ) : (
-          <div className="py-7 text-sm leading-6 text-[#686363]">
+          <div className="py-7 text-sm leading-6 text-brand-text-warm">
             {selectedDate
               ? "No hay horarios disponibles para este día. Podés elegir otra fecha o consultar directamente con el estudio."
               : hasAnyAvailability
@@ -164,12 +164,12 @@ export function PublicAvailabilityView({ availability }: { availability: PublicA
           href={whatsappLink(selectedDate ?? undefined)}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#2e2e2e] px-4 text-sm font-semibold text-white transition hover:bg-[#444] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9a6c00] focus-visible:ring-offset-2"
+          className="mt-2 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand-text px-4 text-sm font-semibold text-white transition hover:bg-hover-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-title focus-visible:ring-offset-2"
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
           Consultar por WhatsApp
         </a>
-        <p className="mt-4 flex items-center gap-2 text-xs text-[#777]">
+        <p className="mt-4 flex items-center gap-2 text-xs text-calendar-muted">
           <CalendarDays className="h-4 w-4" aria-hidden="true" />
           La disponibilidad puede cambiar al coordinar el turno.
         </p>
