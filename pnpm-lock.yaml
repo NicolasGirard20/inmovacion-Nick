@@ -16,7 +16,7 @@ importers:
         version: 5.0.2
       '@hookform/resolvers':
         specifier: ^5.2.2
-        version: 5.9.1(@standard-schema/spec@1.1.0)(effect@3.21.0)(react-hook-form@7.85.0(react@19.2.8))(zod@4.4.3)
+        version: 5.9.1(@standard-schema/spec@1.1.0)(effect@3.21.0)(react-hook-form@7.85.0(react@19.2.8))(zod@3.25.76)
       '@prisma/adapter-pg':
         specifier: ^7.9.1
         version: 7.9.1
@@ -128,6 +128,9 @@ importers:
       officeparser:
         specifier: ^5.2.1
         version: 5.2.2
+      openai:
+        specifier: ^7.38.0
+        version: 7.38.0(zod@3.25.76)
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
@@ -177,8 +180,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       zod:
-        specifier: ^4.1.12
-        version: 4.4.3
+        specifier: ^3.24.4
+        version: 3.25.76
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -3763,6 +3766,30 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
+  openai@7.38.0:
+    resolution: {integrity: sha512-Ef+YyIeoiisZLP/tV4F4/RieJAl4OEJTyJg6gV0AXOb0T9CDkvYJoU224OY5CTmQ4zDJeku4jEHjz2b3/6Ndhw==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
+      '@smithy/hash-node': '>=4.3.0 <5'
+      '@smithy/signature-v4': '>=5.4.0 <6'
+      undici: '>=5 <9'
+      ws: ^8.21.0
+      zod: ^3.25 || ^4.0
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-node':
+        optional: true
+      '@smithy/hash-node':
+        optional: true
+      '@smithy/signature-v4':
+        optional: true
+      undici:
+        optional: true
+      ws:
+        optional: true
+      zod:
+        optional: true
+
   option@0.2.4:
     resolution: {integrity: sha512-pkEqbDyl8ou5cpq+VsnQbe/WlEy5qS7xPzMS1U55OCG9KPvwFD46zDbxQIj3egJSFc3D+XhYOPUzz49zQAVy7A==}
 
@@ -4646,6 +4673,9 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
@@ -4970,14 +5000,14 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@hookform/resolvers@5.9.1(@standard-schema/spec@1.1.0)(effect@3.21.0)(react-hook-form@7.85.0(react@19.2.8))(zod@4.4.3)':
+  '@hookform/resolvers@5.9.1(@standard-schema/spec@1.1.0)(effect@3.21.0)(react-hook-form@7.85.0(react@19.2.8))(zod@3.25.76)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.85.0(react@19.2.8)
     optionalDependencies:
       '@standard-schema/spec': 1.1.0
       effect: 3.21.0
-      zod: 4.4.3
+      zod: 3.25.76
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -8159,6 +8189,10 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
+  openai@7.38.0(zod@3.25.76):
+    optionalDependencies:
+      zod: 3.25.76
+
   option@0.2.4: {}
 
   optionator@0.9.4:
@@ -9154,5 +9188,7 @@ snapshots:
   zod-validation-error@4.0.2(zod@4.4.3):
     dependencies:
       zod: 4.4.3
+
+  zod@3.25.76: {}
 
   zod@4.4.3: {}

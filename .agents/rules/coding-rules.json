@@ -1,16 +1,14 @@
 {
-  "project": "inmovacion",
+  "project": "inmovacion-Nick",
   "typescript": {
     "strict": true,
     "forbid_any": true,
     "forbid_deep_relative_imports": true,
-    "prefer_path_alias": true,
-    "path_alias": "@/* -> ./src/*"
+    "prefer_path_alias": true
   },
   "nomenclature": {
     "components": "PascalCase.tsx",
-    "actions": "camelCase.ts",
-    "helpers": "camelCase.ts",
+    "services": "camelCase.ts",
     "pages": "page.tsx | layout.tsx | error.tsx",
     "folders": "kebab-case",
     "code_language": "en",
@@ -18,54 +16,38 @@
   },
   "styling": {
     "framework": "tailwindcss",
-    "version": "4",
-    "animation": "tw-animate-css",
-    "design_tokens": "src/app/globals.css",
     "forbid_css_in_js": true,
     "forbid_inline_styles": true,
-    "ui_library": "shadcn/ui (radix-ui)",
+    "ui_library": "shadcn/ui",
     "icon_library": "lucide-react",
-    "brand_colors": {
-      "primary": "#63bae9",
-      "accent": "#fcc238"
-    }
+    "chart_library": "recharts"
   },
   "architecture": {
-    "framework": "nextjs-app-router",
-    "server_components_by_default": true,
-    "use_client_minimal": true,
-    "actions_path": "src/actions/<dominio>/",
-    "api_routes_path": "src/app/api/",
-    "helpers_path": "src/lib/",
-    "validators_path": "src/lib/zod.ts",
-    "prisma_client_path": "src/lib/db.ts",
-    "prisma_models_path": "src/generated/prisma",
-    "types_path": "src/types/",
-    "ui_components_path": "src/components/ui/",
+    "prisma_only_in_services": true,
+    "services_path": "src/services/<dominio>/",
+    "models_path": "src/global/models/index.ts",
+    "validators_path": "src/helpers/validators/",
+    "global_state": "DataContext.tsx",
     "forbid_new_state_libs": true
   },
   "react": {
-    "forms_library": "react-hook-form + zod",
-    "data_fetching_library": "@tanstack/react-query",
+    "server_components_by_default": true,
+    "use_client_minimal": true,
+    "forms_library": "react-hook-form",
     "modals_library": "radix-ui",
-    "notifications_library": "react-hot-toast"
+    "notifications_library": "sonner"
   },
   "security": {
-    "auth_type": "next-auth",
-    "auth_config": "auth.ts",
-    "route_protection": "src/middleware.ts",
-    "roles": ["admin", "user"],
     "forbid_secrets_in_code": true,
     "forbid_passwords_in_logs": true,
     "auth_required_pages": true,
-    "validate_inputs_before_persist": true,
-    "prisma_prevents_sql_injection": true
+    "jwt_cookie_name": "user",
+    "prisma_prevents_sql_injection": true,
+    "validate_inputs_before_persist": true
   },
   "code_quality": {
     "lint_before_finish": true,
     "lint_command": "npm run lint",
-    "lint_tool": "tsc --noEmit",
-    "eslint_config": "eslint.config.mjs",
     "no_new_deps_without_justification": true
   }
 }
