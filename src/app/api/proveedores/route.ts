@@ -5,11 +5,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { proveedorSchema } from "@/lib/zod";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // =============================================================
 // GET → Obtener todos los proveedores activos
 // =============================================================
 export async function GET() {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const proveedores = await db.proveedor.findMany({
       where: { estado: true },
@@ -37,6 +41,9 @@ export async function GET() {
 // POST → Crear nuevo proveedor
 // =============================================================
 export async function POST(req: NextRequest) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const json = await req.json();
 

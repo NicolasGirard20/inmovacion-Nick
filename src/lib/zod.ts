@@ -6,19 +6,33 @@ import { z, object, string, number } from "zod";
 // Expresión regular para validar números de teléfono
 const phoneRegex = /^\+?[\d\s\-\(\)\.]{7,20}$/;
 
+export const passwordFieldSchema = string()
+  .min(1, "La contraseña es requerida")
+  .min(8, "Mínimo 8 caracteres")
+  .max(32, "Máximo 32 caracteres");
+
 export const loginSchema = object({
   email: string().min(1, "El correo electrónico es requerido").email("Introduce un correo válido"),
-  password: string().min(1, "La contraseña es requerida").min(8, "Mínimo 8 caracteres").max(32, "Máximo 32 caracteres"),
+  password: passwordFieldSchema,
 });
 
 export const registerSchema = object({
   email: string().min(1, "El correo electrónico es requerido").email("Introduce un correo válido"),
-  password: string().min(1, "La contraseña es requerida").min(8, "Mínimo 8 caracteres").max(32, "Máximo 32 caracteres"),
+  password: passwordFieldSchema,
   confirmPassword: string().min(1, "Confirma tu contraseña").min(8).max(32),
   name: string().min(1, "El nombre es requerido").max(32),
   phone: string().min(1).max(20).regex(phoneRegex, "Formato de teléfono inválido"),
   role: z.enum(["user", "admin"]),
 }).refine((data) => data.password === data.confirmPassword, {
+  message: "Las contraseñas no coinciden",
+  path: ["confirmPassword"],
+});
+
+export const changePasswordSchema = object({
+  currentPassword: string().min(1, "La contraseña actual es requerida"),
+  newPassword: passwordFieldSchema,
+  confirmPassword: string().min(1, "Confirma tu contraseña").min(8).max(32),
+}).refine((data) => data.newPassword === data.confirmPassword, {
   message: "Las contraseñas no coinciden",
   path: ["confirmPassword"],
 });

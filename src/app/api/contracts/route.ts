@@ -38,6 +38,11 @@ const contractSchema = z.object({
 // ==================== GET (listado) - SIN CAMBIOS ====================
 // ==================== GET OPTIMIZADO - SOLO CAMPOS NECESARIOS ====================
 export async function GET(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search');

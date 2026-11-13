@@ -125,6 +125,11 @@ export async function POST(req: NextRequest) {
 // ==================== GET ====================
 // ==================== GET OPTIMIZADO ====================
 export async function GET(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search');
@@ -187,6 +192,11 @@ export async function GET(req: NextRequest) {
 
 // ==================== DELETE (CORREGIDO Y SEGURO) ====================
 export async function DELETE(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+  }
+
   try {
     const { id } = await req.json();
 

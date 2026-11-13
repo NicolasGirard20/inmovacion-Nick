@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Importamos la instancia de Prisma configurada en /lib/db
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // Función que genera el archivo Excel
 import { generarExcelRendicion, IPCData } from "@/lib/excelGenerator";
@@ -41,6 +42,9 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     /* ----------------------------------------------------------------------
        1) Validación del ID recibido

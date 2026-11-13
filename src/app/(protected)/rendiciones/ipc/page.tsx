@@ -7,7 +7,7 @@ import { useState, useRef } from 'react';
 import { TrendingUp, ArrowLeft, Upload, Trash2, FileSpreadsheet, Loader2, AlertCircle, Calendar, X, Pencil } from 'lucide-react';
 
 import toast from 'react-hot-toast';
-import * as XLSX from 'xlsx';
+import { parseIpcExcelBuffer } from '@/lib/ipc-excel-parser';
 import Loading from '@/components/ui/Loading'; 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
@@ -133,14 +133,13 @@ const years = Array.from(
   const validateFile = (file: File | null): boolean => {
     if (!file) return false;
 
-    const validTypes = [
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'application/vnd.ms-excel',
-    ];
+    const validType =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     const maxSize = 10 * 1024 * 1024; // 10MB
 
-    if (!validTypes.includes(file.type)) {
-      toast.error('Solo se permiten archivos .xlsx o .xls');
+    const hasValidExtension = file.name.toLowerCase().endsWith('.xlsx');
+    if (file.type !== validType && !hasValidExtension) {
+      toast.error('Solo se permiten archivos .xlsx');
       return false;
     }
 
@@ -159,50 +158,7 @@ const years = Array.from(
 
     try {
       const data = await selectedFile.arrayBuffer();
-      const workbook = XLSX.read(data);
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null });
-
-      const nuevosDatos = rows.map((r: any) => {
-
-        // detectar columna año o anio automáticamente
-        const keyAnio = Object.keys(r).find(
-          k => k.toLowerCase() === "anio" || k.toLowerCase() === "año"
-        );
-
-        return {
-          mes: Number(
-            r.mes ??
-            r.Mes ??
-            r.MES
-          ),
-
-          anio: Number(
-            r.anio ??
-            r.año ??
-            (keyAnio ? r[keyAnio] : null)
-          ),
-
-          valor:
-            r.valor !== undefined && r.valor !== null
-              ? Number(r.valor)
-              : 0,
-
-          fuente:
-            r.fuente ??
-            r.Fuente ??
-            'Archivo Excel',
-
-          fechaConsulta:
-            r.fecha_publicacion ??
-            r.fechaConsulta ??
-            new Date().toISOString(),
-        };
-
-      }).filter(d =>
-        !isNaN(d.mes) &&
-        !isNaN(d.anio)
-      );
+      const nuevosDatos = await parseIpcExcelBuffer(data);
 
 
       const res = await fetch('/api/rendiciones/ipc', {
@@ -354,7 +310,7 @@ if (isLoading) {
               <h2 className="text-xl font-semibold text-[#686363]">Subir archivo Excel anual</h2>
             </div>
             <p className="mt-1 text-sm text-gray-500">
-              Arrastrar y sueltar el archivo .xlsx o .xls aquí (máximo 10MB)
+              Arrastrar y sueltar el archivo .xlsx aquí (máximo 10MB)
             </p>
           </div>
 
@@ -375,7 +331,7 @@ if (isLoading) {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".xlsx,.xls"
+                accept=".xlsx"
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -388,7 +344,7 @@ if (isLoading) {
                       Arrastrar el archivo aquí o hacer clic para seleccionar
                     </p>
                     <p className="text-sm text-gray-500 mt-2">
-                      Solo archivos Excel (.xlsx / .xls) – Máximo 10MB
+                      Solo archivos Excel (.xlsx) – Máximo 10MB
                     </p>
                   </div>
                 </div>

@@ -3,11 +3,17 @@
 'use server';
 
 import { db } from "@/lib/db";
+import { getAuthenticatedSession } from "@/lib/auth-guards";
 
 // ========================================================
 // Obtener proveedores — SOLO ACTIVOS
 // ========================================================
 export async function getProveedores() {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    throw new Error("No autenticado");
+  }
+
   try {
     const proveedores = await db.proveedor.findMany({
       where: { estado: true },  // 👈 SOLO ACTIVOS

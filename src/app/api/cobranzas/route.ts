@@ -9,6 +9,11 @@ import { auth } from "../../../../auth";
    ================   MÉTODO GET – LISTAR COBRANZAS   ===========
    ============================================================= */
 export async function GET(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
 

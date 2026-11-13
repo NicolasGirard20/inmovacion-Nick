@@ -2,10 +2,16 @@
 // Importamos 'db' que es nuestra instancia de Prisma para interactuar con la base de datos
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // Esta función maneja las solicitudes POST a esta ruta.
 // Es decir: cuando el frontend envía una imagen para guardarla en la base de datos.
 export async function POST(req: Request) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return unauthorizedResponse();
+  }
+
   try {
     // Intentamos leer el cuerpo (body) del request como JSON.
     // Esperamos recibir algo como: { inmuebleId: 3, url: "https://...." }
@@ -15,21 +21,24 @@ export async function POST(req: Request) {
     //   VALIDACIÓN DE DATOS
     // ================================
     // Si falta algún dato requerido, devolvemos un error 400 -> Bad Request
-    if (!inmuebleId || !url) {
+    if (!inmuebleId || !url || typeof url !== "string") {
       return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
+    }
+
+    const parsedInmuebleId = Number(inmuebleId);
+    if (!Number.isInteger(parsedInmuebleId) || parsedInmuebleId <= 0) {
+      return NextResponse.json({ error: "inmuebleId inválido" }, { status: 400 });
+    }
+
+    if (!url.startsWith("https://") && !url.startsWith("/")) {
+      return NextResponse.json({ error: "URL inválida" }, { status: 400 });
     }
 
     // ================================
     //   CREACIÓN EN LA BASE DE DATOS
     // ================================
-    // Guardamos una nueva imagen usando Prisma.
-    // La tabla 'inmuebleImagen' está relacionada con 'inmueble'.
-    // Guardamos:
-    // - inmuebleId → ID del inmueble dueño de la imagen
-    // - url → ruta de la imagen subida
-    // - principal → false por defecto, ya que no es la imagen principal
     const imagen = await db.inmuebleImagen.create({
-      data: { inmuebleId, url, principal: false },
+      data: { inmuebleId: parsedInmuebleId, url, principal: false },
     });
 
     // Respondemos con la imagen recién creada y código 201 -> Created

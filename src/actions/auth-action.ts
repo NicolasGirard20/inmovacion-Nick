@@ -6,7 +6,7 @@
 
 import { z } from "zod";
 import { loginSchema, registerSchema, resetPasswordSchema } from "@/lib/zod";
-import { signIn } from "../../auth";
+import { auth, signIn } from "../../auth";
 import { AuthError } from "next-auth";
 import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
@@ -32,6 +32,11 @@ export const loginAction = async (values: z.infer<typeof loginSchema>) => {
 
 export const registerAction = async (values: z.infer<typeof registerSchema>) => {
   try {
+    const session = await auth();
+    if (!session?.user?.id || session.user.role !== "admin") {
+      return { error: "No autorizado para registrar usuarios" };
+    }
+
     const { data, success } = registerSchema.safeParse(values);
 
     if (!success) {
@@ -59,8 +64,6 @@ export const registerAction = async (values: z.infer<typeof registerSchema>) => 
       },
     });
 
-
-
     return { success: true };
   } catch (error) {
     if (error instanceof AuthError) {
@@ -72,16 +75,21 @@ export const registerAction = async (values: z.infer<typeof registerSchema>) => 
 
 export const forgotPasswordAction = async (email: string) => {
   try {
+    const parsedEmail = z.string().email().safeParse(email);
+    if (!parsedEmail.success) {
+      return { success: false, error: 'Introduce un correo válido' };
+    }
+
     const user = await db.user.findUnique({
-      where: { email },
+      where: { email: parsedEmail.data },
     });
 
     if (!user) {
-      return { success: false, error: 'No se encontró un usuario con ese correo' };
+      return { success: true };
     }
 
     const existingToken = await db.verificationToken.findFirst({
-      where: { identifier: email },
+      where: { identifier: parsedEmail.data },
     });
 
     if (existingToken) {
@@ -98,13 +106,13 @@ export const forgotPasswordAction = async (email: string) => {
     const token = nanoid();
     await db.verificationToken.create({
       data: {
-        identifier: email,
+        identifier: parsedEmail.data,
         token,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 24 horas
       },
     });
 
-    await sendEmailVerification(email, token, true);
+    await sendEmailVerification(parsedEmail.data, token, true);
 
     return { success: true };
   } catch (error) {
@@ -115,6 +123,17 @@ export const forgotPasswordAction = async (email: string) => {
 
 export async function resetPasswordAction(token: string, password: string) {
   try {
+    const parsedPassword = resetPasswordSchema.safeParse({
+      password,
+      confirmPassword: password,
+    });
+    if (!parsedPassword.success) {
+      return {
+        success: false,
+        error: parsedPassword.error.issues[0]?.message ?? 'Contraseña inválida',
+      };
+    }
+
     const verificationToken = await db.verificationToken.findFirst({
       where: { token, expires: { gt: new Date() } },
     });
@@ -131,7 +150,7 @@ export async function resetPasswordAction(token: string, password: string) {
       return { success: false, error: 'Usuario no encontrado' };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(parsedPassword.data.password, 10);
 
     await db.user.update({
       where: { email: verificationToken.identifier },

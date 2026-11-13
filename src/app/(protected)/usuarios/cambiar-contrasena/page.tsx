@@ -26,17 +26,7 @@ import {
 } from "lucide-react";
 import Modal from '@/components/ui/Modal';
 import { changePassword } from "@/actions/user-actions";
-import { registerSchema } from "@/lib/zod"; // Importa el esquema desde zod.ts
-
-// Esquema de validación para cambio de contraseña
-const changePasswordSchema = z.object({
-  currentPassword: z.string().min(1, "La contraseña actual es requerida"),
-  newPassword: registerSchema.shape.password, // Reutiliza las reglas de password de registerSchema
-  confirmPassword: registerSchema.shape.confirmPassword, // Reutiliza las reglas de confirmPassword
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Las contraseñas no coinciden",
-  path: ["confirmPassword"],
-});
+import { changePasswordSchema } from "@/lib/zod";
 
 type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
 

@@ -2,6 +2,7 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 import {
   PDFDocument,
   StandardFonts,
@@ -12,6 +13,9 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   const { id: idStr } = await params;
   const id = Number(idStr);
 

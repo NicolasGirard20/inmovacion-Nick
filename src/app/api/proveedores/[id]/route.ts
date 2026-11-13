@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { proveedorSchema } from "@/lib/zod";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // ================================
 // GET por ID
@@ -13,6 +14,9 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   const { id: idStr } = await params;
   const id = Number(idStr);
 
@@ -44,6 +48,9 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const { id: idStr } = await params;
     const id = Number(idStr);

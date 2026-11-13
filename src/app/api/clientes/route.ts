@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // ==================== GET ====================
 export async function GET() {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const clientes = await db.cliente.findMany({
       orderBy: { id_cliente: "desc" },
@@ -28,6 +32,9 @@ export async function GET() {
 
 // ==================== POST (Crear) ====================
 export async function POST(req: Request) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const body = await req.json();
 

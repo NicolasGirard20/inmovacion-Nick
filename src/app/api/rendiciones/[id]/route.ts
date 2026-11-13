@@ -29,6 +29,11 @@ async function calcularSaldoAnterior(id_inmueble: number, fechaActual: Date) {
 // GET — Obtener rendición por ID
 // =========================================================
 export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   const { id } = await context.params;
   const id_rendicion = Number(id);
 
@@ -504,6 +509,11 @@ const monto_total = Number(totalConIPC.toFixed(2));
 // DELETE
 // =========================================================
 export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   const { id } = await context.params;
   const id_rendicion = Number(id);
 

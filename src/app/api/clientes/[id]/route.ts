@@ -2,6 +2,7 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 
 // ==========================
@@ -11,6 +12,8 @@ export async function GET(
   req: Request,
   context: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
 
   const params = await context.params;
 
@@ -77,6 +80,8 @@ export async function PUT(
   req: Request,
   context: { params: Promise<{ id: string }> }
 ) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
 
   const params = await context.params;
 

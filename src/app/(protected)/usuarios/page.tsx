@@ -57,7 +57,6 @@ export default function UsersPage() {
         phone: user.phone || undefined,
         role: user.role || "user",
         status: user.status || "active",
-        password: user.password || "sincontraseña",
         createdAt: user.createdAt || new Date(),
         updatedAt: user.updatedAt || new Date(),
       }))

@@ -9,6 +9,11 @@ import { auth } from "../../../../../auth";
    GET — obtener una cobranza por ID
    ===================================================== */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   const { id } = await params;
   const id_cobranza = Number(id);
 
@@ -79,6 +84,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
    (solo si está INACTIVA)
    ===================================================== */
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   const { id } = await params;
   const id_cobranza = Number(id);
 

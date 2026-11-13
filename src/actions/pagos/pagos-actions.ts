@@ -7,6 +7,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { getAuthenticatedSession } from "@/lib/auth-guards";
 
 // Validaciones backend (las mismas del POST /api/pagos)
 import {
@@ -31,6 +32,9 @@ function serialize(obj: any) {
 // OBTENER TODOS LOS PAGOS
 // =======================
 export async function getPagos() {
+  const session = await getAuthenticatedSession();
+  if (!session) return [];
+
   try {
     const pagos = await db.pagoProveedor.findMany({
       where: { estado: true },
@@ -53,6 +57,9 @@ export async function getPagos() {
 // OBTENER PAGO POR ID
 // =======================
 export async function getPagoById(id_pago: number) {
+  const session = await getAuthenticatedSession();
+  if (!session) return null;
+
   try {
     const pago = await db.pagoProveedor.findUnique({
       where: { id_pago },
@@ -74,6 +81,9 @@ export async function getPagoById(id_pago: number) {
 // CREAR PAGO
 // =======================
 export async function createPago(data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) return { success: false, message: "No autenticado" };
+
   try {
     // ======================
     // VALIDACIONES BACKEND
@@ -122,6 +132,9 @@ export async function createPago(data: any) {
 // ACTUALIZAR PAGO
 // =======================
 export async function updatePago(id_pago: number, data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) return { success: false, message: "No autenticado" };
+
   try {
     // ======================
     // VALIDACIONES BACKEND
@@ -175,6 +188,9 @@ export async function updatePago(id_pago: number, data: any) {
 // SOFT DELETE
 // =======================
 export async function deletePago(id: number) {
+  const session = await getAuthenticatedSession();
+  if (!session) return { success: false, message: "No autenticado" };
+
   try {
     const pago = await db.pagoProveedor.update({
       where: { id_pago: id },

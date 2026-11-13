@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { getAuthenticatedSession } from "@/lib/auth-guards";
 
 
 // ======================================================
@@ -76,6 +77,10 @@ function validarCliente(data: any) {
 // ======================================================
 
 export async function createCliente(data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, message: "No autenticado." };
+  }
 
   try {
 
@@ -151,6 +156,10 @@ export async function createCliente(data: any) {
 // ACTUALIZAR CLIENTE
 // ======================================================
 export async function updateCliente(id: number, data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, message: "No autenticado." };
+  }
 
   try {
 
@@ -234,6 +243,10 @@ export async function updateCliente(id: number, data: any) {
 // ======================================================
 
 export async function softDeleteCliente(id: number) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, message: "No autenticado." };
+  }
 
   try {
 

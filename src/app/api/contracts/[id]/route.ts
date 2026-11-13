@@ -54,6 +54,9 @@ const patchSchema = z.object({
 
 // ==================== GET OPTIMIZADO ====================
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+
   const { id } = await params;
   const numId = Number(id);
   if (isNaN(numId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
@@ -198,6 +201,9 @@ const existingPath = new URL(contrato.archivoPath).pathname.replace(/^\/storage\
 
 // ==================== PATCH ====================
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+
   const { id } = await params;
   const numId = Number(id);
   if (isNaN(numId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
@@ -230,6 +236,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
 // ==================== DELETE (borrado permanente) ====================
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
+
   const { id } = await params;
   const numId = Number(id);
   if (isNaN(numId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });

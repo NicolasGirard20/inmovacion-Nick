@@ -2,11 +2,17 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { getAuthenticatedSession } from "@/lib/auth-guards";
 
 // =======================
 // CREAR PROVEEDOR
 // =======================
 export async function createProveedor(data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, error: "No autenticado" };
+  }
+
   try {
     const proveedor = await db.proveedor.create({
       data: {
@@ -32,6 +38,11 @@ export async function createProveedor(data: any) {
 // ACTUALIZAR PROVEEDOR
 // =======================
 export async function updateProveedor(id_proveedor: number, data: any) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, error: "No autenticado" };
+  }
+
   try {
     const proveedor = await db.proveedor.update({
       where: { id_proveedor },
@@ -52,6 +63,11 @@ export async function updateProveedor(id_proveedor: number, data: any) {
 // SOFT DELETE
 // =======================
 export async function softDeleteProveedor(id_proveedor: number) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return { success: false, error: "No autenticado" };
+  }
+
   try {
     await db.proveedor.update({
       where: { id_proveedor },
@@ -69,6 +85,11 @@ export async function softDeleteProveedor(id_proveedor: number) {
 // OBTENER POR ID
 // =======================
 export async function getProveedorById(id_proveedor: number) {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    return null;
+  }
+
   try {
     return await db.proveedor.findUnique({
       where: { id_proveedor },

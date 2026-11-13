@@ -23,6 +23,8 @@ const toDecimalOrUndefined = (v: any): Prisma.Decimal | undefined =>
 =============================================================== */
 export async function GET(req: NextRequest) {
   try {
+    const session = await auth();
+    const isAuthenticated = Boolean(session?.user?.id);
     const { searchParams } = new URL(req.url);
 
     // ──► Recibir filtros y paginación
@@ -47,17 +49,14 @@ export async function GET(req: NextRequest) {
       if (precioMax) where.precio.lte = toDecimalOrUndefined(precioMax);
     }
 
-    // archivado puede ser: true, false o all
-if (archivadoParam === "true") {
-  where.archivado = true;
-} 
-else if (archivadoParam === "false") {
-  where.archivado = false;
-} 
-else {
-  // all → no filtrar
-  // no agregamos where.archivado
-}
+    // Los visitantes públicos solo ven propiedades activas (no archivadas)
+    if (!isAuthenticated) {
+      where.archivado = false;
+    } else if (archivadoParam === "true") {
+      where.archivado = true;
+    } else if (archivadoParam === "false") {
+      where.archivado = false;
+    }
 
 
     const [inmuebles, total] = await Promise.all([
@@ -145,7 +144,9 @@ else {
       : null,
     precio: i.precio ? Number(i.precio) : null,
 
-    createdBy: i.createdBy
+    cliente: isAuthenticated ? i.cliente : undefined,
+
+    createdBy: isAuthenticated && i.createdBy
       ? {
           id_usuario: String(i.createdBy.id),
           nombre:
@@ -155,7 +156,7 @@ else {
         }
       : undefined,
 
-    updatedBy: i.updatedBy
+    updatedBy: isAuthenticated && i.updatedBy
       ? {
           id_usuario: String(i.updatedBy.id),
           nombre:

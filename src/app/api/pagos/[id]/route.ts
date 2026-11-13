@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // FIX Decimal → number
 function serialize(obj: any) {
@@ -19,6 +20,9 @@ export const dynamic = "force-dynamic";
 // GET — Obtener Pago
 // ===============================
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const { id: idStr } = await params;
     const id = Number(idStr);
@@ -44,6 +48,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 // PUT — Actualizar Pago
 // ===============================
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const { id: idStr } = await params;
     const id = Number(idStr);
@@ -73,6 +80,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 // DELETE — Soft Delete
 // ===============================
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const { id: idStr } = await params;
     const id = Number(idStr);

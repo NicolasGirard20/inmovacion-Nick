@@ -1,8 +1,13 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { getAuthenticatedSession } from "@/lib/auth-guards";
 
 export async function getClientes() {
+  const session = await getAuthenticatedSession();
+  if (!session) {
+    throw new Error("No autenticado");
+  }
 
   const clientes = await db.cliente.findMany({
 

@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 import {
   validateConcepto,
@@ -33,6 +34,9 @@ function serialize(obj: any) {
 // GET — Listar todos los pagos activos
 // ===============================================
 export async function GET() {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const pagos = await db.pagoProveedor.findMany({
       where: { estado: true },
@@ -58,6 +62,9 @@ export async function GET() {
 // POST — Crear un pago
 // ===============================================
 export async function POST(req: NextRequest) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const data = await req.json();
 

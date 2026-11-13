@@ -11,11 +11,9 @@ const { auth: middleware } = NextAuth(authConfig);
 // Rutas que NO requieren estar logueado.
 const publicRoutes = [
   "/",
-  "/usuarios/nuevo",
   "/login",
   "/api/auth/verify-email",
   "/forgot-password",
-  "/api/auth/reset-password",
   "/reset-password",
   "/propiedades",
   "/disponibilidad",

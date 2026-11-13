@@ -2,6 +2,7 @@
 // rendiciones/ipc/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getAuthenticatedSession, unauthorizedResponse } from "@/lib/auth-guards";
 
 // Tipos para validar entrada
 interface IPCEntrada {
@@ -16,6 +17,9 @@ interface IPCEntrada {
 // GET — Traer todos los IPC ordenados por año y mes
 // =====================================================
 export async function GET() {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const datos = await db.ipc.findMany({
       orderBy: [{ anio: "desc" }, { mes: "desc" }],
@@ -32,6 +36,9 @@ export async function GET() {
 // POST — Guardar o actualizar múltiples IPC
 // =====================================================
 export async function POST(req: NextRequest) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const nuevosDatos = (await req.json()) as IPCEntrada[];
 
@@ -68,6 +75,9 @@ export async function POST(req: NextRequest) {
 // DELETE — Eliminar un registro IPC por ID
 // =====================================================
 export async function DELETE(req: NextRequest) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
     const { searchParams } = new URL(req.url);
     const idStr = searchParams.get("id");
@@ -98,6 +108,9 @@ export async function DELETE(req: NextRequest) {
 
 // PUT — actualizar IPC existente
 export async function PUT(req: NextRequest) {
+  const session = await getAuthenticatedSession();
+  if (!session) return unauthorizedResponse();
+
   try {
 
     const { id, valor, fuente, fechaConsulta } = await req.json();

@@ -3,9 +3,18 @@
 
 import { db } from "@/lib/db";
 import { auth } from "../../auth";
+import { getAdminSession } from "@/lib/auth-guards";
 import bcrypt from "bcryptjs";
 
 export async function deactivateUser(id: string) {
+  const session = await getAdminSession();
+  if (!session) {
+    throw new Error("No autorizado");
+  }
+  if (session.user.id === id) {
+    throw new Error("No puedes desactivar tu propio usuario");
+  }
+
   await db.user.update({
     where: { id },
     data: { status: "inactive" },
@@ -14,6 +23,11 @@ export async function deactivateUser(id: string) {
 }
 
 export async function activateUser(id: string) {
+  const session = await getAdminSession();
+  if (!session) {
+    throw new Error("No autorizado");
+  }
+
   await db.user.update({
     where: { id },
     data: { status: "active" },
@@ -22,6 +36,14 @@ export async function activateUser(id: string) {
 }
 
 export async function deleteUser(id: string) {
+  const session = await getAdminSession();
+  if (!session) {
+    throw new Error("No autorizado");
+  }
+  if (session.user.id === id) {
+    throw new Error("No puedes eliminar tu propio usuario");
+  }
+
   await db.user.delete({
     where: { id },
   });
@@ -30,24 +52,30 @@ export async function deleteUser(id: string) {
 
 export async function getUserById(id: string) {
   const session = await auth();
-  console.log("getUserById - Session:", session);
   if (!session?.user) {
-    console.log("getUserById - No autenticado");
     throw new Error("No autenticado");
   }
 
   // Solo admins pueden ver cualquier usuario; no-admins solo el propio
   if (session.user.role !== "admin" && session.user.id !== id) {
-    console.log("getUserById - No autorizado: session.user.id:", session.user.id, "requested id:", id);
     throw new Error("No autorizado para ver este usuario");
   }
 
   const user = await db.user.findUnique({
     where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      role: true,
+      status: true,
+      image: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
-  console.log("getUserById - User found:", user ? "Yes" : "No", "ID:", id);
   if (!user) {
-    console.log("getUserById - Query executed:", { where: { id } });
     throw new Error("Usuario no encontrado");
   }
   return {
@@ -60,7 +88,6 @@ export async function getUserById(id: string) {
     image: user.image || null,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
-    password: user.password, // Añadido para changePassword
   };
 }
 
@@ -147,13 +174,18 @@ export async function changePassword(userId: string, data: { currentPassword: st
     throw new Error("No autorizado para cambiar la contraseña de este usuario");
   }
 
-  // Usar getUserById para obtener el usuario
-  const user = await getUserById(userId);
-  console.log("changePassword - User from getUserById:", user);
+  // Obtener hash de contraseña directamente en servidor sin exponerlo en getUserById
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, password: true },
+  });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado");
+  }
 
   // Verificar si el usuario tiene una contraseña configurada
   if (!user.password) {
-    console.log("changePassword - No password set for user ID:", userId);
     throw new Error("Este usuario no tiene una contraseña configurada (posible autenticación externa)");
   }
 
